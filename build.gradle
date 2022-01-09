@@ -119,7 +119,7 @@ dependencies {
     deobfCompile "hellfirepvp.astralsorcery:astralsorcery:1.12.2-1.10.23-v161"
     deobfCompile "curse.maven:bloodmagic-224791:2822288"
     deobfCompile "curse.maven:guideapi-228832:2645992"
-    deobfCompile "curse.maven:thaumic-augmentation-319441:3378111"
+    deobfCompile "curse.maven:thaumic-augmentation-319441:3536155"
     deobfCompile "curse.maven:topography-297878:3065647"
     deobfCompile "curse.maven:BNBGamingLib-229587:2698688"
     deobfCompile "curse.maven:mixinbooter-419286:3321174"
