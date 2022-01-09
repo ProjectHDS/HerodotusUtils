@@ -1,10 +1,8 @@
 package youyihj.herodotusutils.proxy;
 
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import youyihj.herodotusutils.client.ClientEventHandler;
 
 public class ClientProxy extends CommonProxy {
     @Override

@@ -43,7 +43,6 @@ minecraft {
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
     def args = [
-            "-Dfml.coreMods.load=youyihj.herodotusutils.core.HerodotusUtilsPlugin",
             "-Dmixin.debug.export=true",
             '-Dmixin.hotSwap=true',
             '-Dmixin.checks.interfaces=true'
@@ -123,6 +122,7 @@ dependencies {
     deobfCompile "curse.maven:thaumic-augmentation-319441:3378111"
     deobfCompile "curse.maven:topography-297878:3065647"
     deobfCompile "curse.maven:BNBGamingLib-229587:2698688"
+    deobfCompile "curse.maven:mixinbooter-419286:3321174"
     compile('org.spongepowered:mixin:0.8-SNAPSHOT') {
         exclude module: 'guava'
         exclude module: 'commons-io'
@@ -152,9 +152,6 @@ processResources {
 jar {
     manifest {
         attributes([
-                'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
-                "FMLCorePlugin": "youyihj.herodotusutils.core.HerodotusUtilsPlugin",
-                "FMLCorePluginContainsFMLMod": true,
                 "ForceLoadAsMod": true,
                 'FMLAT': 'hdsutils_at.cfg'
         ])
