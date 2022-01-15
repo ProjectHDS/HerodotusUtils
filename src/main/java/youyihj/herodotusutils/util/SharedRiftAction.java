@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.monster.EntityEndermite;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.util.Constants;
 
@@ -15,6 +16,7 @@ public class SharedRiftAction {
     public static final DamageSource RIFT = new DamageSource("rift").setDamageBypassesArmor().setMagicDamage();
 
     public static boolean attackEntity(Entity entity, float amount) {
+        if (entity.getClass() == EntityEndermite.class) return false;
         boolean flag = false;
         boolean attackResult = false;
         if (entity instanceof EntityLivingBase) {
