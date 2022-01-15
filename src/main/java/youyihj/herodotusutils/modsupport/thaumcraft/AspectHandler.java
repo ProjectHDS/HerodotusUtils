@@ -23,7 +23,9 @@ public class AspectHandler {
         WRATH = new Aspect("ira", 0x870404, new Aspect[]{Aspect.AVERSION, Aspect.FIRE}, HerodotusUtils.rl("textures/aspects/ira.png"), 771);
         INSPIRATION = new Aspect("revelatio", 0xff8c00, new Aspect[]{Aspect.MIND, Aspect.ELDRITCH}, HerodotusUtils.rl("textures/aspects/revelatio.png"), 771);
         Aspect.FLUX.setComponents(null);
+        Aspect.ELDRITCH.setComponents(null);
         Aspect.mixList.remove((Aspect.ENTROPY.getTag() + Aspect.MAGIC.getTag()).hashCode());
+        Aspect.mixList.remove((Aspect.VOID.getTag() + Aspect.DARKNESS.getTag()).hashCode());
     }
 
 }
