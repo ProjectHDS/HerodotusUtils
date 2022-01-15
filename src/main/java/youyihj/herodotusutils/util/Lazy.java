@@ -42,12 +42,12 @@ public class Lazy<T, R> implements Supplier<R> {
                 this.value = value;
                 this.loaded = true;
                 this.loader = null;
-                return Optional.ofNullable(processor.apply(this.value));
+                return Optional.of(value).map(processor);
             } else {
                 return Optional.empty();
             }
         } else {
-            return Optional.ofNullable(processor.apply(this.value));
+            return Optional.ofNullable(value).map(processor);
         }
     }
 
