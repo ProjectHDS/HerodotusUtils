@@ -18,19 +18,11 @@ public enum NetworkHandler {
 
     {
         channel.registerMessage(TaintSyncMessage.Handler.class, TaintSyncMessage.class, 0, Side.CLIENT);
-        channel.registerMessage(SyncDataMessage.Handler.class, SyncDataMessage.class, 1, Side.CLIENT);
     }
 
     public void sendMessageToPlayer(IMessage msg, EntityPlayer player) {
         if (player instanceof EntityPlayerMP) {
             channel.sendTo(msg, ((EntityPlayerMP) player));
-        }
-    }
-
-    public void sendSyncMessageToPlayer(PlayerSyncer syncer, EntityPlayer player) {
-        if (player instanceof EntityPlayerMP) {
-            syncer.sync(player);
-            channel.sendTo(new SyncDataMessage().setSyncer(syncer), ((EntityPlayerMP) player));
         }
     }
 }
