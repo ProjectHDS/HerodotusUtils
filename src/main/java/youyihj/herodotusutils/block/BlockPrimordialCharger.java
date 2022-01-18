@@ -101,7 +101,7 @@ public class BlockPrimordialCharger extends PlainBlock {
 
     @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
-        int[] ints = new int[]{-2, 0, 2};
+        int[] ints = new int[]{-6, 0, 6};
         Set<Aspect> foundAspects = new HashSet<>();
         Set<Aspect> advanceAspects = BlockCatalyzedAltar.TRANSFORM_RULES.keySet();
         for (int i = 0; i < 3; i++) {

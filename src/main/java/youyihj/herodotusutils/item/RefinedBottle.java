@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidActionResult;
@@ -113,6 +114,7 @@ public class RefinedBottle extends ItemFluidContainer {
                 Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(ContentTweaker.MOD_ID, "flesh_bolus"));
                 if (item != null && NetworkHelper.getSoulNetwork(player).getCurrentEssence() >= 1000) {
                     ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(item));
+                    player.sendStatusMessage(new TextComponentTranslation("hdsutils.drink_mercury"), true);
                 }
             }
         }
