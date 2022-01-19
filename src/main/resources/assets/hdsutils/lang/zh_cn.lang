@@ -52,6 +52,7 @@ hdsutils.alchemy.controller.close=关闭
 hdsutils.alchemy.fluid_info=含有炼金流体：
 hdsutils.error.less_impetus=元动能量不足
 hdsutils.jei.impetus=元动能量: %s
+hdsutils.jei.transform_rule.title=魔力种子转化
 hdsutils.add_lp_while_eating_raw_meat=尽管这些滴血的残尸难以下咽，但每当我吞下它们，我总能感受到一种莫名力量的召唤...
 hdsutils.drink_mercury=我刚才一定是服下了母神的启示！我感到血肉的使徒，要从我的口中...
 hdsutils.taint.infected=侵染: %d

@@ -52,6 +52,7 @@ hdsutils.alchemy.controller.close=Close
 hdsutils.alchemy.fluid_info=Contains Alchemical Fluid:
 hdsutils.error.less_impetus=Not enough impetus
 hdsutils.jei.impetus=Impetus: %s
+hdsutils.jei.transform_rule.title=Vis Seed Transform
 hdsutils.add_lp_while_eating_raw_meat=Although these deformed corpses are still dripping blood and hard to swallow, I always feel the call of an obscure power whenever I swallow them...
 hdsutils.drink_mercury=I must have just followed the revelation of the Mother Goddess! I felt the apostle of flesh and blood, was coming out of my mouth...
 hdsutils.taint.infected=Infected: %d

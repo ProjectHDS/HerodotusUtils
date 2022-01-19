@@ -41,14 +41,14 @@ public class BlockCatalyzedAltar extends PlainBlock {
 
     static {
         TRANSFORM_RULES = ImmutableMap.<Aspect, TransformRule>builder()
-                .put(WRATH, new TransformRule(WRATH, ORDER, ENTROPY, AIR, EARTH, WATER, FIRE, PLANT, ELDRITCH))
-                .put(GLUTTONY, new TransformRule(GLUTTONY, AIR, ORDER, ENTROPY, WATER, EARTH, ELDRITCH, PLANT, FIRE))
-                .put(ENVY, new TransformRule(ENVY, ENTROPY, AIR, ELDRITCH, EARTH, ORDER, FIRE, WATER, PLANT))
-                .put(NETHER, new TransformRule(NETHER, FIRE, PLANT, ELDRITCH, ORDER, AIR, EARTH, ENTROPY, WATER))
-                .put(SLOTH, new TransformRule(SLOTH, FIRE, WATER, PLANT, AIR, EARTH, ENTROPY, ELDRITCH, ORDER))
-                .put(PRIDE, new TransformRule(PRIDE, EARTH, ENTROPY, WATER, AIR, ORDER, WATER, FIRE, ELDRITCH))
-                .put(LUST, new TransformRule(LUST, WATER, FIRE, ENTROPY, ORDER, EARTH, ELDRITCH, PLANT, AIR))
-                .put(INSPIRATION, new TransformRule(INSPIRATION, ENTROPY, ELDRITCH, ORDER, EARTH, WATER, AIR, PLANT, FIRE))
+                .put(WRATH, new TransformRule(WRATH, ORDER, ENTROPY, AIR, EARTH, WATER, FIRE, FLUX, ELDRITCH))
+                .put(GLUTTONY, new TransformRule(GLUTTONY, AIR, ORDER, ENTROPY, WATER, EARTH, ELDRITCH, FLUX, FIRE))
+                .put(ENVY, new TransformRule(ENVY, ENTROPY, AIR, ELDRITCH, EARTH, ORDER, FIRE, WATER, FLUX))
+                .put(NETHER, new TransformRule(NETHER, FIRE, FLUX, ELDRITCH, ORDER, AIR, EARTH, ENTROPY, WATER))
+                .put(SLOTH, new TransformRule(SLOTH, FIRE, WATER, FLUX, AIR, EARTH, ENTROPY, ELDRITCH, ORDER))
+                .put(PRIDE, new TransformRule(PRIDE, EARTH, ENTROPY, WATER, AIR, ORDER, FLUX, FIRE, ELDRITCH))
+                .put(LUST, new TransformRule(LUST, WATER, FIRE, ENTROPY, ORDER, EARTH, ELDRITCH, FLUX, AIR))
+                .put(INSPIRATION, new TransformRule(INSPIRATION, ENTROPY, ELDRITCH, ORDER, EARTH, WATER, AIR, FLUX, FIRE))
                 .build();
         BASIC_VIS_PLANT = Lazy.createOptional(() -> AgriApi.getPlantRegistry().get("herodotus_basic_vis_plant"));
     }
@@ -167,6 +167,10 @@ public class BlockCatalyzedAltar extends PlainBlock {
 
         public Aspect getResult() {
             return result;
+        }
+
+        public List<Pair<BlockPos, Aspect>> getIn() {
+            return in;
         }
 
         public boolean matches(World world, BlockPos pos) {
