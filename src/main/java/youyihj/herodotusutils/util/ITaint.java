@@ -109,7 +109,7 @@ public interface ITaint {
         @Override
         public void setMaxValue(int maxValue) {
             this.maxValue = maxValue;
-            sendClientSyncMessage();
+            markDirty();
         }
 
         @Override
@@ -117,7 +117,7 @@ public interface ITaint {
             double originStickyScale = ((double) sticky) / ((double) maxValue);
             maxValue += value;
             sticky *= originStickyScale;
-            sendClientSyncMessage();
+            markDirty();
         }
 
         @Override
@@ -163,21 +163,21 @@ public interface ITaint {
         public void addPermanentTaint(int value) {
             addModifiedValue(value);
             permanent += restrictValueToMaxValue(value);
-            sendClientSyncMessage();
+            markDirty();
         }
 
         @Override
         public void addStickyTaint(int value) {
             addModifiedValue(value);
             sticky += restrictValueToMaxValue(value);
-            sendClientSyncMessage();
+            markDirty();
         }
 
         @Override
         public void addInfectedTaint(int value) {
             addModifiedValue(value);
             infected += restrictValueToMaxValue(value);
-            sendClientSyncMessage();
+            markDirty();
         }
 
         @Override

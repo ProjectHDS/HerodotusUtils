@@ -103,6 +103,7 @@ public class EventHandler {
                     break;
                 }
             }
+            player.getCapability(Capabilities.TAINT_CAPABILITY, null).syncToClientWhenNeeded();
         }
         if (!world.isRemote) {
             IItemHandler itemHandler = entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
