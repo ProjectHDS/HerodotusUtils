@@ -1,5 +1,6 @@
 package youyihj.herodotusutils.item;
 
+import WayofTime.bloodmagic.core.data.SoulNetwork;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import com.teamacronymcoders.contenttweaker.ContentTweaker;
 import net.minecraft.entity.EntityLivingBase;
@@ -112,7 +113,9 @@ public class RefinedBottle extends ItemFluidContainer {
                 EntityPlayer player = (EntityPlayer) entityLiving;
                 player.getCapability(Capabilities.TAINT_CAPABILITY, null).addPermanentTaint(3);
                 Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(ContentTweaker.MOD_ID, "flesh_bolus"));
-                if (item != null && NetworkHelper.getSoulNetwork(player).getCurrentEssence() >= 1000) {
+                SoulNetwork soulNetwork = NetworkHelper.getSoulNetwork(player);
+                if (item != null && soulNetwork.getCurrentEssence() >= 1000) {
+                    soulNetwork.setCurrentEssence(soulNetwork.getCurrentEssence() - 1000);
                     ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(item));
                     player.sendStatusMessage(new TextComponentTranslation("hdsutils.drink_mercury"), true);
                 }

@@ -204,7 +204,6 @@ public class EventHandler {
             if (player.isPotionActive(Starvation.INSTANCE)) {
                 if (RAW_MEAT_LIST.stream().anyMatch(item.getItem()::equals)) {
                     NetworkHelper.getSoulNetwork(player).add(new SoulTicket(100), 1000);
-                    // TODO: lang file value
                     player.sendStatusMessage(new TextComponentTranslation("hdsutils.add_lp_while_eating_raw_meat"), true);
                 }
             }
