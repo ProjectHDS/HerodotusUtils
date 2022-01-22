@@ -15,6 +15,7 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
@@ -25,6 +26,7 @@ import youyihj.herodotusutils.HerodotusUtils;
 
 import javax.annotation.Nullable;
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Optional;
@@ -35,8 +37,34 @@ import java.util.Optional;
 public abstract class ItemFluidContainer extends Item implements ItemDynamicColor {
     public static final Object2IntArrayMap<Fluid> COLORS = new Object2IntArrayMap<>();
 
-    static {
+    @SideOnly(Side.CLIENT)
+    public static void buildFluidColorMap() {
         COLORS.defaultReturnValue(-1);
+        FluidRegistry.getRegisteredFluids().values().forEach(fluid -> {
+            int color = fluid.getColor();
+            if (color == -1) { // Some fluid colors are undefined.
+                BufferedImage image;
+                ResourceLocation texture = fluid.getStill();
+                String newPath = "textures/" + texture.getResourcePath();
+                if (!newPath.endsWith(".png")) {
+                    newPath += ".png";
+                }
+                texture = new ResourceLocation(texture.getResourceDomain(), newPath);
+                try (IResource resource = Minecraft.getMinecraft().getResourceManager().getResource(texture)) {
+                    image = ImageIO.read(resource.getInputStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }
+                int[] dominantColor = ColorThief.getColor(image);
+                if (dominantColor == null) return;
+                int r = dominantColor[0];
+                int g = dominantColor[1];
+                int b = dominantColor[2];
+                color = new Color(r, g, b).getRGB();
+            }
+            COLORS.put(fluid, color);
+        });
     }
 
     protected ItemFluidContainer(String name) {
@@ -89,36 +117,7 @@ public abstract class ItemFluidContainer extends Item implements ItemDynamicColo
         if (tintIndex != 1) return -1;
         FluidStack fluidStack = FluidUtil.getFluidContained(stack);
         if (fluidStack == null) return -1;
-        Fluid fluid = fluidStack.getFluid();
-        int cacheInt = COLORS.getInt(fluid);
-        if (cacheInt != -1) {
-            return cacheInt;
-        } else {
-            int color = fluid.getColor();
-            if (color == -1) { // Some fluid colors are undefined.
-                BufferedImage image;
-                ResourceLocation texture = fluid.getStill(fluidStack);
-                String newPath = "textures/" + texture.getResourcePath();
-                if (!newPath.endsWith(".png")) {
-                    newPath += ".png";
-                }
-                texture = new ResourceLocation(texture.getResourceDomain(), newPath);
-                try (IResource resource = Minecraft.getMinecraft().getResourceManager().getResource(texture)) {
-                    image = ImageIO.read(resource.getInputStream());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return -1;
-                }
-                int[] dominantColor = ColorThief.getColor(image);
-                if (dominantColor == null) return -1;
-                int r = dominantColor[0];
-                int g = dominantColor[1];
-                int b = dominantColor[2];
-                return (r & 0xff) << 16 | (g & 0xff) << 8 | (b & 0xff);
-            }
-            COLORS.put(fluid, color);
-            return color;
-        }
+        return COLORS.getInt(fluidStack.getFluid());
     }
 
     public boolean isEmpty(ItemStack stack) {
