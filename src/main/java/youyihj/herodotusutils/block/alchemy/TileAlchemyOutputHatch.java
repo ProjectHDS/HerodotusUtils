@@ -92,7 +92,7 @@ public class TileAlchemyOutputHatch extends AbstractHasAlchemyFluidTileEntity im
             Fluid normalContent = getNormalContent();
             if (normalContent == null)
                 return null;
-            if (resource.getFluid() == resource.getFluid() && resource.amount >= FLUID_UNIT) {
+            if (resource.getFluid() == normalContent && resource.amount >= FLUID_UNIT) {
                 if (doDrain) {
                     emptyFluid();
                     TileAlchemyOutputHatch.this.markDirty();
