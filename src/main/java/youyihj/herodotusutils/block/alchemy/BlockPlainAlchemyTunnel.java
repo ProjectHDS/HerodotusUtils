@@ -90,7 +90,7 @@ public abstract class BlockPlainAlchemyTunnel extends AbstractPipeBlock implemen
     protected static final HorizontalBlockBoundingBoxes STRAIGHT_AABB = HorizontalBlockBoundingBoxes.ofModelPos(3, 3, 0, 13, 13, 16);
     protected static final AxisAlignedBB RIGHT_ANGLE_SELECTION_AABB = Util.createAABBFromModelPos(4, 4, 4, 12, 12, 12);
     protected static final AxisAlignedBB VERTICAL_SELECTION_AABB = Util.createAABBFromModelPos(4, 4, 4, 12, 16, 12);
-    protected static final HorizontalBlockBoundingBoxes PART_AABB = HorizontalBlockBoundingBoxes.ofModelPos(0, 4, 0, 4, 4, 4);
+    protected static final HorizontalBlockBoundingBoxes PART_AABB = HorizontalBlockBoundingBoxes.ofModelPos(0, 4, 4, 4, 12, 12);
     protected IProperty<TransferDirection> property;
 
     protected BlockPlainAlchemyTunnel(String name) {
