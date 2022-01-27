@@ -3,6 +3,7 @@ package youyihj.herodotusutils.block.alchemy;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -22,6 +23,7 @@ public abstract class AbstractPipeBlock extends PlainBlock {
     protected AbstractPipeBlock(String name) {
         super(Material.IRON, name);
         this.setHarvestLevel("pickaxe", 2);
+        this.fullBlock = false;
     }
 
     @Override
@@ -37,6 +39,17 @@ public abstract class AbstractPipeBlock extends PlainBlock {
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         super.breakBlock(worldIn, pos, state);
         recalculatePipes(worldIn, pos);
+    }
+
+    @Override
+    public BlockRenderLayer getBlockLayer() {
+        return BlockRenderLayer.CUTOUT;
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
     }
 
     @SuppressWarnings("deprecation")

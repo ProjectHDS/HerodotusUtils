@@ -1,0 +1,43 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "transform": "forge:default-block",
+    "model": "hdsutils:alchemy_pipe/right_angle_left"
+  },
+  "variants": {
+    "normal": [
+      {
+        "x": 90
+      }
+    ],
+    "inventory": [
+      {
+        "x": 90
+      }
+    ],
+    "direction=u2n": [
+      {
+        "x": 90,
+        "y": 90
+      }
+    ],
+    "direction=u2s": [
+      {
+        "x": 90,
+        "y": 270
+      }
+    ],
+    "direction=u2e": [
+      {
+        "x": 90,
+        "y": 180
+      }
+    ],
+    "direction=u2w": [
+      {
+        "x": 90,
+        "y": 0
+      }
+    ]
+  }
+}

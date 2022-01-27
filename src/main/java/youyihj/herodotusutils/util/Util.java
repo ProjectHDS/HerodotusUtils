@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
@@ -67,6 +68,10 @@ public final class Util {
         } else {
             return array[index + 1];
         }
+    }
+
+    public static AxisAlignedBB createAABBFromModelPos(double x1, double y1, double z1, double x2, double y2, double z2) {
+        return new AxisAlignedBB(x1 / 16, y1 / 16, z1 / 16, x2 / 16, y2 / 16, z2 / 16);
     }
 
     @SideOnly(Side.CLIENT)

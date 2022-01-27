@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
+import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
@@ -89,6 +90,8 @@ public class ModelRegistry {
                 return new ModelResourceLocation(HerodotusUtils.rl(FluidMercury.INSTANCE.getName()), "defaults");
             }
         });
+        ModelLoader.setCustomStateMapper(BlockAlchemyController.INSTANCE,
+                new StateMap.Builder().ignore(BlockAlchemyController.WORK_TYPE_PROPERTY).build());
         registerMultipleItemsModel(
                 BlockManaLiquidizer.ITEM_BLOCK,
                 RefinedBottle.INSTANCE,

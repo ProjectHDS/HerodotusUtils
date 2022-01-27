@@ -22,6 +22,7 @@ tile.hdsutils.straight_tunnel.name=Straight Alchemical Pipe
 tile.hdsutils.right_angle_tunnel.name=Right Angle Alchemical Pipe
 tile.hdsutils.vertical_right_angle.name=Vertical Right Alchemical Pipe
 tile.hdsutils.round_robin_tunnel.name=Round Robin Alchemical Pipe
+tile.hdsutils.lazy_tunnel.name=Lazy Alchemical Pipe
 tile.hdsutils.block_aspectlist_provider_input.name=Advanced Essentia Input Hatch
 tile.hdsutils.impetus_input_hatch.name=Impetus Input Hatch
 tile.hdsutils.impetus_output_hatch.name=Impetus Output Hatch

@@ -33,10 +33,11 @@ public class ItemAlchemyPipeWrench extends Item {
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         World world = player.world;
+        boolean sneaking = player.isSneaking();
         IBlockState blockState = world.getBlockState(pos);
         Block block = blockState.getBlock();
         AtomicBoolean adjusted = new AtomicBoolean(false);
-        if (block instanceof IAdjustableBlock) {
+        if (!sneaking && block instanceof IAdjustableBlock) {
             IAdjustableBlock adjustableBlock = (IAdjustableBlock) block;
             IBlockState result = adjustableBlock.getAdjustedResult(blockState);
             if (result != blockState) {
@@ -47,10 +48,12 @@ public class ItemAlchemyPipeWrench extends Item {
                 adjusted.set(true);
             }
         }
-        Util.getTileEntity(world, pos, IAdjustableTileEntity.class).ifPresent(te -> {
-            te.adjust(facing, new MCPosition3f(hitX, hitY, hitZ));
-            adjusted.set(true);
-        });
+        if (sneaking) {
+            Util.getTileEntity(world, pos, IAdjustableTileEntity.class).ifPresent(te -> {
+                te.adjust(facing, new MCPosition3f(hitX, hitY, hitZ));
+                adjusted.set(true);
+            });
+        }
         return adjusted.get() ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
     }
 }

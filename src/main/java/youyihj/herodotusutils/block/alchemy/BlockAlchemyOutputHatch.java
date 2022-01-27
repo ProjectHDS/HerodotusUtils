@@ -8,21 +8,27 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import youyihj.herodotusutils.alchemy.IAdjustableBlock;
+import youyihj.herodotusutils.util.HorizontalBlockBoundingBoxes;
+import youyihj.herodotusutils.util.Util;
 
 import javax.annotation.Nonnull;
 
 /**
  * @author youyihj
  */
-public class BlockAlchemyOutputHatch extends AbstractPipeBlock {
+public class BlockAlchemyOutputHatch extends AbstractPipeBlock implements IAdjustableBlock {
     private BlockAlchemyOutputHatch() {
         super("alchemy_output_hatch");
     }
 
     public static final BlockAlchemyOutputHatch INSTANCE = new BlockAlchemyOutputHatch();
     public static final Item ITEM_BLOCK = new ItemBlock(INSTANCE).setRegistryName("alchemy_output_hatch");
+    private static final HorizontalBlockBoundingBoxes BOUNDING_BOXES = HorizontalBlockBoundingBoxes.ofModelPos(2, 2, 0, 14, 14, 16);
 
     @Override
     protected BlockStateContainer createBlockState() {
@@ -45,9 +51,20 @@ public class BlockAlchemyOutputHatch extends AbstractPipeBlock {
         return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getHorizontal(meta));
     }
 
+    @SuppressWarnings("deprecation")
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return BOUNDING_BOXES.getBoundingBox(state, BlockHorizontal.FACING);
+    }
+
     @Nonnull
     @Override
     public AbstractPipeTileEntity createTileEntity(World world, IBlockState state) {
         return new TileAlchemyOutputHatch();
+    }
+
+    @Override
+    public IBlockState getAdjustedResult(IBlockState previous) {
+        return getDefaultState().withProperty(BlockHorizontal.FACING, Util.getCycledNextElement(EnumFacing.HORIZONTALS, previous.getValue(BlockHorizontal.FACING)));
     }
 }

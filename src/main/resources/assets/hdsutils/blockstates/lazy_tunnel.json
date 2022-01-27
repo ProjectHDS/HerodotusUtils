@@ -2,7 +2,7 @@
   "forge_marker": 1,
   "defaults": {
     "transform": "forge:default-block",
-    "model": "hdsutils:alchemy_pipe/controller"
+    "model": "hdsutils:alchemy_pipe/lazy"
   },
   "variants": {
     "normal": [
@@ -11,20 +11,22 @@
     "inventory": [
       {}
     ],
-    "facing=north": [
-      {}
+    "direction=n2s": [
+      {
+
+      }
     ],
-    "facing=south": [
+    "direction=s2n": [
       {
         "y": 180
       }
     ],
-    "facing=west": [
+    "direction=w2e": [
       {
         "y": 270
       }
     ],
-    "facing=east": [
+    "direction=e2w": [
       {
         "y": 90
       }

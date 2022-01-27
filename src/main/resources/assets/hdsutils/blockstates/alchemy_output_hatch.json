@@ -2,7 +2,7 @@
   "forge_marker": 1,
   "defaults": {
     "transform": "forge:default-block",
-    "model": "hdsutils:alchemy_pipe/controller"
+    "model": "hdsutils:alchemy_pipe/output"
   },
   "variants": {
     "normal": [
