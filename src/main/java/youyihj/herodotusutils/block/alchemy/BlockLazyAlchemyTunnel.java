@@ -5,6 +5,7 @@ import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.IProbeInfoAccessor;
 import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -46,10 +47,8 @@ public class BlockLazyAlchemyTunnel extends BlockPlainAlchemyTunnel implements I
 
     @Override
     public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
-        // TODO: Localization
         Util.getTileEntity(world, data.getPos(), TileAlchemyLazyTunnel.class).ifPresent(te -> {
-            probeInfo.text("Bound: " + te.getBound())
-                    .text("Counter: " + te.getCounter());
+            probeInfo.text(I18n.format("hdsutils.alchemy.lazy", te.getCounter(), te.getBound()));
         });
     }
 }

@@ -5,6 +5,7 @@ import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.IProbeInfoAccessor;
 import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -33,13 +34,17 @@ public class BlockAlchemyRoundRobinTunnel extends AbstractPipeBlock implements I
 
     @Override
     public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
-        // TODO: Localization
         Util.getTileEntity(world, data.getPos(), TileAlchemyRoundRobinTunnel.class).ifPresent(te -> {
-            EnumFacing[] facingQuery = te.facingQuery;
+            EnumFacing[] facingQuery = te.getFacingQuery();
             for (int i = 0; i < facingQuery.length; i++) {
-                probeInfo.text("Index " + i + " : " + facingQuery[i]);
+                EnumFacing facing = facingQuery[i];
+                probeInfo.text(I18n.format("hdsutils.alchemy.round.index", i, getFacingLocalizedInfo(facing)));
             }
-            probeInfo.text("Next Output Side: " + te.getNextOutputSide(false));
+            probeInfo.text(I18n.format("hdsutils.alchemy.round.next", getFacingLocalizedInfo(te.getNextOutputSide(false))));
         });
+    }
+
+    private String getFacingLocalizedInfo(EnumFacing facing) {
+        return I18n.format("hdsutils.alchemy." + (facing == null ? "null" : facing.getName()));
     }
 }
