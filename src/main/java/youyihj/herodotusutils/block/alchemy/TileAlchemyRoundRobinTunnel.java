@@ -1,12 +1,18 @@
 package youyihj.herodotusutils.block.alchemy;
 
 import crafttweaker.api.util.Position3f;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.server.management.PlayerChunkMapEntry;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.world.WorldServer;
 import youyihj.herodotusutils.alchemy.IAdjustableTileEntity;
 import youyihj.herodotusutils.alchemy.IAlchemyModule;
 import youyihj.herodotusutils.alchemy.IHasAlchemyFluidModule;
 
+import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -14,7 +20,7 @@ import java.util.Objects;
  * @author youyihj
  */
 public class TileAlchemyRoundRobinTunnel extends AbstractHasAlchemyFluidTileEntity implements IHasAlchemyFluidModule, IAdjustableTileEntity {
-    /* package-private */ final EnumFacing[] facingQuery = new EnumFacing[]{null, null, null, null};
+    private final EnumFacing[] facingQuery = new EnumFacing[]{null, null, null, null};
     private byte nextIndex = 0;
 
     @Override
@@ -54,6 +60,34 @@ public class TileAlchemyRoundRobinTunnel extends AbstractHasAlchemyFluidTileEnti
     }
 
     @Override
+    public NBTTagCompound getUpdateTag() {
+        return writeToNBT(new NBTTagCompound());
+    }
+
+    @Nonnull
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket() {
+        return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+        readFromNBT(pkt.getNbtCompound());
+    }
+
+    private void syncToTrackingClients() {
+        if (!this.world.isRemote) {
+            SPacketUpdateTileEntity packet = this.getUpdatePacket();
+            PlayerChunkMapEntry trackingEntry = ((WorldServer)this.world).getPlayerChunkMap().getEntry(this.pos.getX() >> 4, this.pos.getZ() >> 4);
+            if (trackingEntry != null) {
+                for (EntityPlayerMP player : trackingEntry.getWatchingPlayers()) {
+                    player.connection.sendPacket(packet);
+                }
+            }
+        }
+    }
+
+    @Override
     public EnumFacing inputSide() {
         return EnumFacing.UP;
     }
@@ -75,6 +109,8 @@ public class TileAlchemyRoundRobinTunnel extends AbstractHasAlchemyFluidTileEnti
             }
         }
         facingQuery[firstNullIndex] = facing;
+        markDirty();
+        syncToTrackingClients();
     }
 
     public EnumFacing getNextOutputSide(boolean next) {
@@ -85,9 +121,16 @@ public class TileAlchemyRoundRobinTunnel extends AbstractHasAlchemyFluidTileEnti
                 nextIndex = 0;
         } while (facingQuery[nextIndex++] == null);
         EnumFacing result = facingQuery[--nextIndex];
-        if (next)
+        if (next) {
             nextIndex++;
+            markDirty();
+            syncToTrackingClients();
+        }
         return result;
+    }
+
+    public EnumFacing[] getFacingQuery() {
+        return facingQuery.clone();
     }
 
     @Override
