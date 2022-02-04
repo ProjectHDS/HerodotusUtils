@@ -8,17 +8,12 @@
   "refmap": "mixins.hdsutils.refmap.json",
   "mixins": [
     "agricraft.MixinAgriPlant",
+    "agricraft.MixinJsonPlant",
+    "agricraft.MixinTileEntityCrop",
     "factorytech.MixinRiverGrateRemovalAction",
-    "modularmachinery.MixinDynamicMachine",
-    "modularmachinery.MixinMachineDeserializer",
-    "modularmachinery.MixinModifierDeserializer",
-    "modularmachinery.MixinRecipeCraftingContext",
-    "modularmachinery.MixinTileMachineController",
-    "modularmagic.MixinJEIComponentAspect"
-  ],
-  "client": [
-    "modularmachinery.MixinDynamicMachineRenderContext",
-    "modularmachinery.MixinGuiScreenBlueprint",
-    "modularmachinery.MixinStructurePreviewWrapper"
+    "modularmagic.MixinJEIComponentAspect",
+    "thaumcraft.MixinEntityFluxRift",
+    "thaumcraft.MixinResearchStage",
+    "thaumcraft.MixinTileCrucible"
   ]
 }

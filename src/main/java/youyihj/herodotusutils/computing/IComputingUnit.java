@@ -56,8 +56,8 @@ public interface IComputingUnit {
 
         @Override
         public void removeInvalidEntry(IBlockAccess world) {
-            generateDevices.keySet().removeIf(pos -> !(world.getTileEntity(pos) instanceof IComputingUnitGenerator));
-            consumeDevices.keySet().removeIf(pos -> !(world.getTileEntity(pos) instanceof IComputingUnitConsumer));
+            generateDevices.object2IntEntrySet().removeIf(entry -> !(world.getTileEntity(entry.getKey()) instanceof IComputingUnitGenerator));
+            consumeDevices.object2IntEntrySet().removeIf(entry -> !(world.getTileEntity(entry.getKey()) instanceof IComputingUnitConsumer));
         }
     }
 }

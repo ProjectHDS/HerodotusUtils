@@ -7,10 +7,13 @@ import net.minecraft.item.ItemStack;
 import youyihj.herodotusutils.alchemy.AlchemyEssence;
 import youyihj.herodotusutils.alchemy.AlchemyEssenceStack;
 import youyihj.herodotusutils.block.alchemy.BlockAlchemyController;
+import youyihj.herodotusutils.block.BlockCatalyzedAltar;
 import youyihj.herodotusutils.modsupport.jei.helper.AlchemyEssenceHelper;
 import youyihj.herodotusutils.modsupport.jei.helper.ImpetusHelper;
 import youyihj.herodotusutils.modsupport.jei.recipes.AlchemyFluidRecipeCategory;
 import youyihj.herodotusutils.modsupport.jei.recipes.AlchemyFluidRecipeWrapper;
+import youyihj.herodotusutils.modsupport.jei.recipes.TransformRuleCategory;
+import youyihj.herodotusutils.modsupport.jei.recipes.TransformRuleWrapper;
 import youyihj.herodotusutils.modsupport.jei.render.AlchemyEssenceRender;
 import youyihj.herodotusutils.modsupport.jei.render.ImpetusRender;
 import youyihj.herodotusutils.recipe.AlchemyRecipes;
@@ -34,15 +37,15 @@ public class JeiPlugin implements IModPlugin {
                 .map(AlchemyFluidRecipeWrapper::new)
                 .collect(Collectors.toList());
         registry.addRecipes(wrappers, "alchemy_fluid");
-    }
-
-    @Override
-    public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) {
+        registry.addRecipeCatalyst(new ItemStack(BlockCatalyzedAltar.ITEM_BLOCK), "transform_rule");
+        List<TransformRuleWrapper> transformRuleWrappers = BlockCatalyzedAltar.TRANSFORM_RULES.values().stream().map(TransformRuleWrapper::new).collect(Collectors.toList());
+        registry.addRecipes(transformRuleWrappers, "transform_rule");
     }
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
         registry.addRecipeCategories(new AlchemyFluidRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new TransformRuleCategory(registry.getJeiHelpers().getGuiHelper()));
     }
 
     @Override

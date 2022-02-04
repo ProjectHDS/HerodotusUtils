@@ -7,8 +7,10 @@ import it.unimi.dsi.fastutil.ints.IntIterator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
@@ -17,11 +19,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.ArrayUtils;
 import youyihj.herodotusutils.HerodotusUtils;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.items.CapabilityItemHandler;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * @author youyihj
@@ -43,6 +49,10 @@ public final class Util {
             s += iterator.nextInt();
         }
         return s;
+    }
+
+    public static <T> Predicate<T> not(Predicate<T> predicate) {
+        return predicate.negate();
     }
 
     public static <T> Optional<T> getTileEntity(World world, BlockPos pos, Class<T> tileEntityClass) {
@@ -72,6 +82,21 @@ public final class Util {
 
     public static AxisAlignedBB createAABBFromModelPos(double x1, double y1, double z1, double x2, double y2, double z2) {
         return new AxisAlignedBB(x1 / 16, y1 / 16, z1 / 16, x2 / 16, y2 / 16, z2 / 16);
+    }
+
+
+    public static <T> Optional<T> getCapability(World world, BlockPos pos, Capability<T> capability, @Nullable EnumFacing facing) {
+        return getTileEntity(world, pos).map(te -> te.getCapability(capability, facing));
+    }
+
+    public static void onBreakContainer(World worldIn, BlockPos pos) {
+        Util.getCapability(worldIn, pos, CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)
+                .ifPresent(itemHandler -> {
+                    int slots = itemHandler.getSlots();
+                    for (int i = 0; i < slots; i++) {
+                        InventoryHelper.spawnItemStack(worldIn, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, itemHandler.getStackInSlot(i).copy());
+                    }
+                });
     }
 
     @SideOnly(Side.CLIENT)

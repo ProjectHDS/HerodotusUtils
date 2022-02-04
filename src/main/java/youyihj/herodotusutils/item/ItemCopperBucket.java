@@ -11,6 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -62,7 +63,7 @@ public class ItemCopperBucket extends ItemFluidContainer {
                     tagCompound.removeTag("Amount");
                 } else {
                     tagCompound.setString("FluidName", fluidStack.getFluid().getName());
-                    tagCompound.setInteger("Amount", 1000);
+                    tagCompound.setInteger("Amount", Fluid.BUCKET_VOLUME);
                 }
             }
         };

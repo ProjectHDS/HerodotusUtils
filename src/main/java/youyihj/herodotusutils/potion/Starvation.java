@@ -4,6 +4,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 
 /**
  * @author ikexing
@@ -13,10 +14,9 @@ public class Starvation extends Potion {
     public static final Starvation INSTANCE = new Starvation();
 
     protected Starvation() {
-        super(false, 5797459);
+        super(true, 5797459);
         this.setRegistryName("starvation");
         this.setPotionName("effect.starvation");
-        this.setIconIndex(1, 1);
     }
 
     @Override
@@ -37,4 +37,15 @@ public class Starvation extends Potion {
     public boolean isReady(int duration, int amplifier) {
         return true;
     }
+
+    @Override
+    public boolean shouldRender(PotionEffect effect) {
+        return false;
+    }
+
+    @Override
+    public boolean shouldRenderHUD(PotionEffect effect) {
+        return false;
+    }
+
 }

@@ -2,7 +2,7 @@ package youyihj.herodotusutils.modsupport.crafttweaker;
 
 import crafttweaker.CraftTweakerAPI;
 import hellfirepvp.modularmachinery.common.integration.crafttweaker.RecipePrimer;
-import hellfirepvp.modularmachinery.common.machine.MachineComponent.IOType;
+import hellfirepvp.modularmachinery.common.machine.IOType;
 import stanhebben.zenscript.annotations.ZenExpansion;
 import stanhebben.zenscript.annotations.ZenMethod;
 import thaumcraft.api.aspects.Aspect;
@@ -18,7 +18,7 @@ public class HDSUtilsPrimer {
 
     @ZenMethod
     public static RecipePrimer addAspectsInput(RecipePrimer primer, Map<String, Integer> aspects) {
-        if (aspects.size() > 6)
+        if (aspects.size() > TileAspectListProvider.MAX_ASPECT)
             CraftTweakerAPI.logError("Max Size was " + TileAspectListProvider.MAX_ASPECT);
         else
             aspects.forEach((k, v) -> {

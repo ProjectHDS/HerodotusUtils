@@ -22,14 +22,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import youyihj.herodotusutils.HerodotusUtils;
-import youyihj.herodotusutils.block.BlockManaLiquidizer;
-import youyihj.herodotusutils.block.BlockOreBase;
-import youyihj.herodotusutils.block.BlockRegistry;
+import youyihj.herodotusutils.block.*;
 import youyihj.herodotusutils.block.alchemy.*;
 import youyihj.herodotusutils.block.computing.BlockCalculatorController;
 import youyihj.herodotusutils.block.computing.BlockCalculatorStructure;
 import youyihj.herodotusutils.block.computing.BlockComputingModule;
 import youyihj.herodotusutils.block.computing.BlockTransporter;
+import youyihj.herodotusutils.client.render.TilePrimordialChargerRender;
 import youyihj.herodotusutils.client.render.TileLazyTunnelRender;
 import youyihj.herodotusutils.client.render.TileRoundRobinTunnelRender;
 import youyihj.herodotusutils.entity.EntityRedSlime;
@@ -39,7 +38,6 @@ import youyihj.herodotusutils.fluid.FluidMercury;
 import youyihj.herodotusutils.item.*;
 import youyihj.herodotusutils.modsupport.modularmachinery.block.BlockAspectListProviderInput;
 import youyihj.herodotusutils.modsupport.modularmachinery.block.BlockImpetusHatch;
-import youyihj.herodotusutils.modsupport.modularmachinery.block.BlockMMController;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
@@ -99,6 +97,7 @@ public class ModelRegistry {
                 BlockManaLiquidizer.ITEM_BLOCK,
                 RefinedBottle.INSTANCE,
                 ItemCopperBucket.INSTANCE,
+                ItemTaintChecker.INSTANCE,
                 ItemAlchemyPipeWrench.INSTANCE,
                 BlockCalculatorStructure.STRUCTURE_BLOCK_1_ITEM,
                 BlockCalculatorStructure.STRUCTURE_BLOCK_2_ITEM,
@@ -110,6 +109,8 @@ public class ModelRegistry {
                 ItemLithiumAmalgam.INSTANCE,
                 StarlightStorageTiny.INSTANCE,
                 ItemOilAIOT.INSTANCE,
+                ItemRiftFeed.INSTANCE,
+                ItemPenumbraRing.INSTANCE,
                 BlockAlchemyController.ITEM_BLOCK,
                 BlockAlchemyInputHatch.ITEM_BLOCK,
                 BlockPlainAlchemyTunnel.RIGHT_ANGLE_ITEM,
@@ -122,11 +123,13 @@ public class ModelRegistry {
                 BlockAspectListProviderInput.ITEM_BLOCK,
                 BlockImpetusHatch.Input.ITEM_BLOCK,
                 BlockImpetusHatch.Output.ITEM_BLOCK,
+                BlockCatalyzedAltar.ITEM_BLOCK,
+                BlockPrimordialCharger.ITEM_BLOCK,
+                BlockImpetusHatch.Output.ITEM_BLOCK,
                 BlockAlchemyCrafter.ITEM_BLOCK,
                 BlockAlchemySeparator.ITEM_BLOCK,
                 BlockAlchemySeparatorTank.ITEM_BLOCK
         );
-        BlockMMController.CONTROLLER_ITEMS.forEach(ModelRegistry::registerItemModel);
         for (BlockOreBase ore : BlockRegistry.ORES) {
             ModelLoader.setCustomStateMapper(ore, ORE_STATE_MAPPER);
             for (int i = 0; i < BlockOreBase.Type.values().length; i++) {
@@ -139,6 +142,7 @@ public class ModelRegistry {
         RenderingRegistry.registerEntityRenderingHandler(EntityRedSlime.class, RenderRedSlime::new);
         ClientRegistry.bindTileEntitySpecialRenderer(TileAlchemyRoundRobinTunnel.class, new TileRoundRobinTunnelRender());
         ClientRegistry.bindTileEntitySpecialRenderer(TileAlchemyLazyTunnel.class, new TileLazyTunnelRender());
+        ClientRegistry.bindTileEntitySpecialRenderer(TilePrimordialCharger.class, new TilePrimordialChargerRender());
     }
 
     @SubscribeEvent

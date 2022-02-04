@@ -43,10 +43,11 @@ minecraft {
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
     def args = [
-            '-Dfml.coreMods.load=youyihj.herodotusutils.core.HerodotusUtilsPlugin',
+            "-Dmixin.debug.export=true",
             '-Dmixin.hotSwap=true',
             '-Dmixin.checks.interfaces=true'
     ]
+
     clientJvmArgs.addAll(args)
     serverJvmArgs.addAll(args)
 }
@@ -109,17 +110,20 @@ dependencies {
     deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.28-17"
     deobfCompile "mezz.jei:jei_1.12.2:4.16.1.302"
     deobfCompile "youyihj:zenutils:1.8.0"
-    deobfCompile "hellfirepvp.modularmachinery:modularmachinery:1.12.2-1.10.0-v44"
+    deobfCompile "hellfirepvp.modularmachinery:modularmachinery:1.12.2-1.11.1-v53"
     deobfCompile "curse.maven:agricraft-225635:2609648"
     deobfCompile "curse.maven:infinitylib-251396:2537265"
     deobfCompile "curse.maven:thaumcraft-223628:2629023"
     deobfCompile "curse.maven:factorytech-278822:3178832"
-    deobfCompile "curse.maven:modularmagic-324318:2737623"
+    deobfCompile "curse.maven:modularmagic-324318:2947301"
     deobfCompile "hellfirepvp.astralsorcery:astralsorcery:1.12.2-1.10.23-v161"
     deobfCompile "curse.maven:bloodmagic-224791:2822288"
     deobfCompile "curse.maven:guideapi-228832:2645992"
-    deobfCompile "curse.maven:thaumic-augmentation-319441:3378111"
-    compile('org.spongepowered:mixin:0.7.11-SNAPSHOT') {
+    deobfCompile "curse.maven:thaumic-augmentation-319441:3536155"
+    deobfCompile "curse.maven:topography-297878:3065647"
+    deobfCompile "curse.maven:BNBGamingLib-229587:2698688"
+    deobfCompile "curse.maven:mixinbooter-419286:3321174"
+    compile('org.spongepowered:mixin:0.8-SNAPSHOT') {
         exclude module: 'guava'
         exclude module: 'commons-io'
         exclude module: 'gson'
@@ -148,10 +152,8 @@ processResources {
 jar {
     manifest {
         attributes([
-                'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
-                "FMLCorePlugin": "youyihj.herodotusutils.core.HerodotusUtilsPlugin",
-                "FMLCorePluginContainsFMLMod": true,
-                "ForceLoadAsMod": true
+                "ForceLoadAsMod": true,
+                'FMLAT': 'hdsutils_at.cfg'
         ])
     }
 }

@@ -1,8 +1,9 @@
 package youyihj.herodotusutils.modsupport.modularmachinery.tile;
 
 import hellfirepvp.modularmachinery.common.crafting.ComponentType;
-import hellfirepvp.modularmachinery.common.crafting.ComponentType.Registry;
+import hellfirepvp.modularmachinery.common.machine.IOType;
 import hellfirepvp.modularmachinery.common.machine.MachineComponent;
+import youyihj.herodotusutils.modsupport.modularmachinery.crafting.component.ComponentAspectList;
 
 /**
  * @author ikexing
@@ -18,7 +19,7 @@ public class MachineComponentAspectListProvider extends MachineComponent<TileAsp
 
     @Override
     public ComponentType getComponentType() {
-        return Registry.getComponent("aspectList");
+        return ComponentAspectList.INSTANCE;
     }
 
     @Override

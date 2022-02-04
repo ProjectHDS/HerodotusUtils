@@ -12,10 +12,8 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import thecodex6824.thaumicaugmentation.common.tile.trait.IBreakCallback;
 import youyihj.herodotusutils.HerodotusUtils;
 import youyihj.herodotusutils.modsupport.modularmachinery.tile.TileImpetusComponent;
-import youyihj.herodotusutils.util.Util;
 
 import javax.annotation.Nullable;
 
@@ -44,7 +42,7 @@ public abstract class BlockImpetusHatch extends BlockMachineComponent {
 
     @Override
     public BlockRenderLayer getBlockLayer() {
-        return BlockRenderLayer.CUTOUT_MIPPED;
+        return BlockRenderLayer.CUTOUT;
     }
 
     @Override
@@ -62,12 +60,6 @@ public abstract class BlockImpetusHatch extends BlockMachineComponent {
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         return null;
-    }
-
-    @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-        Util.getTileEntity(worldIn, pos, IBreakCallback.class).ifPresent(IBreakCallback::onBlockBroken);
-        super.breakBlock(worldIn, pos, state);
     }
 
     @Override

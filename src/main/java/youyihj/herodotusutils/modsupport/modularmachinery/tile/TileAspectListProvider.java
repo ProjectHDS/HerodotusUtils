@@ -1,7 +1,7 @@
 package youyihj.herodotusutils.modsupport.modularmachinery.tile;
 
+import hellfirepvp.modularmachinery.common.machine.IOType;
 import hellfirepvp.modularmachinery.common.machine.MachineComponent;
-import hellfirepvp.modularmachinery.common.machine.MachineComponent.IOType;
 import hellfirepvp.modularmachinery.common.tiles.base.MachineComponentTile;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -188,7 +188,7 @@ public class TileAspectListProvider extends TileThaumcraft implements MachineCom
     }
 
     @Nullable
-    public MachineComponent provideComponent() {
+    public MachineComponent<TileAspectListProvider> provideComponent() {
         return new MachineComponentAspectListProvider(this, IOType.INPUT);
     }
 

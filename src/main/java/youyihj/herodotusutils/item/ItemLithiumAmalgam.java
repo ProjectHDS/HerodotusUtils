@@ -29,7 +29,7 @@ public class ItemLithiumAmalgam extends Item {
             return false;
         }
         if (target instanceof EntityAnimal) {
-            target.addPotionEffect(new PotionEffect(LithiumAmalgamInfected.INSTANCE, 400, 1));
+            target.addPotionEffect(new PotionEffect(LithiumAmalgamInfected.INSTANCE, 2400, 1));
             stack.shrink(1);
             return true;
         }

@@ -3,11 +3,9 @@ package youyihj.herodotusutils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import youyihj.herodotusutils.proxy.IProxy;
 
@@ -38,11 +36,6 @@ public class HerodotusUtils {
     @SidedProxy(serverSide = "youyihj.herodotusutils.proxy.CommonProxy", clientSide = "youyihj.herodotusutils.proxy.ClientProxy")
     public static IProxy proxy;
 
-    @Mod.EventHandler
-    public void construct(FMLConstructionEvent event) {
-        LogManager.getLogger().info("Welcome to Herodotus Modpack!");
-    }
-
     /**
      * This is the first initialization event. Register tile entities here.
      * The registry events below will have fired prior to entry to this method.
@@ -69,4 +62,5 @@ public class HerodotusUtils {
     public void postinit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
     }
+
 }
