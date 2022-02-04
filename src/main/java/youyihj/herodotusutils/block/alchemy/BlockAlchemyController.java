@@ -1,10 +1,12 @@
 package youyihj.herodotusutils.block.alchemy;
 
+import mcjty.theoneprobe.api.*;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumFacing;
@@ -17,6 +19,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import youyihj.herodotusutils.alchemy.IAdjustableBlock;
+import youyihj.herodotusutils.modsupport.theoneprobe.ElementTextComponent;
 import youyihj.herodotusutils.util.HorizontalBlockBoundingBoxes;
 import youyihj.herodotusutils.util.Util;
 
@@ -26,7 +29,7 @@ import java.util.Locale;
 /**
  * @author youyihj
  */
-public class BlockAlchemyController extends AbstractPipeBlock implements IAdjustableBlock {
+public class BlockAlchemyController extends AbstractPipeBlock implements IAdjustableBlock, IProbeInfoAccessor {
     public static final PropertyEnum<WorkType> WORK_TYPE_PROPERTY = PropertyEnum.create("work_type", WorkType.class);
 
     private BlockAlchemyController() {
@@ -82,6 +85,11 @@ public class BlockAlchemyController extends AbstractPipeBlock implements IAdjust
     public ITextComponent getAdjustedMessage(IBlockState state) {
         WorkType value = state.getValue(WORK_TYPE_PROPERTY);
         return new TextComponentTranslation("hdsutils.alchemy.controller.status").appendSibling(value.getDisplayName());
+    }
+
+    @Override
+    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
+        probeInfo.element(new ElementTextComponent(TextStyleClass.INFO, getAdjustedMessage(blockState)));
     }
 
     public enum WorkType implements IStringSerializable {
