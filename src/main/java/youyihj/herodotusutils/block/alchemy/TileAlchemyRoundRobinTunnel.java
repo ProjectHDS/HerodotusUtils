@@ -1,12 +1,12 @@
 package youyihj.herodotusutils.block.alchemy;
 
-import crafttweaker.api.util.Position3f;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.server.management.PlayerChunkMapEntry;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.WorldServer;
 import youyihj.herodotusutils.alchemy.IAdjustableTileEntity;
 import youyihj.herodotusutils.alchemy.IAlchemyModule;
@@ -134,14 +134,14 @@ public class TileAlchemyRoundRobinTunnel extends AbstractHasAlchemyFluidTileEnti
     }
 
     @Override
-    public void adjust(EnumFacing facing, Position3f hitPosition) {
-        float hitX = hitPosition.getX();
-        float hitZ = hitPosition.getZ();
+    public void adjust(EnumFacing facing, Vec3d hitPosition) {
+        double hitX = hitPosition.x;
+        double hitZ = hitPosition.z;
         EnumFacing toSet;
         if (facing.getAxis().getPlane() == EnumFacing.Plane.HORIZONTAL) {
             toSet = facing;
         } else {
-            toSet = (hitX + hitZ < 1.0f) ?
+            toSet = (hitX + hitZ < 1.0) ?
                     (hitX > hitZ) ? EnumFacing.NORTH : EnumFacing.WEST
                     :
                     (hitX > hitZ) ? EnumFacing.EAST : EnumFacing.SOUTH;

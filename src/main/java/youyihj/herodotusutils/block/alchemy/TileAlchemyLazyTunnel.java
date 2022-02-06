@@ -1,6 +1,5 @@
 package youyihj.herodotusutils.block.alchemy;
 
-import crafttweaker.api.util.Position3f;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,6 +9,7 @@ import net.minecraft.server.management.PlayerChunkMapEntry;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import youyihj.herodotusutils.alchemy.IAdjustableTileEntity;
@@ -93,7 +93,7 @@ public class TileAlchemyLazyTunnel extends TileAlchemyTunnel implements IAdjusta
     }
 
     @Override
-    public void adjust(EnumFacing facing, Position3f hitPosition) {
+    public void adjust(EnumFacing facing, Vec3d hitPosition) {
         updateBound();
     }
 

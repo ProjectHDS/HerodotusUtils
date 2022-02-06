@@ -1,21 +1,21 @@
 package youyihj.herodotusutils.item;
 
-import crafttweaker.mc1120.util.MCPosition3f;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import youyihj.herodotusutils.HerodotusUtils;
 import youyihj.herodotusutils.alchemy.IAdjustableBlock;
 import youyihj.herodotusutils.alchemy.IAdjustableTileEntity;
 import youyihj.herodotusutils.util.Util;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author youyihj
@@ -28,32 +28,46 @@ public class ItemAlchemyPipeWrench extends Item {
         this.setRegistryName(NAME);
         this.setUnlocalizedName(HerodotusUtils.MOD_ID + "." + NAME);
         this.setMaxStackSize(1);
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public boolean canDestroyBlockInCreative(World world, BlockPos pos, ItemStack stack, EntityPlayer player) {
+        return false;
+    }
+
+    @SubscribeEvent
+    public void rightClick(PlayerInteractEvent.RightClickBlock event) {
+        EntityPlayer player = event.getEntityPlayer();
         World world = player.world;
-        boolean sneaking = player.isSneaking();
-        IBlockState blockState = world.getBlockState(pos);
-        Block block = blockState.getBlock();
-        AtomicBoolean adjusted = new AtomicBoolean(false);
-        if (!sneaking && block instanceof IAdjustableBlock) {
-            IAdjustableBlock adjustableBlock = (IAdjustableBlock) block;
-            IBlockState result = adjustableBlock.getAdjustedResult(blockState);
-            if (result != blockState) {
-                world.setBlockState(pos, result);
+        if (player.getHeldItem(event.getHand()).getItem() == this) {
+            IBlockState blockState = world.getBlockState(event.getPos());
+            Block block = blockState.getBlock();
+            if (block instanceof IAdjustableBlock) {
+                IAdjustableBlock adjustableBlock = (IAdjustableBlock) block;
+                IBlockState result = adjustableBlock.getAdjustedResult(blockState);
+                if (result != blockState) {
+                    world.setBlockState(event.getPos(), result);
+                }
                 if (!world.isRemote) {
                     player.sendStatusMessage(adjustableBlock.getAdjustedMessage(result), true);
                 }
-                adjusted.set(true);
+                event.setUseBlock(Event.Result.DENY);
+                event.setUseItem(Event.Result.ALLOW);
             }
         }
-        if (sneaking) {
-            Util.getTileEntity(world, pos, IAdjustableTileEntity.class).ifPresent(te -> {
-                te.adjust(facing, new MCPosition3f(hitX, hitY, hitZ));
-                adjusted.set(true);
+    }
+
+    @SubscribeEvent
+    public void leftClick(PlayerInteractEvent.LeftClickBlock event) {
+        EntityPlayer player = event.getEntityPlayer();
+        World world = player.world;
+        if (player.getHeldItem(event.getHand()).getItem() == this && !world.isRemote) {
+            Util.getTileEntity(world, event.getPos(), IAdjustableTileEntity.class).ifPresent(te -> {
+                te.adjust(event.getFace(), event.getHitVec().subtract(new Vec3d(event.getPos())));
+                event.setUseBlock(Event.Result.DENY);
+                event.setUseItem(Event.Result.ALLOW);
             });
         }
-        return adjusted.get() ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
     }
 }

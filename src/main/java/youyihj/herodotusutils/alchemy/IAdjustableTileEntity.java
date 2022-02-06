@@ -1,11 +1,11 @@
 package youyihj.herodotusutils.alchemy;
 
-import crafttweaker.api.util.Position3f;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.Vec3d;
 
 /**
  * @author youyihj
  */
 public interface IAdjustableTileEntity {
-    void adjust(EnumFacing facing, Position3f hitPosition);
+    void adjust(EnumFacing facing, Vec3d hitPosition);
 }
