@@ -80,7 +80,11 @@ public abstract class BlockPlainAlchemyTunnel extends AbstractPipeBlock implemen
         @Override
         public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState) {
             super.addCollisionBoxToList(state, worldIn, pos, entityBox, collidingBoxes, entityIn, isActualState);
-            addCollisionBoxToList(pos, entityBox, collidingBoxes, PART_AABB.getBoundingBox(state.getValue(property).getOutputSide()));
+            EnumFacing side = state.getValue(property).getOutputSide();
+            if (side.getHorizontalIndex() == -1) {
+                side = state.getValue(property).getInputSide();
+            }
+            addCollisionBoxToList(pos, entityBox, collidingBoxes, PART_AABB.getBoundingBox(side));
         }
     };
     public static final Item STRAIGHT_ITEM = new ItemBlock(STRAIGHT).setRegistryName("straight_tunnel");
@@ -161,7 +165,11 @@ public abstract class BlockPlainAlchemyTunnel extends AbstractPipeBlock implemen
         U2N(EnumFacing.UP, EnumFacing.NORTH),
         U2S(EnumFacing.UP, EnumFacing.SOUTH),
         U2W(EnumFacing.UP, EnumFacing.WEST),
-        U2E(EnumFacing.UP, EnumFacing.EAST);
+        U2E(EnumFacing.UP, EnumFacing.EAST),
+        N2D(EnumFacing.NORTH, EnumFacing.DOWN),
+        S2D(EnumFacing.SOUTH, EnumFacing.DOWN),
+        W2D(EnumFacing.WEST, EnumFacing.DOWN),
+        E2D(EnumFacing.EAST, EnumFacing.DOWN);
 
         private final EnumFacing inputSide;
         private final EnumFacing outputSide;
@@ -193,7 +201,7 @@ public abstract class BlockPlainAlchemyTunnel extends AbstractPipeBlock implemen
         }
 
         public boolean isVerticalRightAngle() {
-            return inputSide == EnumFacing.UP;
+            return inputSide == EnumFacing.UP || outputSide == EnumFacing.DOWN;
         }
 
         public boolean isHorizontalRightAngle() {
