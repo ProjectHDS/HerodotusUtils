@@ -13,22 +13,22 @@
     ],
     "direction=n2s": [
       {
-
+        "y": 180
       }
     ],
     "direction=s2n": [
       {
-        "y": 180
+        "y": 0
       }
     ],
     "direction=w2e": [
       {
-        "y": 270
+        "y": 90
       }
     ],
     "direction=e2w": [
       {
-        "y": 90
+        "y": 270
       }
     ]
   }
