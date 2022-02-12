@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import youyihj.herodotusutils.HerodotusUtils;
 import youyihj.herodotusutils.alchemy.IAdjustableBlock;
 import youyihj.herodotusutils.alchemy.IAdjustableTileEntity;
+import youyihj.herodotusutils.block.alchemy.AbstractPipeBlock;
 import youyihj.herodotusutils.util.Util;
 
 /**
@@ -43,17 +44,24 @@ public class ItemAlchemyPipeWrench extends Item {
         if (player.getHeldItem(event.getHand()).getItem() == this) {
             IBlockState blockState = world.getBlockState(event.getPos());
             Block block = blockState.getBlock();
-            if (block instanceof IAdjustableBlock) {
-                IAdjustableBlock adjustableBlock = (IAdjustableBlock) block;
-                IBlockState result = adjustableBlock.getAdjustedResult(blockState);
-                if (result != blockState) {
-                    world.setBlockState(event.getPos(), result);
+            if (!player.isSneaking()) {
+                if (block instanceof IAdjustableBlock) {
+                    IAdjustableBlock adjustableBlock = (IAdjustableBlock) block;
+                    IBlockState result = adjustableBlock.getAdjustedResult(blockState);
+                    if (result != blockState) {
+                        world.setBlockState(event.getPos(), result);
+                    }
+                    if (!world.isRemote) {
+                        player.sendStatusMessage(adjustableBlock.getAdjustedMessage(result), true);
+                    }
+                    event.setUseBlock(Event.Result.DENY);
+                    event.setUseItem(Event.Result.ALLOW);
                 }
-                if (!world.isRemote) {
-                    player.sendStatusMessage(adjustableBlock.getAdjustedMessage(result), true);
+            } else {
+                if (block instanceof AbstractPipeBlock) {
+                    world.setBlockToAir(event.getPos());
+                    block.dropBlockAsItem(world, event.getPos(), blockState, 0);
                 }
-                event.setUseBlock(Event.Result.DENY);
-                event.setUseItem(Event.Result.ALLOW);
             }
         }
     }
