@@ -13,7 +13,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import youyihj.herodotusutils.alchemy.IAdjustableBlock;
-import youyihj.herodotusutils.util.HorizontalBlockBoundingBoxes;
 import youyihj.herodotusutils.util.Util;
 
 import javax.annotation.Nonnull;
@@ -28,7 +27,7 @@ public class BlockAlchemyOutputHatch extends AbstractPipeBlock implements IAdjus
 
     public static final BlockAlchemyOutputHatch INSTANCE = new BlockAlchemyOutputHatch();
     public static final Item ITEM_BLOCK = new ItemBlock(INSTANCE).setRegistryName("alchemy_output_hatch");
-    private static final HorizontalBlockBoundingBoxes BOUNDING_BOXES = HorizontalBlockBoundingBoxes.ofModelPos(2, 2, 0, 14, 14, 16);
+    private static final AxisAlignedBB BOUNDING_BOX = Util.createAABBFromModelPos(2, 0, 2, 13, 11, 13);
 
     @Override
     protected BlockStateContainer createBlockState() {
@@ -54,7 +53,7 @@ public class BlockAlchemyOutputHatch extends AbstractPipeBlock implements IAdjus
     @SuppressWarnings("deprecation")
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return BOUNDING_BOXES.getBoundingBox(state, BlockHorizontal.FACING);
+        return BOUNDING_BOX;
     }
 
     @Nonnull

@@ -72,6 +72,8 @@ public class BlockRegistry {
                 BlockAlchemyRoundRobinTunnel.INSTANCE,
                 BlockLazyAlchemyTunnel.INSTANCE,
                 BlockAlchemyCrafter.INSTANCE,
+                BlockAlchemySeparator.INSTANCE,
+                BlockAlchemySeparatorTank.INSTANCE,
                 BlockAspectListProviderInput.INSTANCE,
                 BlockImpetusHatch.Input.INSTANCE,
                 BlockImpetusHatch.Output.INSTANCE,

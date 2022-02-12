@@ -7,12 +7,15 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import youyihj.herodotusutils.alchemy.IAlchemyExternalHatch;
+import youyihj.herodotusutils.util.Util;
 
 import javax.annotation.Nonnull;
 
@@ -26,6 +29,7 @@ public class BlockAlchemyInputHatch extends AbstractPipeBlock {
 
     public static final BlockAlchemyInputHatch INSTANCE = new BlockAlchemyInputHatch();
     public static final Item ITEM_BLOCK = new ItemBlock(INSTANCE).setRegistryName("alchemy_input_hatch");
+    private static final AxisAlignedBB BOUNDING_BOX = Util.createAABBFromModelPos(2, 0, 2, 14, 16, 14);
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
@@ -45,5 +49,11 @@ public class BlockAlchemyInputHatch extends AbstractPipeBlock {
     @Override
     public AbstractPipeTileEntity createTileEntity(World world, IBlockState state) {
         return new TileAlchemyInputHatch();
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return BOUNDING_BOX;
     }
 }

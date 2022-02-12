@@ -12,21 +12,23 @@
       {}
     ],
     "facing=north": [
-      {}
-    ],
-    "facing=south": [
       {
         "y": 180
       }
     ],
+    "facing=south": [
+      {
+        "y": 0
+      }
+    ],
     "facing=west": [
       {
-        "y": 270
+        "y": 90
       }
     ],
     "facing=east": [
       {
-        "y": 90
+        "y": 270
       }
     ]
   }

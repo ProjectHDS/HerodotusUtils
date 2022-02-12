@@ -28,8 +28,8 @@ import youyihj.herodotusutils.block.computing.BlockCalculatorController;
 import youyihj.herodotusutils.block.computing.BlockCalculatorStructure;
 import youyihj.herodotusutils.block.computing.BlockComputingModule;
 import youyihj.herodotusutils.block.computing.BlockTransporter;
-import youyihj.herodotusutils.client.render.TilePrimordialChargerRender;
 import youyihj.herodotusutils.client.render.TileLazyTunnelRender;
+import youyihj.herodotusutils.client.render.TilePrimordialChargerRender;
 import youyihj.herodotusutils.client.render.TileRoundRobinTunnelRender;
 import youyihj.herodotusutils.entity.EntityRedSlime;
 import youyihj.herodotusutils.entity.RenderRedSlime;
@@ -41,6 +41,7 @@ import youyihj.herodotusutils.modsupport.modularmachinery.block.BlockImpetusHatc
 
 import javax.annotation.Nonnull;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.IntFunction;
 import java.util.stream.Stream;
 
@@ -127,14 +128,16 @@ public class ModelRegistry {
                 BlockPrimordialCharger.ITEM_BLOCK,
                 BlockImpetusHatch.Output.ITEM_BLOCK,
                 BlockAlchemyCrafter.ITEM_BLOCK,
-                BlockAlchemySeparator.ITEM_BLOCK,
-                BlockAlchemySeparatorTank.ITEM_BLOCK
+                BlockAlchemySeparator.ITEM_BLOCK
         );
         for (BlockOreBase ore : BlockRegistry.ORES) {
             ModelLoader.setCustomStateMapper(ore, ORE_STATE_MAPPER);
             for (int i = 0; i < BlockOreBase.Type.values().length; i++) {
                 ModelLoader.setCustomModelResourceLocation(ore.getItem(), i, META_ORE_STATE_MAPPER.apply(i));
             }
+        }
+        for (int i = 0; i < 4; i++) {
+            ModelLoader.setCustomModelResourceLocation(BlockAlchemySeparatorTank.ITEM_BLOCK, i, new ModelResourceLocation(Objects.requireNonNull(BlockAlchemySeparatorTank.ITEM_BLOCK.getRegistryName()), "inventory"));
         }
         ModelLoader.setCustomModelResourceLocation(StarlightStorageTiny.INSTANCE, 1,
                 new ModelResourceLocation(StarlightStorageTiny.INSTANCE.getRegistryName() + "_full", "inventory"));

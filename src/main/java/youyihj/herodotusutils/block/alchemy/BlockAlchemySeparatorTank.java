@@ -11,8 +11,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import youyihj.herodotusutils.util.Util;
 
 import javax.annotation.Nonnull;
 
@@ -39,6 +42,8 @@ public class BlockAlchemySeparatorTank extends AbstractPipeBlock {
         }
     }.setRegistryName("alchemy_separator_tank").setHasSubtypes(true);
 
+    private static final AxisAlignedBB BOUNDING_BOX = Util.createAABBFromModelPos(3, 0, 3, 13, 12, 13);
+
     @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, NUMBER);
@@ -58,6 +63,12 @@ public class BlockAlchemySeparatorTank extends AbstractPipeBlock {
     @Override
     public int damageDropped(IBlockState state) {
         return getMetaFromState(state);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return BOUNDING_BOX;
     }
 
     @Override

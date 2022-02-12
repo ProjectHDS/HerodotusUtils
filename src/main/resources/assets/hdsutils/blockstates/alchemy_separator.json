@@ -2,13 +2,11 @@
   "forge_marker": 1,
   "defaults": {
     "transform": "forge:default-block",
-    "model": "hdsutils:alchemy_pipe/input"
+    "model": "hdsutils:alchemy_pipe/separator"
   },
   "variants": {
     "normal": [
-      {
-        "x": 90
-      }
+      {}
     ],
     "inventory": [
       {}
