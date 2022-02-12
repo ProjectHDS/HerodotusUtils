@@ -1,5 +1,6 @@
 fluid.fluid_mana=Fluid Mana
 fluid.mercury=Mercury
+fluid.fluid_alchemy_waste=Alchemical Waste
 tile.hdsutils.mana_liquidizer.name=Mana Liquidizer
 tile.hdsutils.structure_block_1.name=Calculator Structure Block One
 tile.hdsutils.structure_block_2.name=Calculator Structure Block Two

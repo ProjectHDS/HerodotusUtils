@@ -1,5 +1,6 @@
 fluid.fluid_mana=液态魔力
 fluid.mercury=水银
+fluid.fluid_alchemy_waste=炼金废料
 tile.hdsutils.mana_liquidizer.name=魔力液化器
 tile.hdsutils.structure_block_1.name=运算室结构方块 1
 tile.hdsutils.structure_block_2.name=运算室结构方块 2
