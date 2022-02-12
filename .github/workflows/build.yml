@@ -57,7 +57,7 @@ jobs:
       - name: Commit this mod to Herodotus modpack repo
         uses: EndBug/add-and-commit@v7
         with:
-          branch: master
+          branch: develop
           author_name: friendlyhj
           author_email: youyi580@qq.com
           message: "Update Herodotus Utils Mod"
