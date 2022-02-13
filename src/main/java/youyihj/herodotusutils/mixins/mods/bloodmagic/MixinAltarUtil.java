@@ -21,7 +21,7 @@ import java.util.Collection;
 /**
  * @author youyihj
  */
-@Mixin(AltarUtil.class)
+@Mixin(value = AltarUtil.class, remap = false)
 public class MixinAltarUtil {
 
     /**

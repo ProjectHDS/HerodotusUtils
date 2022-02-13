@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * @author youyihj
  */
-@Mixin(BlockAltar.class)
+@Mixin(value = BlockAltar.class, remap = false)
 public class MixinBlockAltar {
     /**
      * @author youyihj
