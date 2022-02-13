@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -25,7 +26,7 @@ public class BloodAltarStructures {
         for (AltarTier tier : AltarTier.values()) {
             if (tier == AltarTier.ONE) continue;
             try {
-                Reader reader = new InputStreamReader(new FileInputStream("config/hdsutils/blood_altar_" + tier.toInt() +".json"));
+                Reader reader = new InputStreamReader(new FileInputStream("config/hdsutils/blood_altar_" + tier.toInt() +".json"), StandardCharsets.UTF_8);
                 STRUCTURES.put(tier, gson.fromJson(reader, DynamicMachine.class).getPattern());
             } catch (IOException e) {
                 HerodotusUtils.logger.error("cannot read blood altar structures", e);

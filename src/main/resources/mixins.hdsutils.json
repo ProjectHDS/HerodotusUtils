@@ -12,10 +12,14 @@
     "agricraft.MixinTileEntityCrop",
     "bloodmagic.MixinAltarUtil",
     "bloodmagic.MixinBlockAltar",
+    "bloodmagic.MixinItemAltarMaker",
     "factorytech.MixinRiverGrateRemovalAction",
     "modularmagic.MixinJEIComponentAspect",
     "thaumcraft.MixinEntityFluxRift",
     "thaumcraft.MixinResearchStage",
     "thaumcraft.MixinTileCrucible"
+  ],
+  "client": [
+    "bloodmagic.MixinRenderAltar"
   ]
 }
