@@ -15,6 +15,7 @@ import youyihj.herodotusutils.block.BlockRegistry;
 import youyihj.herodotusutils.fluid.FluidAlchemyWaste;
 import youyihj.herodotusutils.fluid.FluidMana;
 import youyihj.herodotusutils.fluid.FluidMercury;
+import youyihj.herodotusutils.modsupport.bloodmagic.BloodAltarStructures;
 import youyihj.herodotusutils.modsupport.crafttweaker.CraftTweakerExtension;
 import youyihj.herodotusutils.modsupport.thaumcraft.AspectHandler;
 import youyihj.herodotusutils.modsupport.topography.HackTopographyDummyProxy;
@@ -40,6 +41,7 @@ public class CommonProxy implements IProxy {
         ANCIENT_VOID_DIMENSION = DimensionType.register("ancient_void", "_ancient_void", ANCIENT_VOID_DIMENSION_ID, AncientVoidDimensionProvider.class, false);
         DimensionManager.registerDimension(ANCIENT_VOID_DIMENSION_ID, ANCIENT_VOID_DIMENSION);
         AspectHandler.initAspects();
+        BloodAltarStructures.loadStructures();
         Topography.proxy = new HackTopographyDummyProxy();
     }
 

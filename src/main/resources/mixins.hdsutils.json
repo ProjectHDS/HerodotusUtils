@@ -10,6 +10,8 @@
     "agricraft.MixinAgriPlant",
     "agricraft.MixinJsonPlant",
     "agricraft.MixinTileEntityCrop",
+    "bloodmagic.MixinAltarUtil",
+    "bloodmagic.MixinBlockAltar",
     "factorytech.MixinRiverGrateRemovalAction",
     "modularmagic.MixinJEIComponentAspect",
     "thaumcraft.MixinEntityFluxRift",
