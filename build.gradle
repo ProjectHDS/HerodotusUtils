@@ -92,7 +92,7 @@ repositories {
     }
     maven {
         name = "curseforge"
-        url "https://www.cursemaven.com"
+        url "https://cfa2.cursemaven.com"
     }
 }
 
