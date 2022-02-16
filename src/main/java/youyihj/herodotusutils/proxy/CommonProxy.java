@@ -41,12 +41,12 @@ public class CommonProxy implements IProxy {
         ANCIENT_VOID_DIMENSION = DimensionType.register("ancient_void", "_ancient_void", ANCIENT_VOID_DIMENSION_ID, AncientVoidDimensionProvider.class, false);
         DimensionManager.registerDimension(ANCIENT_VOID_DIMENSION_ID, ANCIENT_VOID_DIMENSION);
         AspectHandler.initAspects();
-        BloodAltarStructures.loadStructures();
         Topography.proxy = new HackTopographyDummyProxy();
     }
 
     @Override
     public void init(FMLInitializationEvent event) {
+        BloodAltarStructures.loadStructures();
         BlockRegistry.ORES.forEach(BlockOreBase::registerOreDict);
         FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "youyihj.herodotusutils.modsupport.theoneprobe.TOPHandler");
     }
