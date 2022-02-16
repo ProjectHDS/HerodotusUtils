@@ -1,0 +1,50 @@
+{
+	"credit": "Made with Blockbench",
+	"ambientocclusion": false,
+	"texture_size": [64, 64],
+	"textures": {
+		"0": "hdsutils:blocks/alchemy_pipe/input",
+		"particle": "hdsutils:blocks/alchemy_pipe/input"
+	},
+	"elements": [
+		{
+			"name": "cc",
+			"from": [3, 3, 8],
+			"to": [13, 13, 14],
+			"faces": {
+				"north": {"uv": [0, 6, 2.5, 8.5], "texture": "#0"},
+				"east": {"uv": [5.5, 2, 7, 4.5], "texture": "#0"},
+				"south": {"uv": [0.25, 0.25, 2.75, 2.75], "texture": "#0"},
+				"west": {"uv": [7, 2, 5.5, 4.5], "texture": "#0"},
+				"up": {"uv": [7.5, 2, 5, 0.5], "texture": "#0"},
+				"down": {"uv": [7.5, 0.5, 5, 2], "texture": "#0"}
+			}
+		},
+		{
+			"name": "oc",
+			"from": [4, 4, 0],
+			"to": [12, 12, 8],
+			"faces": {
+				"north": {"uv": [3, 2, 5, 4], "texture": "#0"},
+				"east": {"uv": [3, 4, 5, 6], "texture": "#0"},
+				"south": {"uv": [0.25, 6.25, 2.25, 8.25], "texture": "#0"},
+				"west": {"uv": [5, 4, 3, 6], "texture": "#0"},
+				"up": {"uv": [5, 2, 3, 0], "texture": "#0"},
+				"down": {"uv": [5, 0, 3, 2], "texture": "#0"}
+			}
+		},
+		{
+			"name": "ic",
+			"from": [2, 2, 14],
+			"to": [14, 14, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 3, 3], "texture": "#0"},
+				"east": {"uv": [5, 2, 5.5, 5], "texture": "#0"},
+				"south": {"uv": [0, 3, 3, 6], "texture": "#0"},
+				"west": {"uv": [5, 2, 5.5, 5], "texture": "#0"},
+				"up": {"uv": [8, 0.5, 5, 0], "texture": "#0"},
+				"down": {"uv": [8, 0, 5, 0.5], "texture": "#0"}
+			}
+		}
+	]
+}

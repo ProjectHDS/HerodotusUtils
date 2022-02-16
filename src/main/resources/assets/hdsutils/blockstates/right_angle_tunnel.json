@@ -1,0 +1,56 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "transform": "forge:default-block",
+    "model": "hdsutils:alchemy_pipe/right_angle_right"
+  },
+  "variants": {
+    "normal": [
+      {}
+    ],
+    "inventory": [
+      {}
+    ],
+    "direction=n2w": [
+      {
+        "y": 180
+      }
+    ],
+    "direction=s2e": [
+      {}
+    ],
+    "direction=w2s": [
+      {
+        "y": 90
+      }
+    ],
+    "direction=e2n": [
+      {
+        "y": 270
+      }
+    ],
+    "direction=n2e": [
+      {
+        "y": 180,
+        "model": "hdsutils:alchemy_pipe/right_angle_left"
+      }
+    ],
+    "direction=s2w": [
+      {
+        "model": "hdsutils:alchemy_pipe/right_angle_left"
+      }
+    ],
+    "direction=w2n": [
+      {
+        "model": "hdsutils:alchemy_pipe/right_angle_left",
+        "y": 90
+      }
+    ],
+    "direction=e2s": [
+      {
+        "model": "hdsutils:alchemy_pipe/right_angle_left",
+        "y": 270
+      }
+    ]
+  }
+}

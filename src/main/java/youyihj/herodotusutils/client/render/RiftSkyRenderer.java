@@ -6,16 +6,11 @@ import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexBuffer;
 import net.minecraft.client.renderer.vertex.VertexFormat;
-import net.minecraft.client.shader.Framebuffer;
-import net.minecraft.client.shader.Shader;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.IRenderHandler;
 import org.lwjgl.opengl.GL11;
-import youyihj.herodotusutils.HerodotusUtils;
 import youyihj.herodotusutils.client.ClientEventHandler;
 
-import java.nio.FloatBuffer;
 import java.util.Random;
 
 public class RiftSkyRenderer extends IRenderHandler {
@@ -104,9 +99,9 @@ public class RiftSkyRenderer extends IRenderHandler {
         float scale = 4.5F - (index + 1) / 4.0F;
         //This loop generates stars in each layer, the more loop it does, the more star it shows.
         for (int i = 0; i < STAR_NUMBERS; ++i) {
-            double d0 = (double) (random.nextFloat() * 2.0F - 1.0F);
-            double d1 = (double) (random.nextFloat() * 2.0F - 1.0F);
-            double d2 = (double) (random.nextFloat() * 2.0F - 1.0F);
+            double d0 = random.nextFloat() * 2.0F - 1.0F;
+            double d1 = random.nextFloat() * 2.0F - 1.0F;
+            double d2 = random.nextFloat() * 2.0F - 1.0F;
             double d3 = (double) (0.3F + random.nextFloat() * 0.2F) * scale * STAR_SIZE;
             double ratio = random.nextFloat() * 0.25 + 0.5F;
             double d4 = d0 * d0 + d1 * d1 + d2 * d2;

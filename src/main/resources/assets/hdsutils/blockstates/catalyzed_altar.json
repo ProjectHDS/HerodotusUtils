@@ -1,0 +1,30 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "texture": "hdsutils:blocks/catalyzed_altar_transform",
+      "particle": "hdsutils:blocks/catalyzed_altar_transform"
+    },
+    "model": "hdsutils:catalyzed_altar",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [
+      {}
+    ],
+    "inventory": [
+      {}
+    ],
+    "type=transform": [
+      {}
+    ],
+    "type=grow": [
+      {
+        "textures": {
+          "texture": "hdsutils:blocks/catalyzed_altar_grow",
+          "particle": "hdsutils:blocks/catalyzed_altar_grow"
+        }
+      }
+    ]
+  }
+}

@@ -3,7 +3,6 @@ package youyihj.herodotusutils.block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -15,7 +14,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.items.CapabilityItemHandler;
 import youyihj.herodotusutils.HerodotusUtils;
 import youyihj.herodotusutils.util.Util;
 
@@ -54,9 +52,7 @@ public class BlockCreatureDataAnalyzer extends PlainBlock {
 
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-        Util.getTileEntity(worldIn, pos)
-                .map(tileEntity -> tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null))
-                .ifPresent(itemHandler -> InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY() + 0.5f, pos.getZ(), itemHandler.getStackInSlot(0).copy()));
+        Util.onBreakContainer(worldIn, pos);
         super.breakBlock(worldIn, pos, state);
     }
 

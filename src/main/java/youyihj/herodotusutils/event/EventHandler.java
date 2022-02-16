@@ -39,6 +39,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -49,6 +50,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.oredict.OreDictionary;
+import youyihj.herodotusutils.alchemy.AlchemyFluid;
 import youyihj.herodotusutils.block.BlockCreatureDataAnalyzer;
 import youyihj.herodotusutils.block.BlockCreatureDataReEncodeInterface;
 import youyihj.herodotusutils.block.BlockMercury;
@@ -63,6 +65,7 @@ import youyihj.herodotusutils.modsupport.modularmachinery.crafting.requirement.R
 import youyihj.herodotusutils.potion.LithiumAmalgamInfected;
 import youyihj.herodotusutils.potion.Starvation;
 import youyihj.herodotusutils.proxy.CommonProxy;
+import youyihj.herodotusutils.recipe.AlchemyRecipes;
 import youyihj.herodotusutils.util.Capabilities;
 import youyihj.herodotusutils.util.ITaint;
 import youyihj.herodotusutils.util.SharedRiftAction;
@@ -102,6 +105,7 @@ public class EventHandler {
                     break;
                 }
             }
+            player.getCapability(Capabilities.TAINT_CAPABILITY, null).syncToClientWhenNeeded();
         }
         if (!world.isRemote) {
             IItemHandler itemHandler = entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
@@ -202,11 +206,20 @@ public class EventHandler {
             if (player.isPotionActive(Starvation.INSTANCE)) {
                 if (RAW_MEAT_LIST.stream().anyMatch(item.getItem()::equals)) {
                     NetworkHelper.getSoulNetwork(player).add(new SoulTicket(100), 1000);
-                    // TODO: lang file value
-                    player.sendMessage(new TextComponentTranslation("hdsutils.add_lp_while_eating_raw_meat"));
+                    player.sendStatusMessage(new TextComponentTranslation("hdsutils.add_lp_while_eating_raw_meat"), true);
                 }
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void onItemTooltip(ItemTooltipEvent event) {
+        Optional.of(event.getItemStack())
+                .map(FluidUtil::getFluidContained)
+                .map(FluidStack::getFluid)
+                .map(AlchemyRecipes::normalToAlchemy)
+                .map(AlchemyFluid::getDisplayName)
+                .ifPresent(event.getToolTip()::add);
     }
 
     @SubscribeEvent

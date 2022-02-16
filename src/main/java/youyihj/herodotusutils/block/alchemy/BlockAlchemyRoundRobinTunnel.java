@@ -5,12 +5,11 @@ import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.IProbeInfoAccessor;
 import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import youyihj.herodotusutils.util.Util;
 
@@ -34,29 +33,18 @@ public class BlockAlchemyRoundRobinTunnel extends AbstractPipeBlock implements I
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        EnumFacing toSet;
-        if (facing.getAxis().getPlane() == EnumFacing.Plane.HORIZONTAL) {
-            toSet = facing;
-        } else {
-            toSet = (hitX + hitZ < 1.0f) ?
-                    (hitX > hitZ) ? EnumFacing.NORTH : EnumFacing.WEST
-                    :
-                    (hitX > hitZ) ? EnumFacing.EAST : EnumFacing.SOUTH;
-        }
-        Util.getTileEntity(worldIn, pos, TileAlchemyRoundRobinTunnel.class).ifPresent(te -> te.putFacing(toSet));
-        return true;
+    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
+        Util.getTileEntity(world, data.getPos(), TileAlchemyRoundRobinTunnel.class).ifPresent(te -> {
+            EnumFacing[] facingQuery = te.getFacingQuery();
+            for (int i = 0; i < facingQuery.length; i++) {
+                EnumFacing facing = facingQuery[i];
+                probeInfo.text(I18n.format("hdsutils.alchemy.round.index", i, getFacingLocalizedInfo(facing)));
+            }
+            probeInfo.text(I18n.format("hdsutils.alchemy.round.next", getFacingLocalizedInfo(te.getNextOutputSide(false))));
+        });
     }
 
-    @Override
-    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
-        // TODO: Localization
-        Util.getTileEntity(world, data.getPos(), TileAlchemyRoundRobinTunnel.class).ifPresent(te -> {
-            EnumFacing[] facingQuery = te.facingQuery;
-            for (int i = 0; i < facingQuery.length; i++) {
-                probeInfo.text("Index " + i + " : " + facingQuery[i]);
-            }
-            probeInfo.text("Next Output Side: " + te.getNextOutputSide(false));
-        });
+    private String getFacingLocalizedInfo(EnumFacing facing) {
+        return I18n.format("hdsutils.alchemy." + (facing == null ? "null" : facing.getName()));
     }
 }

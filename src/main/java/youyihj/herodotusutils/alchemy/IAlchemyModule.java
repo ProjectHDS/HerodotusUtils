@@ -3,7 +3,6 @@ package youyihj.herodotusutils.alchemy;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.Fluid;
 import youyihj.herodotusutils.util.Util;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -14,7 +13,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public interface IAlchemyModule extends IPipe {
     static void transferFluid(IHasAlchemyFluid from, IHasAlchemyFluid to, EnumFacing outputSide) {
-        Fluid containedFluid = from.getContainedFluid();
+        AlchemyFluid containedFluid = from.getContainedFluid();
         if (containedFluid != null && to.handleInput(containedFluid, outputSide.getOpposite())) {
             from.emptyFluid();
         }

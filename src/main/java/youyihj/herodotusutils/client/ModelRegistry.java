@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
+import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
@@ -14,12 +15,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import youyihj.herodotusutils.HerodotusUtils;
+import youyihj.herodotusutils.block.*;
 import youyihj.herodotusutils.block.BlockGolemCore;
 import youyihj.herodotusutils.block.BlockManaLiquidizer;
 import youyihj.herodotusutils.block.BlockOreBase;
@@ -29,6 +32,9 @@ import youyihj.herodotusutils.block.computing.BlockCalculatorController;
 import youyihj.herodotusutils.block.computing.BlockCalculatorStructure;
 import youyihj.herodotusutils.block.computing.BlockComputingModule;
 import youyihj.herodotusutils.block.computing.BlockTransporter;
+import youyihj.herodotusutils.client.render.TileLazyTunnelRender;
+import youyihj.herodotusutils.client.render.TilePrimordialChargerRender;
+import youyihj.herodotusutils.client.render.TileRoundRobinTunnelRender;
 import youyihj.herodotusutils.entity.EntityRedSlime;
 import youyihj.herodotusutils.entity.RenderRedSlime;
 import youyihj.herodotusutils.entity.golem.*;
@@ -40,6 +46,7 @@ import youyihj.herodotusutils.modsupport.modularmachinery.block.BlockImpetusHatc
 
 import javax.annotation.Nonnull;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.IntFunction;
 import java.util.stream.Stream;
 
@@ -90,11 +97,14 @@ public class ModelRegistry {
                 return new ModelResourceLocation(HerodotusUtils.rl(FluidMercury.INSTANCE.getName()), "defaults");
             }
         });
+        ModelLoader.setCustomStateMapper(BlockAlchemyController.INSTANCE,
+                new StateMap.Builder().ignore(BlockAlchemyController.WORK_TYPE_PROPERTY).build());
         registerMultipleItemsModel(
                 BlockManaLiquidizer.ITEM_BLOCK,
                 RefinedBottle.INSTANCE,
                 ItemCopperBucket.INSTANCE,
                 ItemTaintChecker.INSTANCE,
+                ItemAlchemyPipeWrench.INSTANCE,
                 BlockCalculatorStructure.STRUCTURE_BLOCK_1_ITEM,
                 BlockCalculatorStructure.STRUCTURE_BLOCK_2_ITEM,
                 BlockCalculatorStructure.STRUCTURE_BLOCK_3_ITEM,
@@ -121,7 +131,12 @@ public class ModelRegistry {
                 BlockAlchemyCrafter.ITEM_BLOCK,
                 BlockAspectListProviderInput.ITEM_BLOCK,
                 BlockImpetusHatch.Input.ITEM_BLOCK,
-                BlockImpetusHatch.Output.ITEM_BLOCK
+                BlockImpetusHatch.Output.ITEM_BLOCK,
+                BlockCatalyzedAltar.ITEM_BLOCK,
+                BlockPrimordialCharger.ITEM_BLOCK,
+                BlockImpetusHatch.Output.ITEM_BLOCK,
+                BlockAlchemyCrafter.ITEM_BLOCK,
+                BlockAlchemySeparator.ITEM_BLOCK
         );
         for (BlockOreBase ore : BlockRegistry.ORES) {
             ModelLoader.setCustomStateMapper(ore, ORE_STATE_MAPPER);
@@ -129,11 +144,17 @@ public class ModelRegistry {
                 ModelLoader.setCustomModelResourceLocation(ore.getItem(), i, META_ORE_STATE_MAPPER.apply(i));
             }
         }
+        for (int i = 0; i < 4; i++) {
+            ModelLoader.setCustomModelResourceLocation(BlockAlchemySeparatorTank.ITEM_BLOCK, i, new ModelResourceLocation(Objects.requireNonNull(BlockAlchemySeparatorTank.ITEM_BLOCK.getRegistryName()), "inventory"));
+        }
         BlockGolemCore.ITEM_BLOCKS.forEach(ModelRegistry::registerItemModel);
         ModelLoader.setCustomModelResourceLocation(StarlightStorageTiny.INSTANCE, 1,
                 new ModelResourceLocation(StarlightStorageTiny.INSTANCE.getRegistryName() + "_full", "inventory"));
         BlockTransporter.getItemBlockMap().values().forEach(ModelRegistry::registerItemModel);
         RenderingRegistry.registerEntityRenderingHandler(EntityRedSlime.class, RenderRedSlime::new);
+        ClientRegistry.bindTileEntitySpecialRenderer(TileAlchemyRoundRobinTunnel.class, new TileRoundRobinTunnelRender());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileAlchemyLazyTunnel.class, new TileLazyTunnelRender());
+        ClientRegistry.bindTileEntitySpecialRenderer(TilePrimordialCharger.class, new TilePrimordialChargerRender());
         RenderingRegistry.registerEntityRenderingHandler(EntityExtraIronGolem.class, RenderExtraIronGolem::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityExtraSnowman.class, RenderExtraSnowman::new);
     }

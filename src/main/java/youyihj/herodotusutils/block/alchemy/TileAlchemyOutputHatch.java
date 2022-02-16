@@ -3,14 +3,18 @@ package youyihj.herodotusutils.block.alchemy;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import youyihj.herodotusutils.alchemy.IAlchemyExternalHatch;
+import youyihj.herodotusutils.fluid.FluidAlchemyWaste;
+import youyihj.herodotusutils.recipe.AlchemyRecipes;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 /**
  * @author youyihj
@@ -20,10 +24,11 @@ public class TileAlchemyOutputHatch extends AbstractHasAlchemyFluidTileEntity im
 
     @Override
     public void work() {
-        if (content != null) {
+        Fluid output = getNormalContent();
+        if (output != null) {
             IFluidHandler downFluidHandler = FluidUtil.getFluidHandler(world, pos.down(), EnumFacing.UP);
             if (downFluidHandler != null) {
-                FluidStack fluidStack = new FluidStack(content, FLUID_UNIT);
+                FluidStack fluidStack = new FluidStack(output, FLUID_UNIT);
                 int testValue = downFluidHandler.fill(fluidStack, false);
                 if (testValue == FLUID_UNIT) {
                     downFluidHandler.fill(fluidStack, true);
@@ -34,8 +39,13 @@ public class TileAlchemyOutputHatch extends AbstractHasAlchemyFluidTileEntity im
     }
 
     @Override
-    protected EnumFacing allowInputSide() {
+    public EnumFacing inputSide() {
         return world.getBlockState(pos).getValue(BlockHorizontal.FACING);
+    }
+
+    @Override
+    public EnumFacing outputSide() {
+        return null;
     }
 
     @Override
@@ -55,6 +65,15 @@ public class TileAlchemyOutputHatch extends AbstractHasAlchemyFluidTileEntity im
         return super.getCapability(capability, facing);
     }
 
+    @Nullable
+    private Fluid getNormalContent() {
+        if (content == null)
+            return null;
+        return Optional.of(content)
+                .map(AlchemyRecipes::alchemyToNormal)
+                .orElse(FluidAlchemyWaste.INSTANCE);
+    }
+
     private class CustomFluidHandler implements IFluidHandler, IFluidTankProperties {
 
         @Override
@@ -70,11 +89,15 @@ public class TileAlchemyOutputHatch extends AbstractHasAlchemyFluidTileEntity im
         @Nullable
         @Override
         public FluidStack drain(FluidStack resource, boolean doDrain) {
-            if (resource.getFluid() == resource.getFluid() && resource.amount >= FLUID_UNIT) {
+            Fluid normalContent = getNormalContent();
+            if (normalContent == null)
+                return null;
+            if (resource.getFluid() == normalContent && resource.amount >= FLUID_UNIT) {
                 if (doDrain) {
                     emptyFluid();
+                    TileAlchemyOutputHatch.this.markDirty();
                 }
-                return new FluidStack(content, FLUID_UNIT);
+                return new FluidStack(normalContent, FLUID_UNIT);
             }
             return null;
         }
@@ -82,11 +105,15 @@ public class TileAlchemyOutputHatch extends AbstractHasAlchemyFluidTileEntity im
         @Nullable
         @Override
         public FluidStack drain(int maxDrain, boolean doDrain) {
+            Fluid normalContent = getNormalContent();
+            if (normalContent == null)
+                return null;
             if (maxDrain >= FLUID_UNIT) {
                 if (doDrain) {
                     emptyFluid();
+                    TileAlchemyOutputHatch.this.markDirty();
                 }
-                return new FluidStack(content, FLUID_UNIT);
+                return new FluidStack(normalContent, FLUID_UNIT);
             }
             return null;
         }
@@ -94,7 +121,8 @@ public class TileAlchemyOutputHatch extends AbstractHasAlchemyFluidTileEntity im
         @Nullable
         @Override
         public FluidStack getContents() {
-            return content == null ? null : new FluidStack(content, FLUID_UNIT);
+            Fluid normalContent = getNormalContent();
+            return normalContent == null ? null : new FluidStack(normalContent, FLUID_UNIT);
         }
 
         @Override

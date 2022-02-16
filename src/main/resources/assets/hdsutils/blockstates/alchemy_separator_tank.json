@@ -1,0 +1,27 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "transform": "forge:default-block",
+    "model": "hdsutils:alchemy_pipe/separator_tank"
+  },
+  "variants": {
+    "normal": [
+      {}
+    ],
+    "inventory": [
+      {}
+    ],
+    "number=1": [
+      {}
+    ],
+    "number=2": [
+      {}
+    ],
+    "number=3": [
+      {}
+    ],
+    "number=4": [
+      {}
+    ]
+  }
+}

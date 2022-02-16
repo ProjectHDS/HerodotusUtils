@@ -27,6 +27,7 @@ public class ItemRegistry {
                 RefinedBottle.INSTANCE,
                 ItemCopperBucket.INSTANCE,
                 ItemTaintChecker.INSTANCE,
+                ItemAlchemyPipeWrench.INSTANCE,
                 BlockCalculatorStructure.STRUCTURE_BLOCK_1_ITEM,
                 BlockCalculatorStructure.STRUCTURE_BLOCK_2_ITEM,
                 BlockCalculatorStructure.STRUCTURE_BLOCK_3_ITEM,
@@ -54,8 +55,14 @@ public class ItemRegistry {
                 BlockAspectListProviderInput.ITEM_BLOCK,
                 BlockImpetusHatch.Input.ITEM_BLOCK,
                 BlockImpetusHatch.Output.ITEM_BLOCK,
+                BlockAlchemyCrafter.ITEM_BLOCK,
+                BlockAlchemySeparator.ITEM_BLOCK,
+                BlockAlchemySeparatorTank.ITEM_BLOCK,
+                BlockImpetusHatch.Output.ITEM_BLOCK,
                 BlockCreatureDataAnalyzer.ITEM_BLOCK,
-                BlockCreatureDataReEncodeInterface.ITEM_BLOCK
+                BlockCreatureDataReEncodeInterface.ITEM_BLOCK,
+                BlockCatalyzedAltar.ITEM_BLOCK,
+                BlockPrimordialCharger.ITEM_BLOCK
         );
         BlockRegistry.ORES.stream().map(BlockOreBase::getItem).forEach(registry::register);
         BlockGolemCore.ITEM_BLOCKS.forEach(registry::register);

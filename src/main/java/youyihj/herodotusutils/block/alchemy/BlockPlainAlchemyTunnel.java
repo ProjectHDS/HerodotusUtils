@@ -4,17 +4,25 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import youyihj.herodotusutils.alchemy.IAdjustableBlock;
+import youyihj.herodotusutils.util.HorizontalBlockBoundingBoxes;
+import youyihj.herodotusutils.util.Util;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.function.Predicate;
@@ -22,11 +30,17 @@ import java.util.function.Predicate;
 /**
  * @author youyihj
  */
-public abstract class BlockPlainAlchemyTunnel extends AbstractPipeBlock {
+public abstract class BlockPlainAlchemyTunnel extends AbstractPipeBlock implements IAdjustableBlock {
     public static final BlockPlainAlchemyTunnel STRAIGHT = new BlockPlainAlchemyTunnel("straight_tunnel") {
         @Override
         protected TunnelType getTunnelType() {
             return TunnelType.STRAIGHT;
+        }
+
+        @SuppressWarnings("deprecation")
+        @Override
+        public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+            return STRAIGHT_AABB.getBoundingBox(state.getValue(property).getInputSide());
         }
     };
     public static final BlockPlainAlchemyTunnel HORIZONTAL_RIGHT_ANGLE = new BlockPlainAlchemyTunnel("right_angle_tunnel") {
@@ -34,18 +48,54 @@ public abstract class BlockPlainAlchemyTunnel extends AbstractPipeBlock {
         protected TunnelType getTunnelType() {
             return TunnelType.HORIZONTAL_RIGHT_ANGLE;
         }
+
+        @SuppressWarnings("deprecation")
+        @Override
+        public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+            return RIGHT_ANGLE_SELECTION_AABB;
+        }
+
+        @SuppressWarnings("deprecation")
+        @Override
+        public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState) {
+            super.addCollisionBoxToList(state, worldIn, pos, entityBox, collidingBoxes, entityIn, isActualState);
+            TransferDirection direction = state.getValue(property);
+            addCollisionBoxToList(pos, entityBox, collidingBoxes, PART_AABB.getBoundingBox(direction.getInputSide()));
+            addCollisionBoxToList(pos, entityBox, collidingBoxes, PART_AABB.getBoundingBox(direction.getOutputSide()));
+        }
     };
     public static final BlockPlainAlchemyTunnel VERTICAL_RIGHT_ANGLE = new BlockPlainAlchemyTunnel("vertical_right_angle") {
         @Override
         protected TunnelType getTunnelType() {
             return TunnelType.VERTICAL_RIGHT_ANGLE;
         }
+
+        @SuppressWarnings("deprecation")
+        @Override
+        public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+            return VERTICAL_SELECTION_AABB;
+        }
+
+        @SuppressWarnings("deprecation")
+        @Override
+        public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState) {
+            super.addCollisionBoxToList(state, worldIn, pos, entityBox, collidingBoxes, entityIn, isActualState);
+            EnumFacing side = state.getValue(property).getOutputSide();
+            if (side.getHorizontalIndex() == -1) {
+                side = state.getValue(property).getInputSide();
+            }
+            addCollisionBoxToList(pos, entityBox, collidingBoxes, PART_AABB.getBoundingBox(side));
+        }
     };
     public static final Item STRAIGHT_ITEM = new ItemBlock(STRAIGHT).setRegistryName("straight_tunnel");
     public static final Item RIGHT_ANGLE_ITEM = new ItemBlock(HORIZONTAL_RIGHT_ANGLE).setRegistryName("right_angle_tunnel");
     public static final Item VERTICAL_ITEM = new ItemBlock(VERTICAL_RIGHT_ANGLE).setRegistryName("vertical_right_angle");
 
-    private IProperty<TransferDirection> property;
+    protected static final HorizontalBlockBoundingBoxes STRAIGHT_AABB = HorizontalBlockBoundingBoxes.ofModelPos(3, 3, 0, 13, 13, 16);
+    protected static final AxisAlignedBB RIGHT_ANGLE_SELECTION_AABB = Util.createAABBFromModelPos(4, 4, 4, 12, 12, 12);
+    protected static final AxisAlignedBB VERTICAL_SELECTION_AABB = Util.createAABBFromModelPos(4, 4, 4, 12, 16, 12);
+    protected static final HorizontalBlockBoundingBoxes PART_AABB = HorizontalBlockBoundingBoxes.ofModelPos(0, 4, 4, 4, 12, 12);
+    protected IProperty<TransferDirection> property;
 
     protected BlockPlainAlchemyTunnel(String name) {
         super(name);
@@ -64,7 +114,7 @@ public abstract class BlockPlainAlchemyTunnel extends AbstractPipeBlock {
 
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        return this.blockState.getBaseState().withProperty(property, getTunnelType().directionSupplierFromPlacement.get(placer.getHorizontalFacing(), hitX, hitZ));
+        return this.blockState.getBaseState().withProperty(property, getTunnelType().directionSupplierFromPlacement.get(placer.getHorizontalFacing().getOpposite(), hitX, hitZ));
     }
 
     @Override
@@ -74,10 +124,16 @@ public abstract class BlockPlainAlchemyTunnel extends AbstractPipeBlock {
     }
 
     private IProperty<TransferDirection> createProperty() {
-        return PropertyEnum.create("direction", TransferDirection.class, getTunnelType().directionFilter::test);
+        return PropertyEnum.create("direction", TransferDirection.class, getTunnelType());
     }
 
     protected abstract TunnelType getTunnelType();
+
+    @Override
+    public IBlockState getAdjustedResult(IBlockState previous) {
+        TransferDirection direction = getDirection(previous);
+        return this.getDefaultState().withProperty(property, Util.getCycledNextElement(getTunnelType().getAcceptedDirections(), direction));
+    }
 
     @Nonnull
     @Override
@@ -87,20 +143,6 @@ public abstract class BlockPlainAlchemyTunnel extends AbstractPipeBlock {
 
     public TransferDirection getDirection(IBlockState state) {
         return state.getValue(this.property);
-    }
-
-    @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (!playerIn.isSneaking() || !playerIn.getHeldItem(hand).isEmpty())
-            return false;
-        if (!worldIn.isRemote) {
-            int meta = this.getMetaFromState(state);
-            meta++;
-            if (meta >= this.blockState.getValidStates().size())
-                meta = 0;
-            worldIn.setBlockState(pos, this.getStateFromMeta(meta));
-        }
-        return true;
     }
 
     @SuppressWarnings("unused")
@@ -117,13 +159,17 @@ public abstract class BlockPlainAlchemyTunnel extends AbstractPipeBlock {
         S2E(EnumFacing.SOUTH, EnumFacing.EAST),
         W2N(EnumFacing.WEST, EnumFacing.NORTH),
         W2S(EnumFacing.WEST, EnumFacing.SOUTH),
-        E2N(EnumFacing.WEST, EnumFacing.NORTH),
+        E2N(EnumFacing.EAST, EnumFacing.NORTH),
         E2S(EnumFacing.EAST, EnumFacing.SOUTH),
         // vertical right angle
         U2N(EnumFacing.UP, EnumFacing.NORTH),
         U2S(EnumFacing.UP, EnumFacing.SOUTH),
         U2W(EnumFacing.UP, EnumFacing.WEST),
-        U2E(EnumFacing.UP, EnumFacing.EAST);
+        U2E(EnumFacing.UP, EnumFacing.EAST),
+        N2D(EnumFacing.NORTH, EnumFacing.DOWN),
+        S2D(EnumFacing.SOUTH, EnumFacing.DOWN),
+        W2D(EnumFacing.WEST, EnumFacing.DOWN),
+        E2D(EnumFacing.EAST, EnumFacing.DOWN);
 
         private final EnumFacing inputSide;
         private final EnumFacing outputSide;
@@ -155,7 +201,7 @@ public abstract class BlockPlainAlchemyTunnel extends AbstractPipeBlock {
         }
 
         public boolean isVerticalRightAngle() {
-            return inputSide == EnumFacing.UP;
+            return inputSide == EnumFacing.UP || outputSide == EnumFacing.DOWN;
         }
 
         public boolean isHorizontalRightAngle() {
@@ -168,17 +214,17 @@ public abstract class BlockPlainAlchemyTunnel extends AbstractPipeBlock {
         }
     }
 
-    public enum TunnelType {
+    public enum TunnelType implements com.google.common.base.Predicate<TransferDirection> {
         STRAIGHT(TransferDirection::isStraight, (mainFacing, hitX, hitZ) -> {
             switch (mainFacing) {
                 case NORTH:
-                    return TransferDirection.S2N;
-                case SOUTH:
                     return TransferDirection.N2S;
+                case SOUTH:
+                    return TransferDirection.S2N;
                 case WEST:
-                    return TransferDirection.E2W;
-                case EAST:
                     return TransferDirection.W2E;
+                case EAST:
+                    return TransferDirection.E2W;
                 default:
                     throw new IllegalArgumentException(mainFacing.name());
             }
@@ -201,10 +247,21 @@ public abstract class BlockPlainAlchemyTunnel extends AbstractPipeBlock {
 
         private final Predicate<TransferDirection> directionFilter;
         private final IDirectionSupplierFromPlacement directionSupplierFromPlacement;
+        private final TransferDirection[] acceptedDirections;
 
         TunnelType(Predicate<TransferDirection> directionFilter, IDirectionSupplierFromPlacement directionSupplierFromPlacement) {
             this.directionFilter = directionFilter;
             this.directionSupplierFromPlacement = directionSupplierFromPlacement;
+            this.acceptedDirections = Arrays.stream(TransferDirection.values()).filter(directionFilter).toArray(TransferDirection[]::new);
+        }
+
+        public TransferDirection[] getAcceptedDirections() {
+            return acceptedDirections;
+        }
+
+        @Override
+        public boolean apply(@Nullable TransferDirection input) {
+            return directionFilter.test(input);
         }
     }
 

@@ -6,12 +6,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.items.CapabilityItemHandler;
 import youyihj.herodotusutils.HerodotusUtils;
+import youyihj.herodotusutils.alchemy.AlchemyFluid;
 import youyihj.herodotusutils.alchemy.IHasAlchemyFluid;
 import youyihj.herodotusutils.block.computing.TileComputingModule;
 import youyihj.herodotusutils.computing.IComputingUnit;
@@ -54,9 +55,9 @@ public enum TOPInfoProvider implements IProbeInfoProvider {
             }
         }
         if (tileEntity instanceof IHasAlchemyFluid) {
-            Fluid containedFluid = ((IHasAlchemyFluid) tileEntity).getContainedFluid();
+            AlchemyFluid containedFluid = ((IHasAlchemyFluid) tileEntity).getContainedFluid();
             if (containedFluid != null) {
-                probeInfo.element(new ElementTextComponent(TextStyleClass.NAME, new TextComponentTranslation("hdsutils.alchemy.fluid_info").appendSibling(new TextComponentTranslation(containedFluid.getUnlocalizedName()))));
+                probeInfo.element(new ElementTextComponent(TextStyleClass.NAME, new TextComponentTranslation("hdsutils.alchemy.fluid_info").appendSibling(new TextComponentString(containedFluid.getDisplayName()))));
             }
         }
     }

@@ -2,6 +2,7 @@ package youyihj.herodotusutils.network;
 
 import crafttweaker.CraftTweakerAPI;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -46,7 +47,9 @@ public class TaintSyncMessage implements IMessage {
 
         @Override
         public IMessage onMessage(TaintSyncMessage message, MessageContext ctx) {
-            ExpandPlayer.getTaint(CraftTweakerAPI.client.getPlayer()).copyFrom(message.getTaint());
+            Minecraft.getMinecraft().addScheduledTask(() ->
+                    ExpandPlayer.getTaint(CraftTweakerAPI.client.getPlayer()).copyFrom(message.getTaint())
+            );
             return null;
         }
     }

@@ -1,11 +1,8 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "textures": {
-      "all": "hdsutils:blocks/alchemy_controller",
-      "particle": "hdsutils:blocks/alchemy_controller"
-    },
-    "model": "minecraft:cube_all"
+    "transform": "forge:default-block",
+    "model": "hdsutils:alchemy_pipe/controller"
   },
   "variants": {
     "normal": [
@@ -14,14 +11,23 @@
     "inventory": [
       {}
     ],
-    "work_type=close": [
+    "facing=north": [
       {}
     ],
-    "work_type=debug": [
-      {}
+    "facing=south": [
+      {
+        "y": 180
+      }
     ],
-    "work_type=working": [
-      {}
+    "facing=west": [
+      {
+        "y": 270
+      }
+    ],
+    "facing=east": [
+      {
+        "y": 90
+      }
     ]
   }
 }

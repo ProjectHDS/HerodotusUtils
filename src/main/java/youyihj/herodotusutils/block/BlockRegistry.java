@@ -72,11 +72,15 @@ public class BlockRegistry {
                 BlockAlchemyRoundRobinTunnel.INSTANCE,
                 BlockLazyAlchemyTunnel.INSTANCE,
                 BlockAlchemyCrafter.INSTANCE,
+                BlockAlchemySeparator.INSTANCE,
+                BlockAlchemySeparatorTank.INSTANCE,
                 BlockAspectListProviderInput.INSTANCE,
                 BlockImpetusHatch.Input.INSTANCE,
                 BlockImpetusHatch.Output.INSTANCE,
                 BlockCreatureDataReEncodeInterface.INSTANCE,
-                BlockCreatureDataAnalyzer.INSTANCE
+                BlockCreatureDataAnalyzer.INSTANCE,
+                BlockCatalyzedAltar.INSTANCE,
+                BlockPrimordialCharger.INSTANCE
         );
         BlockTransporter.getBlockMap().values().forEach(registry::register);
         BlockGolemCore.BLOCKS.forEach(registry::register);
@@ -97,5 +101,8 @@ public class BlockRegistry {
         GameRegistry.registerTileEntity(TileImpetusComponent.Output.class, HerodotusUtils.rl("impetus_output_hatch"));
         GameRegistry.registerTileEntity(TileCreatureDataAnalyzer.class, HerodotusUtils.rl("creature_data_analyzer"));
         GameRegistry.registerTileEntity(TileCreatureDataReEncodeInterface.class, HerodotusUtils.rl("creature_encode_interface"));
+        GameRegistry.registerTileEntity(TilePrimordialCharger.class, HerodotusUtils.rl("primordial_changer"));
+        GameRegistry.registerTileEntity(TileAlchemySeparatorTank.class, HerodotusUtils.rl("alchemy_separator_tank"));
+        GameRegistry.registerTileEntity(TileAlchemySeparator.class, HerodotusUtils.rl("alchemy_separator"));
     }
 }

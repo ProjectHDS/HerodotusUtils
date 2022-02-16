@@ -4,15 +4,20 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import thaumcraft.common.entities.EntityFluxRift;
 import youyihj.herodotusutils.item.ItemRiftFeed;
+import youyihj.herodotusutils.util.ItemDropSupplier;
 import youyihj.herodotusutils.util.SharedRiftAction;
 
 /**
@@ -22,7 +27,8 @@ import youyihj.herodotusutils.util.SharedRiftAction;
 @Mixin(EntityFluxRift.class)
 public abstract class MixinEntityFluxRift extends Entity {
 
-    private static final DamageSource RIFT = new DamageSource("rift").setDamageBypassesArmor().setMagicDamage();
+    private static final ItemDropSupplier PRIMORDIAL_GRAIN = ItemDropSupplier.of(() -> new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("thaumicwonders:primordial_grain"))));
+
     @Shadow(remap = false)
     int maxSize;
 
@@ -67,5 +73,16 @@ public abstract class MixinEntityFluxRift extends Entity {
                 setCollapse(true);
         }
         entity.setDead();
+    }
+
+    @Redirect(method = "completeCollapse", at = @At(value = "INVOKE", target = "Lthaumcraft/common/entities/EntityFluxRift;entityDropItem(Lnet/minecraft/item/ItemStack;F)Lnet/minecraft/entity/item/EntityItem;", ordinal = 0))
+    public EntityItem removePrimordialPearl(EntityFluxRift instance, ItemStack itemStack, float v) {
+        // NO-OP
+        return null;
+    }
+
+    @Inject(method = "completeCollapse", at = @At(value = "INVOKE", target = "Lthaumcraft/common/entities/EntityFluxRift;setDead()V"))
+    public void addPrimordialGrain(CallbackInfo ci) {
+        this.entityDropItem(PRIMORDIAL_GRAIN.get(), 0.0f);
     }
 }

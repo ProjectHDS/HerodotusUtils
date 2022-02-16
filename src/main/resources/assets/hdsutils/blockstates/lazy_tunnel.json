@@ -1,0 +1,35 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "transform": "forge:default-block",
+    "model": "hdsutils:alchemy_pipe/lazy"
+  },
+  "variants": {
+    "normal": [
+      {}
+    ],
+    "inventory": [
+      {}
+    ],
+    "direction=n2s": [
+      {
+        "y": 180
+      }
+    ],
+    "direction=s2n": [
+      {
+        "y": 0
+      }
+    ],
+    "direction=w2e": [
+      {
+        "y": 90
+      }
+    ],
+    "direction=e2w": [
+      {
+        "y": 270
+      }
+    ]
+  }
+}

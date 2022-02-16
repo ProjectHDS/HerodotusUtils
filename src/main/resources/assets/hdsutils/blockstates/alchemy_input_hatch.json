@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "transform": "forge:default-block",
+    "model": "hdsutils:alchemy_pipe/input"
+  },
+  "variants": {
+    "normal": [
+      {
+        "x": 90
+      }
+    ],
+    "inventory": [
+      {}
+    ]
+  }
+}

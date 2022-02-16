@@ -18,14 +18,13 @@ import thecodex6824.thaumicaugmentation.api.impetus.node.*;
 import thecodex6824.thaumicaugmentation.api.impetus.node.prefab.ImpetusNode;
 import thecodex6824.thaumicaugmentation.api.impetus.node.prefab.SimpleImpetusConsumer;
 import thecodex6824.thaumicaugmentation.api.util.DimensionalBlockPos;
-import thecodex6824.thaumicaugmentation.common.tile.trait.IBreakCallback;
 
 import javax.annotation.Nullable;
 
 /**
  * @author youyihj
  */
-public abstract class TileImpetusComponent extends TileColorableMachineComponent implements IBreakCallback, MachineComponentTile {
+public abstract class TileImpetusComponent extends TileColorableMachineComponent implements MachineComponentTile {
     public static final int CAPACITY = 1000;
     protected int impetus = 0;
     protected ImpetusNode node;
@@ -62,13 +61,14 @@ public abstract class TileImpetusComponent extends TileColorableMachineComponent
     }
 
     @Override
-    public void onBlockBroken() {
+    public void invalidate() {
         if (!this.world.isRemote) {
             NodeHelper.syncDestroyedImpetusNode(this.node);
         }
 
         this.node.destroy();
         ThaumicAugmentation.proxy.deregisterRenderableImpetusNode(this.node);
+        super.invalidate();
     }
 
     @Override

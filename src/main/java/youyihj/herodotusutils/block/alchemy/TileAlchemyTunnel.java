@@ -17,8 +17,13 @@ public class TileAlchemyTunnel extends AbstractHasAlchemyFluidTileEntity impleme
     }
 
     @Override
-    protected EnumFacing allowInputSide() {
+    public EnumFacing inputSide() {
         return getTransportDirection().getInputSide();
+    }
+
+    @Override
+    public EnumFacing outputSide() {
+        return getTransportDirection().getOutputSide();
     }
 
     @Override
