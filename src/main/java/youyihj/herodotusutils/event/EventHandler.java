@@ -40,7 +40,6 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fluids.FluidStack;
@@ -52,7 +51,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.oredict.OreDictionary;
-import youyihj.herodotusutils.alchemy.AlchemyFluid;
 import youyihj.herodotusutils.block.BlockCreatureDataAnalyzer;
 import youyihj.herodotusutils.block.BlockCreatureDataReEncodeInterface;
 import youyihj.herodotusutils.block.BlockMercury;
@@ -69,7 +67,6 @@ import youyihj.herodotusutils.proxy.CommonProxy;
 import youyihj.herodotusutils.util.Capabilities;
 import youyihj.herodotusutils.util.ITaint;
 import youyihj.herodotusutils.util.SharedRiftAction;
-import youyihj.herodotusutils.recipe.AlchemyRecipes;
 import youyihj.herodotusutils.util.Util;
 import youyihj.herodotusutils.world.PlainTeleporter;
 import youyihj.zenutils.api.world.ZenUtilsWorld;
@@ -211,16 +208,6 @@ public class EventHandler {
                 }
             }
         }
-    }
-
-    @SubscribeEvent
-    public static void onItemTooltip(ItemTooltipEvent event) {
-        Optional.of(event.getItemStack())
-                .map(FluidUtil::getFluidContained)
-                .map(FluidStack::getFluid)
-                .map(AlchemyRecipes::normalToAlchemy)
-                .map(AlchemyFluid::getDisplayName)
-                .ifPresent(event.getToolTip()::add);
     }
 
     @SubscribeEvent
