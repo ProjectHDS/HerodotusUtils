@@ -1,4 +1,4 @@
-package youyihj.herodotusutils.entity.golem;
+package youyihj.herodotusutils.item;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -8,6 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import youyihj.herodotusutils.HerodotusUtils;
+import youyihj.herodotusutils.entity.golem.IGolem;
 
 /**
  * @author youyihj
