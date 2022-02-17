@@ -42,7 +42,7 @@ public class GolemDrops {
         DropFunction ferrousMetal = new DropFunction("FerrousMetal");
         DropFunction preciousMetal = new DropFunction("PreciousMetal");
         DropFunction radioactiveResidue = new DropFunction("RadioactiveResidue");
-        DropFunction nonFerrousMetal = new DropFunction("NonPreciousMetal");
+        DropFunction nonFerrousMetal = new DropFunction("NonFerrousMetal");
         DropFunction fractalMetal = new DropFunction("FractalMetal");
 
         addDrop(RED, RHOMBUS, 1, redStone);
