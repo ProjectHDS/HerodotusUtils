@@ -36,7 +36,7 @@ public class GolemDrops {
         DropFunction mercury = new DropFunction("Mercury", ItemDropSupplier.ofOreDict("nuggetQuicksilver"), ItemDropSupplier.ofItem(ItemsTC.quicksilver));
         DropFunction lithium = new DropFunction("Lithium", "nugget", "crystal");
         DropFunction cinnabar = new DropFunction("Cinnabar", "nugget", "crystal");
-        DropFunction quartzite = new DropFunction("Quartzite", ItemDropSupplier.ofItem("contenttweaker:quartzite_tiny"), ItemDropSupplier.ofItem("contenttweaker:quartzite"));
+        DropFunction quartzite = new DropFunction("Quartzite", "cluster", "rock");
         DropFunction omniEssential = new DropFunction("OmniEssential", ItemDropSupplier.ofItem("contenttweaker:onmi_essential_tiny_dust"), ItemDropSupplier.ofItem("contenttweaker:onmi_essential"));
         DropFunction coloredGem = new DropFunction("ColoredGem", ItemDropSupplier.ofItem("contenttweaker:colored_gem_tiny"), ItemDropSupplier.ofItem("contenttweaker:colored_gem"));
         DropFunction ferrousMetal = new DropFunction("FerrousMetal");
