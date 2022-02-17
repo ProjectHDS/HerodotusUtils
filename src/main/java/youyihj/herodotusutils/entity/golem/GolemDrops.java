@@ -32,38 +32,46 @@ public class GolemDrops {
         DropFunction lead = new DropFunction("Lead");
         DropFunction silver = new DropFunction("Silver");
         DropFunction tin = new DropFunction("Tin");
-        DropFunction gold = new DropFunction("Gold");
         DropFunction nickel = new DropFunction("Nickel");
         DropFunction mercury = new DropFunction("Mercury", ItemDropSupplier.ofOreDict("nuggetQuicksilver"), ItemDropSupplier.ofItem(ItemsTC.quicksilver));
         DropFunction lithium = new DropFunction("Lithium", "nugget", "crystal");
+        DropFunction cinnabar = new DropFunction("Cinnabar", "nugget", "crystal");
+        DropFunction quartzite = new DropFunction("Quartzite", ItemDropSupplier.ofItem("contenttweaker:quartzite_tiny"), ItemDropSupplier.ofItem("contenttweaker:quartzite"));
+        DropFunction omniEssential = new DropFunction("OmniEssential", ItemDropSupplier.ofItem("contenttweaker:onmi_essential_tiny_dust"), ItemDropSupplier.ofItem("contenttweaker:onmi_essential"));
+        DropFunction coloredGem = new DropFunction("ColoredGem", ItemDropSupplier.ofItem("contenttweaker:colored_gem_tiny"), ItemDropSupplier.ofItem("contenttweaker:colored_gem"));
+        DropFunction ferrousMetal = new DropFunction("FerrousMetal");
+        DropFunction preciousMetal = new DropFunction("PreciousMetal");
+        DropFunction radioactiveResidue = new DropFunction("RadioactiveResidue");
+        DropFunction nonFerrousMetal = new DropFunction("NonPreciousMetal");
+        DropFunction fractalMetal = new DropFunction("FractalMetal");
 
         addDrop(RED, RHOMBUS, 1, redStone);
-        addDrop(RED, RHOMBUS, 2, redStone.withModifier(3.0f));
-        addDrop(RED, RHOMBUS, 3, redStone.withModifier(4.5f));
+        addDrop(RED, RHOMBUS, 2, redStone.withModifier(4.0f));
+        addDrop(RED, RHOMBUS, 3, cinnabar);
         addDrop(YELLOW, RHOMBUS, 1, coal);
-        addDrop(YELLOW, RHOMBUS, 2, coal.withModifier(3.0f));
-        addDrop(YELLOW, RHOMBUS, 3, coal.withModifier(4.5f));
+        addDrop(YELLOW, RHOMBUS, 2, coal.withModifier(4.0f));
+        addDrop(YELLOW, RHOMBUS, 3, coloredGem);
         addDrop(BLUE, RHOMBUS, 1, quartz);
-        addDrop(BLUE, RHOMBUS, 2, quartz.withModifier(3.0f));
-        addDrop(BLUE, RHOMBUS, 3, quartz.withModifier(4.5f));
-        addDrop(RED, SQUARE, 1, iron);
+        addDrop(BLUE, RHOMBUS, 2, quartz.withModifier(4.0f));
+        addDrop(BLUE, RHOMBUS, 3, omniEssential);
+        addDrop(RED, SQUARE, 1, iron.withModifier(2.5f));
         addDrop(RED, SQUARE, 2, nickel);
-        addDrop(RED, SQUARE, 3, iron.withModifier(4.5f));
+        addDrop(RED, SQUARE, 3, ferrousMetal);
         addDrop(YELLOW, SQUARE, 1, copper);
-        addDrop(YELLOW, SQUARE, 2, gold); // TODO: for test, should be `copper.withModifier(3.0f)`
-        addDrop(YELLOW, SQUARE, 3, gold);
+        addDrop(YELLOW, SQUARE, 2, copper.withModifier(4.0f));
+        addDrop(YELLOW, SQUARE, 3, preciousMetal);
         addDrop(BLUE, SQUARE, 1, lead);
-        addDrop(BLUE, SQUARE, 2, lead.withModifier(3.0f));
-        addDrop(BLUE, SQUARE, 3, lead.withModifier(4.5f));
+        addDrop(BLUE, SQUARE, 2, lead.withModifier(4.0f));
+        addDrop(BLUE, SQUARE, 3, radioactiveResidue);
         addDrop(RED, SPHERICAL, 1, lithium);
         addDrop(RED, SPHERICAL, 2, lithium.withModifier(3.0f));
-        addDrop(RED, SPHERICAL, 3, lithium.withModifier(4.5f));
+        addDrop(RED, SPHERICAL, 3, quartzite);
         addDrop(YELLOW, SPHERICAL, 1, mercury);
         addDrop(YELLOW, SPHERICAL, 2, mercury.withModifier(3.0f));
-        addDrop(YELLOW, SPHERICAL, 3, mercury.withModifier(4.5f));
-        addDrop(BLUE, SPHERICAL, 1, tin);
+        addDrop(YELLOW, SPHERICAL, 3, nonFerrousMetal);
+        addDrop(BLUE, SPHERICAL, 1, tin.withModifier(2.5f));
         addDrop(BLUE, SPHERICAL, 2, silver);
-        addDrop(BLUE, SPHERICAL, 3, silver.withModifier(2.5f));
+        addDrop(BLUE, SPHERICAL, 3, fractalMetal);
     }
 
     public static void addDrop(Color color, Shape shape, int level, DropFunction dropFunction) {
