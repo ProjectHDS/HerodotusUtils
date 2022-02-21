@@ -11,6 +11,7 @@
     "agricraft.MixinJsonPlant",
     "agricraft.MixinTileEntityCrop",
     "factorytech.MixinRiverGrateRemovalAction",
+    "modularmachinery.MixinMachineLoader",
     "modularmagic.MixinJEIComponentAspect",
     "thaumcraft.MixinEntityFluxRift",
     "thaumcraft.MixinResearchStage",
