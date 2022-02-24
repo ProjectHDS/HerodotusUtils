@@ -104,5 +104,6 @@ public class BlockRegistry {
         GameRegistry.registerTileEntity(TilePrimordialCharger.class, HerodotusUtils.rl("primordial_changer"));
         GameRegistry.registerTileEntity(TileAlchemySeparatorTank.class, HerodotusUtils.rl("alchemy_separator_tank"));
         GameRegistry.registerTileEntity(TileAlchemySeparator.class, HerodotusUtils.rl("alchemy_separator"));
+        GameRegistry.registerTileEntity(TileGolemCore.class, HerodotusUtils.rl("golem_core"));
     }
 }

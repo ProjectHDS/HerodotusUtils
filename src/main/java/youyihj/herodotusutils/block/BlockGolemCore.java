@@ -1,20 +1,26 @@
 package youyihj.herodotusutils.block;
 
 import com.google.common.base.Predicate;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockWorldState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockMaterialMatcher;
 import net.minecraft.block.state.pattern.BlockPattern;
 import net.minecraft.block.state.pattern.FactoryBlockPattern;
+import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import youyihj.herodotusutils.entity.golem.*;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -26,7 +32,7 @@ import java.util.Objects;
 public class BlockGolemCore extends PlainBlock {
     public static final String NAME = "golem_core";
     public static final List<BlockGolemCore> BLOCKS = new ArrayList<>(9);
-    public static final List<ItemBlock> ITEM_BLOCKS = new ArrayList<>(9);
+    public static final List<BlockGolemCore.Item> ITEM_BLOCKS = new ArrayList<>(9);
 
     static {
         for (Color color : Color.values()) {
@@ -34,7 +40,7 @@ public class BlockGolemCore extends PlainBlock {
                 if (color != Color.UNSET && shape != Shape.UNSET) {
                     BlockGolemCore block = new BlockGolemCore(color, shape);
                     BLOCKS.add(block);
-                    ItemBlock itemBlock = new ItemBlock(block);
+                    BlockGolemCore.Item itemBlock = new Item(block);
                     itemBlock.setRegistryName(Objects.requireNonNull(block.getRegistryName()));
                     ITEM_BLOCKS.add(itemBlock);
                 }
@@ -80,6 +86,17 @@ public class BlockGolemCore extends PlainBlock {
         }
     }
 
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
+        return new TileGolemCore(color, shape);
+    }
+
     private String getMetalBlockName(BlockWorldState worldState) {
         //noinspection deprecation
         ItemStack item = worldState.getBlockState().getBlock().getItem(worldState.world, worldState.getPos(), worldState.getBlockState());
@@ -113,5 +130,35 @@ public class BlockGolemCore extends PlainBlock {
         }
 
         return this.golemPattern;
+    }
+
+    @Override
+    public BlockRenderLayer getBlockLayer() {
+        return BlockRenderLayer.CUTOUT;
+    }
+
+    @Override
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return 15;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public Shape getShape() {
+        return shape;
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
+
+    public static class Item extends ItemBlock {
+        public Item(Block block) {
+            super(block);
+        }
     }
 }

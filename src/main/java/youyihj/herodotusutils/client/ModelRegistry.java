@@ -32,9 +32,7 @@ import youyihj.herodotusutils.block.computing.BlockCalculatorController;
 import youyihj.herodotusutils.block.computing.BlockCalculatorStructure;
 import youyihj.herodotusutils.block.computing.BlockComputingModule;
 import youyihj.herodotusutils.block.computing.BlockTransporter;
-import youyihj.herodotusutils.client.render.TileLazyTunnelRender;
-import youyihj.herodotusutils.client.render.TilePrimordialChargerRender;
-import youyihj.herodotusutils.client.render.TileRoundRobinTunnelRender;
+import youyihj.herodotusutils.client.render.*;
 import youyihj.herodotusutils.entity.EntityRedSlime;
 import youyihj.herodotusutils.entity.RenderRedSlime;
 import youyihj.herodotusutils.entity.golem.*;
@@ -144,10 +142,19 @@ public class ModelRegistry {
                 ModelLoader.setCustomModelResourceLocation(ore.getItem(), i, META_ORE_STATE_MAPPER.apply(i));
             }
         }
+        BlockGolemCore.BLOCKS.forEach(block -> ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
+            @Override
+            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                return new ModelResourceLocation(HerodotusUtils.rl("golem_core"), "normal");
+            }
+        }));
+        BlockGolemCore.ITEM_BLOCKS.forEach(item -> {
+            ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(HerodotusUtils.rl("golem_core_item"), "inventory"));
+            item.setTileEntityItemStackRenderer(new TileGolemCoreItemRender(item));
+        });
         for (int i = 0; i < 4; i++) {
             ModelLoader.setCustomModelResourceLocation(BlockAlchemySeparatorTank.ITEM_BLOCK, i, new ModelResourceLocation(Objects.requireNonNull(BlockAlchemySeparatorTank.ITEM_BLOCK.getRegistryName()), "inventory"));
         }
-        BlockGolemCore.ITEM_BLOCKS.forEach(ModelRegistry::registerItemModel);
         ModelLoader.setCustomModelResourceLocation(StarlightStorageTiny.INSTANCE, 1,
                 new ModelResourceLocation(StarlightStorageTiny.INSTANCE.getRegistryName() + "_full", "inventory"));
         BlockTransporter.getItemBlockMap().values().forEach(ModelRegistry::registerItemModel);
@@ -155,6 +162,7 @@ public class ModelRegistry {
         ClientRegistry.bindTileEntitySpecialRenderer(TileAlchemyRoundRobinTunnel.class, new TileRoundRobinTunnelRender());
         ClientRegistry.bindTileEntitySpecialRenderer(TileAlchemyLazyTunnel.class, new TileLazyTunnelRender());
         ClientRegistry.bindTileEntitySpecialRenderer(TilePrimordialCharger.class, new TilePrimordialChargerRender());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileGolemCore.class, new TileGolemCoreRender());
         RenderingRegistry.registerEntityRenderingHandler(EntityExtraIronGolem.class, RenderExtraIronGolem::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityExtraSnowman.class, RenderExtraSnowman::new);
     }
