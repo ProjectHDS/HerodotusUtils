@@ -46,13 +46,13 @@ public class GolemDrops {
         DropFunction fractalMetal = new DropFunction("FractalMetal");
 
         addDrop(RED, RHOMBUS, 1, redStone);
-        addDrop(RED, RHOMBUS, 2, redStone.withModifier(4.0f));
+        addDrop(RED, RHOMBUS, 2, redStone.withModifier(3.0f));
         addDrop(RED, RHOMBUS, 3, cinnabar);
         addDrop(YELLOW, RHOMBUS, 1, coal);
-        addDrop(YELLOW, RHOMBUS, 2, coal.withModifier(4.0f));
+        addDrop(YELLOW, RHOMBUS, 2, coal.withModifier(3.0f));
         addDrop(YELLOW, RHOMBUS, 3, coloredGem);
         addDrop(BLUE, RHOMBUS, 1, quartz);
-        addDrop(BLUE, RHOMBUS, 2, quartz.withModifier(4.0f));
+        addDrop(BLUE, RHOMBUS, 2, quartz.withModifier(3.0f));
         addDrop(BLUE, RHOMBUS, 3, omniEssential);
         addDrop(RED, SQUARE, 1, iron.withModifier(2.5f));
         addDrop(RED, SQUARE, 2, nickel);
