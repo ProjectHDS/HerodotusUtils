@@ -83,6 +83,7 @@ public class BlockRegistry {
                 BlockPrimordialCharger.INSTANCE
         );
         BlockTransporter.getBlockMap().values().forEach(registry::register);
+        BlockGolemCore.BLOCKS.forEach(registry::register);
         ORES.forEach(registry::register);
         GameRegistry.registerTileEntity(TileManaLiquidizer.class, HerodotusUtils.rl("mana_liquidizer"));
         GameRegistry.registerTileEntity(TileCalculatorController.class, HerodotusUtils.rl("calculator_controller"));
@@ -103,5 +104,6 @@ public class BlockRegistry {
         GameRegistry.registerTileEntity(TilePrimordialCharger.class, HerodotusUtils.rl("primordial_changer"));
         GameRegistry.registerTileEntity(TileAlchemySeparatorTank.class, HerodotusUtils.rl("alchemy_separator_tank"));
         GameRegistry.registerTileEntity(TileAlchemySeparator.class, HerodotusUtils.rl("alchemy_separator"));
+        GameRegistry.registerTileEntity(TileGolemCore.class, HerodotusUtils.rl("golem_core"));
     }
 }

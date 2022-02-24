@@ -36,10 +36,13 @@ public class ItemRegistry {
                 BlockCalculatorController.ITEM_BLOCK_3,
                 BlockComputingModule.ITEM_BLOCK,
                 ItemLithiumAmalgam.INSTANCE,
+                ItemRiftSword.INSTANCE,
                 StarlightStorageTiny.INSTANCE,
                 ItemOilAIOT.INSTANCE,
                 ItemRiftFeed.INSTANCE,
                 ItemPenumbraRing.INSTANCE,
+                GolemUpperSword.INSTANCE,
+                GolemDownerSword.INSTANCE,
                 BlockAlchemyController.ITEM_BLOCK,
                 BlockPlainAlchemyTunnel.VERTICAL_ITEM,
                 BlockPlainAlchemyTunnel.RIGHT_ANGLE_ITEM,
@@ -62,6 +65,7 @@ public class ItemRegistry {
                 BlockPrimordialCharger.ITEM_BLOCK
         );
         BlockRegistry.ORES.stream().map(BlockOreBase::getItem).forEach(registry::register);
+        BlockGolemCore.ITEM_BLOCKS.forEach(registry::register);
         BlockTransporter.getItemBlockMap().values().forEach(registry::register);
     }
 }
