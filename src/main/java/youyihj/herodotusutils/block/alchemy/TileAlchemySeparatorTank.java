@@ -22,11 +22,6 @@ public class TileAlchemySeparatorTank extends AbstractHasAlchemyFluidTileEntity 
 
     @Override
     public EnumFacing outputSide() {
-        for (EnumFacing facing : EnumFacing.HORIZONTALS) {
-            if (world.getTileEntity(pos.offset(facing)) instanceof TileAlchemySeparator) {
-                return facing.getOpposite();
-            }
-        }
-        return null;
+        return EnumFacing.DOWN;
     }
 }
