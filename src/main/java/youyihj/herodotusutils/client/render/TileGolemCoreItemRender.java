@@ -36,7 +36,7 @@ public class TileGolemCoreItemRender extends TileEntityItemStackRenderer {
             BlockGolemCore block1 = (BlockGolemCore) block;
             Color color = block1.getColor();
             Shape shape = block1.getShape();
-            NonNullList<ItemStack> ores = OreDictionary.getOres(shape.name().toLowerCase() + "TierThree" + StringUtil.capitalize(color.name()));
+            NonNullList<ItemStack> ores = OreDictionary.getOres(shape.name().toLowerCase() + "TierThree" + StringUtil.capitalize(color.name().toLowerCase()));
             cacheCore = ores.isEmpty() ? ItemStack.EMPTY : ores.get(0);
         }
         GlStateManager.pushMatrix();

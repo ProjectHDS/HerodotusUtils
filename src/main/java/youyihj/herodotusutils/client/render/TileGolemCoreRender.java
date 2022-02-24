@@ -29,7 +29,7 @@ public class TileGolemCoreRender extends TileEntitySpecialRenderer<TileGolemCore
         GlStateManager.pushMatrix();
         GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
         GlStateManager.rotate((ClientEventHandler.ticks * 2.5f) % 360, 0, 1, 0);
-        Minecraft.getMinecraft().getRenderItem().renderItem(new ItemStack(Items.APPLE), ItemCameraTransforms.TransformType.GROUND);
+        Minecraft.getMinecraft().getRenderItem().renderItem(cacheCore, ItemCameraTransforms.TransformType.GROUND);
         GlStateManager.scale(0.9, 0.9, 0.9);
         GlStateManager.enableBlend();
         GlStateManager.popMatrix();
