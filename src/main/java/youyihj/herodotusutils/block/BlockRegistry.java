@@ -14,6 +14,9 @@ import net.minecraftforge.registries.IForgeRegistry;
 import youyihj.herodotusutils.HerodotusUtils;
 import youyihj.herodotusutils.block.alchemy.*;
 import youyihj.herodotusutils.block.computing.*;
+import youyihj.herodotusutils.block.organism.BlockFrameworks;
+import youyihj.herodotusutils.block.organism.BlockORELauncher;
+import youyihj.herodotusutils.block.organism.TileORELauncher;
 import youyihj.herodotusutils.fluid.FluidMana;
 import youyihj.herodotusutils.modsupport.modularmachinery.block.BlockAspectListProviderInput;
 import youyihj.herodotusutils.modsupport.modularmachinery.block.BlockImpetusHatch;
@@ -80,7 +83,9 @@ public class BlockRegistry {
                 BlockCreatureDataReEncodeInterface.INSTANCE,
                 BlockCreatureDataAnalyzer.INSTANCE,
                 BlockCatalyzedAltar.INSTANCE,
-                BlockPrimordialCharger.INSTANCE
+                BlockPrimordialCharger.INSTANCE,
+                BlockFrameworks.BRASS,
+                BlockORELauncher.BRASS
         );
         BlockTransporter.getBlockMap().values().forEach(registry::register);
         ORES.forEach(registry::register);
@@ -103,5 +108,6 @@ public class BlockRegistry {
         GameRegistry.registerTileEntity(TilePrimordialCharger.class, HerodotusUtils.rl("primordial_changer"));
         GameRegistry.registerTileEntity(TileAlchemySeparatorTank.class, HerodotusUtils.rl("alchemy_separator_tank"));
         GameRegistry.registerTileEntity(TileAlchemySeparator.class, HerodotusUtils.rl("alchemy_separator"));
+        GameRegistry.registerTileEntity(TileORELauncher.class, HerodotusUtils.rl("organism_launcher"));
     }
 }

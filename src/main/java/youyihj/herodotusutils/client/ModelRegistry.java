@@ -28,6 +28,8 @@ import youyihj.herodotusutils.block.computing.BlockCalculatorController;
 import youyihj.herodotusutils.block.computing.BlockCalculatorStructure;
 import youyihj.herodotusutils.block.computing.BlockComputingModule;
 import youyihj.herodotusutils.block.computing.BlockTransporter;
+import youyihj.herodotusutils.block.organism.BlockFrameworks;
+import youyihj.herodotusutils.block.organism.BlockORELauncher;
 import youyihj.herodotusutils.client.render.TileLazyTunnelRender;
 import youyihj.herodotusutils.client.render.TilePrimordialChargerRender;
 import youyihj.herodotusutils.client.render.TileRoundRobinTunnelRender;
@@ -128,7 +130,9 @@ public class ModelRegistry {
                 BlockPrimordialCharger.ITEM_BLOCK,
                 BlockImpetusHatch.Output.ITEM_BLOCK,
                 BlockAlchemyCrafter.ITEM_BLOCK,
-                BlockAlchemySeparator.ITEM_BLOCK
+                BlockAlchemySeparator.ITEM_BLOCK,
+                BlockFrameworks.BRASS.getItem(),
+                BlockORELauncher.BRASS.getItem()
         );
         for (BlockOreBase ore : BlockRegistry.ORES) {
             ModelLoader.setCustomStateMapper(ore, ORE_STATE_MAPPER);
