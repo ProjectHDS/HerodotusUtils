@@ -4,6 +4,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import youyihj.herodotusutils.alchemy.AlchemyFluid;
+import youyihj.herodotusutils.alchemy.AlchemyModuleCallback;
 import youyihj.herodotusutils.alchemy.IAlchemyModule;
 import youyihj.herodotusutils.alchemy.IHasAlchemyFluid;
 import youyihj.herodotusutils.util.Util;
@@ -14,6 +15,7 @@ import youyihj.herodotusutils.util.Util;
 public class TileAlchemySeparator extends AbstractHasAlchemyFluidTileEntity implements IAlchemyModule {
     @Override
     public void work() {
+        if (content == null) return;
         EnumFacing[] tankFacings = new EnumFacing[4];
         for (int i = 0; i < 4; i++) {
             for (EnumFacing enumFacing : EnumFacing.Plane.HORIZONTAL) {
@@ -34,12 +36,27 @@ public class TileAlchemySeparator extends AbstractHasAlchemyFluidTileEntity impl
         }
         if (validTanks == 0) return;
         AlchemyFluid[] outputs = content.separate(validTanks);
-        emptyFluid();
+        AlchemyModuleCallback callback = new AlchemyModuleCallback(this);
+        int flags = 0;
         for (int i = 0; i < outputs.length; i++) {
             EnumFacing facing = tankFacings[i];
-            int finalI = i;
-            Util.getTileEntity(world, pos.offset(facing), TileAlchemySeparatorTank.class)
-                    .ifPresent(te -> te.handleInput(outputs[finalI], null));
+            TileAlchemySeparatorTank tank = Util.getTileEntity(world, pos.offset(facing), TileAlchemySeparatorTank.class).orElse(null);
+            if (tank != null) {
+                if (tank.getContainedFluid() != null) {
+                    flags |= (1 << i);
+                    tank.setEmptyCallback(callback);
+                }
+            }
+        }
+        if (flags == 0) {
+            for (int i = 0; i < outputs.length; i++) {
+                EnumFacing facing = tankFacings[i];
+                TileAlchemySeparatorTank tank = Util.getTileEntity(world, pos.offset(facing), TileAlchemySeparatorTank.class).orElse(null);
+                if (tank != null) {
+                    tank.handleInput(outputs[i], null);
+                }
+            }
+            emptyFluid();
         }
     }
 

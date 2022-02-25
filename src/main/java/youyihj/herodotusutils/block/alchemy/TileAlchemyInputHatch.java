@@ -6,9 +6,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import youyihj.herodotusutils.alchemy.AlchemyFluid;
-import youyihj.herodotusutils.alchemy.IAlchemyExternalHatch;
-import youyihj.herodotusutils.alchemy.IAlchemyModule;
+import youyihj.herodotusutils.alchemy.*;
 import youyihj.herodotusutils.recipe.AlchemyRecipes;
 
 import javax.annotation.Nullable;
@@ -66,8 +64,8 @@ public class TileAlchemyInputHatch extends AbstractPipeTileEntity implements IAl
     }
 
     @Override
-    public boolean handleInput(AlchemyFluid input, EnumFacing inputSide) {
-        return false;
+    public InputResult handleInput(AlchemyFluid input, EnumFacing inputSide) {
+        return InputResult.WRONG_SIDE;
     }
 
     @Override
@@ -83,6 +81,11 @@ public class TileAlchemyInputHatch extends AbstractPipeTileEntity implements IAl
     @Override
     public EnumFacing outputSide() {
         return EnumFacing.DOWN;
+    }
+
+    @Override
+    public void setEmptyCallback(AlchemyModuleCallback callback) {
+        // NO-OP
     }
 
     private class CustomFluidTank extends FluidTank {

@@ -96,7 +96,7 @@ public class TileAlchemyRoundRobinTunnel extends AbstractHasAlchemyFluidTileEnti
 
     @Override
     public EnumFacing outputSide() {
-        return getNextOutputSide(true);
+        return getNextOutputSide();
     }
 
     public void putFacing(EnumFacing facing) {
@@ -115,24 +115,26 @@ public class TileAlchemyRoundRobinTunnel extends AbstractHasAlchemyFluidTileEnti
         syncToTrackingClients();
     }
 
-    public EnumFacing getNextOutputSide(boolean next) {
+    public EnumFacing getNextOutputSide() {
         if (Arrays.stream(facingQuery).allMatch(Objects::isNull))
             return null;
         do {
             if (nextIndex >= facingQuery.length)
                 nextIndex = 0;
         } while (facingQuery[nextIndex++] == null);
-        EnumFacing result = facingQuery[--nextIndex];
-        if (next) {
-            nextIndex++;
-            markDirty();
-            syncToTrackingClients();
-        }
-        return result;
+        return facingQuery[--nextIndex];
     }
 
     public EnumFacing[] getFacingQuery() {
         return facingQuery.clone();
+    }
+
+    @Override
+    public void afterModuleMainWork() {
+        super.afterModuleMainWork();
+        nextIndex++;
+        if (nextIndex >= facingQuery.length)
+            nextIndex = 0;
     }
 
     @Override

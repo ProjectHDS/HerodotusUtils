@@ -6,6 +6,7 @@ import net.minecraft.util.EnumFacing;
 import youyihj.herodotusutils.alchemy.IAlchemyModule;
 import youyihj.herodotusutils.alchemy.IHasAlchemyFluid;
 import youyihj.herodotusutils.alchemy.IHasAlchemyFluidModule;
+import youyihj.herodotusutils.alchemy.InputResult;
 
 /**
  * @author youyihj
@@ -28,9 +29,14 @@ public class TileAlchemyTunnel extends AbstractHasAlchemyFluidTileEntity impleme
 
     @Override
     public void work() {
+        workInternal();
+    }
+
+    protected InputResult workInternal() {
         EnumFacing outputSide = getTransportDirection().getOutputSide();
         TileEntity tileEntity = world.getTileEntity(pos.offset(outputSide));
         if (tileEntity instanceof IHasAlchemyFluid)
-            IAlchemyModule.transferFluid(this, ((IHasAlchemyFluid) tileEntity), outputSide);
+            return IAlchemyModule.transferFluid(this, ((IHasAlchemyFluid) tileEntity), outputSide);
+        else return InputResult.NO_OPERATION;
     }
 }
