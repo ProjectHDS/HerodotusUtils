@@ -59,7 +59,7 @@ public class TileAlchemyLazyTunnel extends TileAlchemyTunnel implements IAdjusta
     }
 
     @Override
-    public void  callBackWork() {
+    public void callBackWork() {
         if (bound == counter) {
             InputResult result = super.workInternal();
             if (result == InputResult.SUCCESS) {
