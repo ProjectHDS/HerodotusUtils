@@ -1,5 +1,6 @@
 package youyihj.herodotusutils.util;
 
+import com.google.common.util.concurrent.Callables;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
@@ -15,6 +16,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import youyihj.herodotusutils.HerodotusUtils;
 import youyihj.herodotusutils.computing.ComputingUnitCapabilityProvider;
 import youyihj.herodotusutils.computing.IComputingUnit;
+import youyihj.herodotusutils.organism.IInputInterface;
+import youyihj.herodotusutils.organism.IOutputInterface;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
@@ -32,6 +35,12 @@ public class Capabilities {
 
     @CapabilityInject(ITaint.class)
     public static Capability<ITaint> TAINT_CAPABILITY = null;
+
+    @CapabilityInject(IInputInterface.class)
+    public static Capability<IInputInterface<?>> INPUT_INTERFACE_CAPABILITY = null;
+
+    @CapabilityInject(IOutputInterface.class)
+    public static Capability<IOutputInterface<?>> OUTPUT_INTERFACE_CAPABILITY = null;
 
     @SubscribeEvent
     public static void attachToChunk(AttachCapabilitiesEvent<Chunk> event) {
@@ -51,6 +60,8 @@ public class Capabilities {
     public static void register() {
         CapabilityManager.INSTANCE.register(IComputingUnit.class, getInvalidStorage(), IComputingUnit.Impl::new);
         CapabilityManager.INSTANCE.register(ITaint.class, getInvalidStorage(), ITaint.Impl::new);
+        CapabilityManager.INSTANCE.register(IInputInterface.class, getInvalidStorage(), Callables.returning(null));
+        CapabilityManager.INSTANCE.register(IOutputInterface.class, getInvalidStorage(), Callables.returning(null));
     }
 
     @SuppressWarnings("unchecked")

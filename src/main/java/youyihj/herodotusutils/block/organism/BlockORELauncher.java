@@ -11,6 +11,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import youyihj.herodotusutils.HerodotusUtils;
+import youyihj.herodotusutils.organism.StructureTier;
 
 import javax.annotation.Nullable;
 

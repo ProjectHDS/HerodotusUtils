@@ -19,6 +19,7 @@ import youyihj.herodotusutils.modsupport.crafttweaker.CraftTweakerExtension;
 import youyihj.herodotusutils.modsupport.thaumcraft.AspectHandler;
 import youyihj.herodotusutils.modsupport.topography.HackTopographyDummyProxy;
 import youyihj.herodotusutils.network.GuiHandler;
+import youyihj.herodotusutils.organism.StructureTier;
 import youyihj.herodotusutils.util.Capabilities;
 import youyihj.herodotusutils.world.AncientVoidDimensionProvider;
 
@@ -41,6 +42,7 @@ public class CommonProxy implements IProxy {
         DimensionManager.registerDimension(ANCIENT_VOID_DIMENSION_ID, ANCIENT_VOID_DIMENSION);
         AspectHandler.initAspects();
         Topography.proxy = new HackTopographyDummyProxy();
+        StructureTier.BRASS.init();
     }
 
     @Override

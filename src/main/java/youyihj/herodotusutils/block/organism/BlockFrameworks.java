@@ -1,5 +1,7 @@
 package youyihj.herodotusutils.block.organism;
 
+import youyihj.herodotusutils.organism.StructureTier;
+
 /**
  * @author youyihj
  */

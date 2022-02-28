@@ -11,10 +11,9 @@ import youyihj.herodotusutils.block.computing.BlockCalculatorController;
 import youyihj.herodotusutils.block.computing.BlockCalculatorStructure;
 import youyihj.herodotusutils.block.computing.BlockComputingModule;
 import youyihj.herodotusutils.block.computing.BlockTransporter;
-import youyihj.herodotusutils.block.organism.BlockFrameworks;
-import youyihj.herodotusutils.block.organism.BlockORELauncher;
 import youyihj.herodotusutils.modsupport.modularmachinery.block.BlockAspectListProviderInput;
 import youyihj.herodotusutils.modsupport.modularmachinery.block.BlockImpetusHatch;
+import youyihj.herodotusutils.organism.StructureTier;
 
 /**
  * @author youyihj
@@ -61,10 +60,9 @@ public class ItemRegistry {
                 BlockCreatureDataAnalyzer.ITEM_BLOCK,
                 BlockCreatureDataReEncodeInterface.ITEM_BLOCK,
                 BlockCatalyzedAltar.ITEM_BLOCK,
-                BlockPrimordialCharger.ITEM_BLOCK,
-                BlockFrameworks.BRASS.getItem(),
-                BlockORELauncher.BRASS.getItem()
+                BlockPrimordialCharger.ITEM_BLOCK
         );
+        StructureTier.BRASS.register(block -> registry.register(block.getItem()));
         BlockRegistry.ORES.stream().map(BlockOreBase::getItem).forEach(registry::register);
         BlockTransporter.getItemBlockMap().values().forEach(registry::register);
     }

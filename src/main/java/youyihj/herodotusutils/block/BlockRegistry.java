@@ -14,14 +14,13 @@ import net.minecraftforge.registries.IForgeRegistry;
 import youyihj.herodotusutils.HerodotusUtils;
 import youyihj.herodotusutils.block.alchemy.*;
 import youyihj.herodotusutils.block.computing.*;
-import youyihj.herodotusutils.block.organism.BlockFrameworks;
-import youyihj.herodotusutils.block.organism.BlockORELauncher;
-import youyihj.herodotusutils.block.organism.TileORELauncher;
+import youyihj.herodotusutils.block.organism.*;
 import youyihj.herodotusutils.fluid.FluidMana;
 import youyihj.herodotusutils.modsupport.modularmachinery.block.BlockAspectListProviderInput;
 import youyihj.herodotusutils.modsupport.modularmachinery.block.BlockImpetusHatch;
 import youyihj.herodotusutils.modsupport.modularmachinery.tile.TileAspectListProvider;
 import youyihj.herodotusutils.modsupport.modularmachinery.tile.TileImpetusComponent;
+import youyihj.herodotusutils.organism.StructureTier;
 import youyihj.herodotusutils.util.ItemDropSupplier;
 
 import java.util.List;
@@ -83,12 +82,11 @@ public class BlockRegistry {
                 BlockCreatureDataReEncodeInterface.INSTANCE,
                 BlockCreatureDataAnalyzer.INSTANCE,
                 BlockCatalyzedAltar.INSTANCE,
-                BlockPrimordialCharger.INSTANCE,
-                BlockFrameworks.BRASS,
-                BlockORELauncher.BRASS
+                BlockPrimordialCharger.INSTANCE
         );
         BlockTransporter.getBlockMap().values().forEach(registry::register);
         ORES.forEach(registry::register);
+        StructureTier.BRASS.register(registry::register);
         GameRegistry.registerTileEntity(TileManaLiquidizer.class, HerodotusUtils.rl("mana_liquidizer"));
         GameRegistry.registerTileEntity(TileCalculatorController.class, HerodotusUtils.rl("calculator_controller"));
         GameRegistry.registerTileEntity(TileComputingModule.class, HerodotusUtils.rl("computing_module"));
@@ -109,5 +107,7 @@ public class BlockRegistry {
         GameRegistry.registerTileEntity(TileAlchemySeparatorTank.class, HerodotusUtils.rl("alchemy_separator_tank"));
         GameRegistry.registerTileEntity(TileAlchemySeparator.class, HerodotusUtils.rl("alchemy_separator"));
         GameRegistry.registerTileEntity(TileORELauncher.class, HerodotusUtils.rl("organism_launcher"));
+        GameRegistry.registerTileEntity(TileItemInputInterface.class, HerodotusUtils.rl("item_input_interface"));
+        GameRegistry.registerTileEntity(TileItemOutputInterface.class, HerodotusUtils.rl("item_output_interface"));
     }
 }

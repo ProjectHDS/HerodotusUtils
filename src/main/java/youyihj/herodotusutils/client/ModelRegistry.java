@@ -28,8 +28,6 @@ import youyihj.herodotusutils.block.computing.BlockCalculatorController;
 import youyihj.herodotusutils.block.computing.BlockCalculatorStructure;
 import youyihj.herodotusutils.block.computing.BlockComputingModule;
 import youyihj.herodotusutils.block.computing.BlockTransporter;
-import youyihj.herodotusutils.block.organism.BlockFrameworks;
-import youyihj.herodotusutils.block.organism.BlockORELauncher;
 import youyihj.herodotusutils.client.render.TileLazyTunnelRender;
 import youyihj.herodotusutils.client.render.TilePrimordialChargerRender;
 import youyihj.herodotusutils.client.render.TileRoundRobinTunnelRender;
@@ -40,6 +38,7 @@ import youyihj.herodotusutils.fluid.FluidMercury;
 import youyihj.herodotusutils.item.*;
 import youyihj.herodotusutils.modsupport.modularmachinery.block.BlockAspectListProviderInput;
 import youyihj.herodotusutils.modsupport.modularmachinery.block.BlockImpetusHatch;
+import youyihj.herodotusutils.organism.StructureTier;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
@@ -130,9 +129,7 @@ public class ModelRegistry {
                 BlockPrimordialCharger.ITEM_BLOCK,
                 BlockImpetusHatch.Output.ITEM_BLOCK,
                 BlockAlchemyCrafter.ITEM_BLOCK,
-                BlockAlchemySeparator.ITEM_BLOCK,
-                BlockFrameworks.BRASS.getItem(),
-                BlockORELauncher.BRASS.getItem()
+                BlockAlchemySeparator.ITEM_BLOCK
         );
         for (BlockOreBase ore : BlockRegistry.ORES) {
             ModelLoader.setCustomStateMapper(ore, ORE_STATE_MAPPER);
@@ -143,6 +140,7 @@ public class ModelRegistry {
         for (int i = 0; i < 4; i++) {
             ModelLoader.setCustomModelResourceLocation(BlockAlchemySeparatorTank.ITEM_BLOCK, i, new ModelResourceLocation(Objects.requireNonNull(BlockAlchemySeparatorTank.ITEM_BLOCK.getRegistryName()), "inventory"));
         }
+        StructureTier.BRASS.register(block -> registerItemModel(block.getItem()));
         ModelLoader.setCustomModelResourceLocation(StarlightStorageTiny.INSTANCE, 1,
                 new ModelResourceLocation(StarlightStorageTiny.INSTANCE.getRegistryName() + "_full", "inventory"));
         BlockTransporter.getItemBlockMap().values().forEach(ModelRegistry::registerItemModel);

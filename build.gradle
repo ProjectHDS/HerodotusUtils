@@ -103,7 +103,7 @@ mixin {
 dependencies {
     deobfCompile "vazkii.botania:Botania:r1.10-363.148"
     deobfCompile "com.azanor.baubles:Baubles:1.12-1.5.2"
-    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.646"
+    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.673"
     deobfCompile "com.teamacronymcoders.base:base:1.12.2-3.13.0-SNAPSHOT.+"
     deobfCompile "com.teamacronymcoders:ContentTweaker:1.12.2-4.9.1"
     deobfCompile "cofh:RedstoneFlux:1.12-2.1.0.+:universal"
