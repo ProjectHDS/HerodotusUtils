@@ -109,5 +109,8 @@ public class BlockRegistry {
         GameRegistry.registerTileEntity(TileORELauncher.class, HerodotusUtils.rl("organism_launcher"));
         GameRegistry.registerTileEntity(TileItemInputInterface.class, HerodotusUtils.rl("item_input_interface"));
         GameRegistry.registerTileEntity(TileItemOutputInterface.class, HerodotusUtils.rl("item_output_interface"));
+        GameRegistry.registerTileEntity(TileEnergyInputInterface.class, HerodotusUtils.rl("energy_input_interface"));
+        GameRegistry.registerTileEntity(TileFluidInputInterface.class, HerodotusUtils.rl("fluid_input_interface"));
+        GameRegistry.registerTileEntity(TileFluidOutputInterface.class, HerodotusUtils.rl("fluid_output_interface"));
     }
 }

@@ -13,10 +13,12 @@ public enum StructureTier {
     BRASS(7, "brass") {
         @Override
         public void init() {
+            putBlock(BlockORELauncher.BRASS);
             putBlock(BlockFrameworks.BRASS);
             putBlock(BlockItemInputInterface.BRASS);
             putBlock(BlockItemOutputInterface.BRASS);
-            putBlock(BlockORELauncher.BRASS);
+            putBlock(BlockFluidInputInterface.BRASS);
+            putBlock(BlockFluidOutputInterface.BRASS);
         }
     };
 

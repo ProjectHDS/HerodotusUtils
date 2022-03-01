@@ -2,8 +2,11 @@ package youyihj.herodotusutils.network.container;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import youyihj.herodotusutils.HerodotusUtils;
+
+import java.util.Locale;
 
 /**
  * @author youyihj
@@ -31,5 +34,19 @@ public class ORELauncherGui extends GuiContainer {
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
         this.mc.getTextureManager().bindTexture(DEFAULT_TEXTURE);
         this.drawTexturedModalRect(left, top, 0, 0, xSize, ySize);
+    }
+
+    @Override
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+        ORELauncherContainer container = (ORELauncherContainer) this.inventorySlots;
+        String statusKey = container.isComplete() ? container.getStatus().name().toLowerCase(Locale.ENGLISH) : "structure";
+        String prefix = "hdsutils.organism.status";
+        this.fontRenderer.drawString(I18n.format(prefix, I18n.format(prefix + "." + statusKey)), 13, 14, -1);
+        this.mc.getTextureManager().bindTexture(DEFAULT_TEXTURE);
+        double process = ((double) container.getTimer()) / ((double) container.getRequiredTime());
+        int length = 160;
+        int renderLength = ((int) (process * length));
+        this.drawTexturedModalRect(8, 80,0, 176, renderLength, 4);
     }
 }

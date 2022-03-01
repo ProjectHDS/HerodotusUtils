@@ -9,6 +9,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import youyihj.herodotusutils.organism.LauncherManager;
+import youyihj.herodotusutils.organism.RecipeContext;
 import youyihj.herodotusutils.organism.StructureTier;
 
 /**
@@ -17,6 +18,7 @@ import youyihj.herodotusutils.organism.StructureTier;
 public class TileORELauncher extends TileEntity implements ITickable {
     private StructureTier tier;
     private boolean structureComplete;
+    private final RecipeContext recipeContext = new RecipeContext();
 
     public TileORELauncher(StructureTier tier) {
         this.tier = tier;
@@ -29,18 +31,28 @@ public class TileORELauncher extends TileEntity implements ITickable {
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
         compound.setInteger("tier", tier.ordinal());
+        compound.setTag("context", recipeContext.serializeNBT());
         return compound;
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
+        recipeContext.deserializeNBT(compound.getCompoundTag("context"));
         this.tier = StructureTier.values()[compound.getInteger("tier")];
         LauncherManager.putLauncher(this, world.getBlockState(pos).getValue(BlockHorizontal.FACING));
     }
 
     public StructureTier getTier() {
         return tier;
+    }
+
+    public RecipeContext getRecipeContext() {
+        return recipeContext;
+    }
+
+    public boolean isStructureComplete() {
+        return structureComplete;
     }
 
     @Override
@@ -56,12 +68,21 @@ public class TileORELauncher extends TileEntity implements ITickable {
 
     @Override
     public void update() {
+        if (world.isRemote) return;
         if (!structureComplete && world.getTotalWorldTime() % 40 == 0) {
             checkStructure();
+        }
+        if (structureComplete) {
+            if (recipeContext.getStatus() == RecipeContext.Status.PROCESSING) {
+                recipeContext.tick();
+            } else if (world.getTotalWorldTime() % 20 == 0) {
+                recipeContext.partialTick();
+            }
         }
     }
 
     public void checkStructure() {
+        recipeContext.reset();
         AxisAlignedBB boundary = LauncherManager.getBoundary(this);
         AxisAlignedBB internal = boundary.shrink(1);
         internal = internal.grow(0.1);
@@ -77,6 +98,9 @@ public class TileORELauncher extends TileEntity implements ITickable {
                     structureComplete = false;
                     return;
                 }
+            }
+            if (isBoundary) {
+                recipeContext.checkModule(world, pos);
             }
         }
         structureComplete = true;

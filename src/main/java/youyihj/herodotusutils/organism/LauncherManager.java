@@ -19,8 +19,8 @@ public class LauncherManager {
     public static void putLauncher(TileORELauncher launcher, EnumFacing facing) {
         BlockPos pos = launcher.getPos();
         int size = launcher.getTier().getSize();
-        BlockPos first = MiscUtils.rotateYCCWNorthUntil(pos.add(-size / 2, -1, 0), facing);
-        BlockPos second = MiscUtils.rotateYCCWNorthUntil(pos.add(size / 2, size - 2, size - 1), facing);
+        BlockPos first = pos.add(MiscUtils.rotateYCCWNorthUntil(new BlockPos(-size / 2, -1, 0), facing));
+        BlockPos second = pos.add(MiscUtils.rotateYCCWNorthUntil(new BlockPos(size / 2, size - 2, size - 1), facing));
         launchers.put(launcher, new AxisAlignedBB(first.getX(), first.getY(), first.getZ(), second.getX(), second.getY(), second.getZ()));
     }
 
