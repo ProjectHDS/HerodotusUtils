@@ -14,12 +14,17 @@ import java.util.*;
  */
 public class ConditionManager {
     public static final ConditionManager EMPTY = new ConditionManager();
+    private static final List<IConditionPatchFunction> FUNCTIONS = new ArrayList<>();
 
     private final Condition condition = new Condition();
     private final List<Pair<BlockPos, IConditionPlugin>> plugins = new ArrayList<>();
     private final Map<BlockPos, IConditionPlugin> pluginPos = new HashMap<>();
     private final Multimap<ConditionType, IConditionPlugin> pluginType = HashMultimap.create();
     private int pluginCount;
+
+    public static void addPatchFunction(IConditionPatchFunction function) {
+        FUNCTIONS.add(function);
+    }
 
     public Condition getCondition() {
         return condition;
@@ -65,6 +70,7 @@ public class ConditionManager {
             }
             condition.addConditionValue(plugin.getType(), value);
         });
+        FUNCTIONS.forEach(function -> function.apply(this, condition));
     }
 
     private void sortPlugins() {
