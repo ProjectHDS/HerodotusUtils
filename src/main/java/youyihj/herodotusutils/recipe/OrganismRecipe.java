@@ -22,12 +22,14 @@ public class OrganismRecipe {
     private final int time;
     private final Multimap<IngredientType<?>, ?> inputs;
     private final Multimap<IngredientType<?>, ?> outputs;
+    private final int minLevel;
 
-    public OrganismRecipe(String name, int time, Multimap<IngredientType<?>, ?> inputs, Multimap<IngredientType<?>, ?> outputs) {
+    public OrganismRecipe(String name, int time, int minLevel, Multimap<IngredientType<?>, ?> inputs, Multimap<IngredientType<?>, ?> outputs) {
         this.name = name;
         this.time = time;
         this.inputs = inputs;
         this.outputs = outputs;
+        this.minLevel = minLevel;
     }
 
     public int getTime() {
@@ -36,6 +38,10 @@ public class OrganismRecipe {
 
     public String getName() {
         return name;
+    }
+
+    public int getMinLevel() {
+        return minLevel;
     }
 
     public Collection<IngredientType<?>> getInputTypes() {
@@ -60,6 +66,7 @@ public class OrganismRecipe {
     public static class Builder {
         private int time;
         private String name;
+        private int minLevel;
         private final Multimap<IngredientType<?>, Object> inputs = Multimaps.newMultimap(new IdentityHashMap<>(), ArrayList::new);
         private final Multimap<IngredientType<?>, Object> outputs = Multimaps.newMultimap(new IdentityHashMap<>(), ArrayList::new);
 
@@ -69,8 +76,15 @@ public class OrganismRecipe {
             return this;
         }
 
+        @ZenMethod
         public Builder setName(String name) {
             this.name = name;
+            return this;
+        }
+
+        @ZenMethod
+        public Builder setMinLevel(int minLevel) {
+            this.minLevel = minLevel;
             return this;
         }
 
@@ -92,15 +106,18 @@ public class OrganismRecipe {
             if (name == null) {
                 throw new IllegalStateException("Name is not set!");
             }
-            OrganismRecipe recipe = new OrganismRecipe(name, time, Multimaps.unmodifiableMultimap(inputs), Multimaps.unmodifiableMultimap(outputs));
+            if (minLevel == 0) {
+                throw new IllegalStateException("MinLevel is not set!");
+            }
+            OrganismRecipe recipe = new OrganismRecipe(name, time, minLevel, Multimaps.unmodifiableMultimap(inputs), Multimaps.unmodifiableMultimap(outputs));
             REGISTRY.put(name, recipe);
         }
 
         // CraftTweaker Helper Methods
 
         @ZenMethod
-        public static Builder create(String name, int time) {
-            return new Builder().setName(name).setTime(time);
+        public static Builder create() {
+            return new Builder();
         }
 
         @ZenMethod

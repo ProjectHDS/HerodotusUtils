@@ -26,6 +26,7 @@ public class RecipeContext implements INBTSerializable<NBTTagCompound> {
     private OrganismRecipe currentRecipe;
     private int ticks;
     private Status status = Status.NO_RECIPE_FOUND;
+    private int level;
 
     public Status getStatus() {
         return status;
@@ -58,6 +59,10 @@ public class RecipeContext implements INBTSerializable<NBTTagCompound> {
             }
         }
         status = Status.NO_RECIPE_FOUND;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     public void checkModule(World world, BlockPos pos) {
@@ -98,6 +103,7 @@ public class RecipeContext implements INBTSerializable<NBTTagCompound> {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     private boolean hasEnoughInputs(OrganismRecipe recipe) {
+        if (recipe.getMinLevel() > level) return false;
         for (IngredientType<?> inputType : recipe.getInputTypes()) {
             Collection<IInputInterface<?>> typeInputInterfaces = inputInterfaces.get(inputType);
             Collection<?> inputEntries = recipe.getInputEntries(inputType);

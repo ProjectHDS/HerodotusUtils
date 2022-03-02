@@ -22,6 +22,7 @@ public class TileORELauncher extends TileEntity implements ITickable {
 
     public TileORELauncher(StructureTier tier) {
         this.tier = tier;
+        recipeContext.setLevel(tier.ordinal());
     }
 
     @SuppressWarnings("unused")
@@ -40,6 +41,7 @@ public class TileORELauncher extends TileEntity implements ITickable {
         super.readFromNBT(compound);
         recipeContext.deserializeNBT(compound.getCompoundTag("context"));
         this.tier = StructureTier.values()[compound.getInteger("tier")];
+        recipeContext.setLevel(tier.ordinal());
         LauncherManager.putLauncher(this, world.getBlockState(pos).getValue(BlockHorizontal.FACING));
     }
 
