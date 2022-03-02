@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 /**
  * @author youyihj
  */
-public interface IConditionPlugin extends Comparable<IConditionPlugin> {
+public interface IConditionPlugin {
     ConditionType getType();
 
     int getBaseValue();

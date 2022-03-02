@@ -1,0 +1,95 @@
+package youyihj.herodotusutils.block.organism.plugin;
+
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import youyihj.herodotusutils.organism.Condition;
+import youyihj.herodotusutils.organism.ConditionManager;
+import youyihj.herodotusutils.organism.ConditionType;
+import youyihj.herodotusutils.organism.IConditionPlugin;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+/**
+ * @author youyihj
+ */
+public class TileTemperaturePlugin extends AbstractTileConditionPlugin implements ITickable {
+
+    private Group group = new Group();
+    private boolean firstTick = true;
+
+    @Override
+    protected IConditionPlugin createConditionPlugin() {
+        return new IConditionPlugin() {
+            @Override
+            public ConditionType getType() {
+                return ConditionType.TEMPERATURE;
+            }
+
+            @Override
+            public int getBaseValue() {
+                return 10;
+            }
+
+            @Override
+            public Operation getOperation() {
+                return Operation.MULTIPLY;
+            }
+
+            @Override
+            public int getPriority() {
+                return 300;
+            }
+
+            @Override
+            public double getModifierAmount(World world, BlockPos pos, ConditionManager manager, Condition condition) {
+                double value = 0.9 + 0.1 * group.poses.size();
+                int oxygen = condition.getValue(ConditionType.OXYGEN);
+                if (oxygen >= 100 && value >= 3.0) {
+                    return 0.0;
+                }
+                if (oxygen >= 200 && value >= 2.0) {
+                    return 0.0;
+                }
+                if (oxygen >= 300 && value >= 1.1) {
+                    return 0.0;
+                }
+                boolean nextToHumidity = Arrays.stream(EnumFacing.values())
+                        .map(pos::offset)
+                        .map(manager::getPlugin)
+                        .filter(Objects::nonNull)
+                        .map(IConditionPlugin::getType)
+                        .anyMatch(it -> it == ConditionType.HUMIDITY);
+                if (nextToHumidity) value /= 2;
+                return value;
+            }
+        };
+    }
+
+    // FIXME: the group can't work properly on re-entering the world
+    @Override
+    public void update() {
+        if (firstTick) {
+            for (EnumFacing facing : EnumFacing.values()) {
+                TileEntity tileEntity = world.getTileEntity(pos.offset(facing));
+                if (tileEntity instanceof TileTemperaturePlugin) {
+                    this.group = ((TileTemperaturePlugin) tileEntity).group;
+                    this.group.poses.add(pos);
+                    return;
+                }
+            }
+            this.group = new Group();
+            group.poses.add(pos);
+            firstTick = false;
+        }
+    }
+
+    private static class Group {
+        private final Set<BlockPos> poses = new HashSet<>();
+    }
+}

@@ -15,6 +15,7 @@ import youyihj.herodotusutils.HerodotusUtils;
 import youyihj.herodotusutils.block.alchemy.*;
 import youyihj.herodotusutils.block.computing.*;
 import youyihj.herodotusutils.block.organism.*;
+import youyihj.herodotusutils.block.organism.plugin.*;
 import youyihj.herodotusutils.fluid.FluidMana;
 import youyihj.herodotusutils.modsupport.modularmachinery.block.BlockAspectListProviderInput;
 import youyihj.herodotusutils.modsupport.modularmachinery.block.BlockImpetusHatch;
@@ -82,7 +83,13 @@ public class BlockRegistry {
                 BlockCreatureDataReEncodeInterface.INSTANCE,
                 BlockCreatureDataAnalyzer.INSTANCE,
                 BlockCatalyzedAltar.INSTANCE,
-                BlockPrimordialCharger.INSTANCE
+                BlockPrimordialCharger.INSTANCE,
+                BlockConditionPlugin.HUMIDITY,
+                BlockConditionPlugin.LIGHT,
+                BlockConditionPlugin.PRESSURE,
+                BlockConditionPlugin.TEMPERATURE,
+                BlockConditionPlugin.OXYGEN,
+                BlockConditionPlugin.WATER
         );
         BlockTransporter.getBlockMap().values().forEach(registry::register);
         ORES.forEach(registry::register);
@@ -112,5 +119,11 @@ public class BlockRegistry {
         GameRegistry.registerTileEntity(TileEnergyInputInterface.class, HerodotusUtils.rl("energy_input_interface"));
         GameRegistry.registerTileEntity(TileFluidInputInterface.class, HerodotusUtils.rl("fluid_input_interface"));
         GameRegistry.registerTileEntity(TileFluidOutputInterface.class, HerodotusUtils.rl("fluid_output_interface"));
+        GameRegistry.registerTileEntity(TileHumidityPlugin.class, HerodotusUtils.rl("humidity_plugin"));
+        GameRegistry.registerTileEntity(TileLightPlugin.class, HerodotusUtils.rl("light_plugin"));
+        GameRegistry.registerTileEntity(TileOxygenPlugin.class, HerodotusUtils.rl("oxygen_plugin"));
+        GameRegistry.registerTileEntity(TilePressurePlugin.class, HerodotusUtils.rl("pressure_plugin"));
+        GameRegistry.registerTileEntity(TileTemperaturePlugin.class, HerodotusUtils.rl("temperature_plugin"));
+        GameRegistry.registerTileEntity(TileWaterPlugin.class, HerodotusUtils.rl("water_plugin"));
     }
 }

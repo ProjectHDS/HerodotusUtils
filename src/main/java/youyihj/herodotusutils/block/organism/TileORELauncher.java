@@ -59,13 +59,17 @@ public class TileORELauncher extends TileEntity implements ITickable {
 
     @Override
     public void onLoad() {
-        LauncherManager.putLauncher(this, world.getBlockState(pos).getValue(BlockHorizontal.FACING));
+        if (!world.isRemote) {
+            LauncherManager.putLauncher(this, world.getBlockState(pos).getValue(BlockHorizontal.FACING));
+        }
     }
 
     @Override
     public void invalidate() {
         super.invalidate();
-        LauncherManager.removeLauncher(this);
+        if (!world.isRemote) {
+            LauncherManager.removeLauncher(this);
+        }
     }
 
     @Override
@@ -73,7 +77,6 @@ public class TileORELauncher extends TileEntity implements ITickable {
         if (world.isRemote) return;
         if (!structureComplete && world.getTotalWorldTime() % 40 == 0) {
             checkStructure();
-            environment.finishCheckStructure();
         }
         if (structureComplete) {
             if (environment.getStatus() == OrganismRuntimeEnvironment.Status.PROCESSING) {
@@ -111,5 +114,6 @@ public class TileORELauncher extends TileEntity implements ITickable {
             }
         }
         structureComplete = true;
+        environment.finishCheckStructure();
     }
 }

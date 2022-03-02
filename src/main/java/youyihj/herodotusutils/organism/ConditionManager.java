@@ -1,5 +1,7 @@
 package youyihj.herodotusutils.organism;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.tuple.Pair;
@@ -16,14 +18,18 @@ public class ConditionManager {
     private final Condition condition = new Condition();
     private final List<Pair<BlockPos, IConditionPlugin>> plugins = new ArrayList<>();
     private final Map<BlockPos, IConditionPlugin> pluginPos = new HashMap<>();
+    private final Multimap<ConditionType, IConditionPlugin> pluginType = HashMultimap.create();
+    private int pluginCount;
 
     public Condition getCondition() {
         return condition;
     }
 
     public void addPlugin(IConditionPlugin plugin, BlockPos pos) {
+        pluginCount++;
         plugins.add(Pair.of(pos, plugin));
         pluginPos.put(pos, plugin);
+        pluginType.put(plugin.getType(), plugin);
     }
 
     @Nullable
@@ -31,9 +37,16 @@ public class ConditionManager {
         return pluginPos.get(pos);
     }
 
+    public Collection<IConditionPlugin> getPlugins(ConditionType type) {
+        return pluginType.get(type);
+    }
+
+    public int getPluginCount() {
+        return pluginCount;
+    }
+
     public void calculate(World world) {
         sortPlugins();
-        Map<ConditionType, Integer> map = condition.getMap();
         plugins.forEach(pair -> {
             BlockPos pos = pair.getLeft();
             IConditionPlugin plugin = pair.getRight();
@@ -50,7 +63,7 @@ public class ConditionManager {
                 default:
                     value = baseValue;
             }
-            map.merge(plugin.getType(), value, Integer::sum);
+            condition.addConditionValue(plugin.getType(), value);
         });
     }
 

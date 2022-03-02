@@ -11,6 +11,7 @@ import youyihj.herodotusutils.block.computing.BlockCalculatorController;
 import youyihj.herodotusutils.block.computing.BlockCalculatorStructure;
 import youyihj.herodotusutils.block.computing.BlockComputingModule;
 import youyihj.herodotusutils.block.computing.BlockTransporter;
+import youyihj.herodotusutils.block.organism.plugin.BlockConditionPlugin;
 import youyihj.herodotusutils.modsupport.modularmachinery.block.BlockAspectListProviderInput;
 import youyihj.herodotusutils.modsupport.modularmachinery.block.BlockImpetusHatch;
 import youyihj.herodotusutils.organism.StructureTier;
@@ -60,7 +61,13 @@ public class ItemRegistry {
                 BlockCreatureDataAnalyzer.ITEM_BLOCK,
                 BlockCreatureDataReEncodeInterface.ITEM_BLOCK,
                 BlockCatalyzedAltar.ITEM_BLOCK,
-                BlockPrimordialCharger.ITEM_BLOCK
+                BlockPrimordialCharger.ITEM_BLOCK,
+                BlockConditionPlugin.WATER.getItemBlock(),
+                BlockConditionPlugin.LIGHT.getItemBlock(),
+                BlockConditionPlugin.OXYGEN.getItemBlock(),
+                BlockConditionPlugin.PRESSURE.getItemBlock(),
+                BlockConditionPlugin.TEMPERATURE.getItemBlock(),
+                BlockConditionPlugin.HUMIDITY.getItemBlock()
         );
         StructureTier.BRASS.register(block -> registry.register(block.getItem()));
         BlockRegistry.ORES.stream().map(BlockOreBase::getItem).forEach(registry::register);

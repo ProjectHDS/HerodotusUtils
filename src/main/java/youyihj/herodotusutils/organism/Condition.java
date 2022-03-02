@@ -27,6 +27,10 @@ public class Condition {
         return map;
     }
 
+    public void addConditionValue(ConditionType type, int value) {
+        map.merge(type, value, Integer::sum);
+    }
+
     public int[] toIntList() {
         IntList list = new IntArrayList();
         map.forEach((type, value) -> {
