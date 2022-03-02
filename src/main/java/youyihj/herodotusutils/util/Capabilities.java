@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import youyihj.herodotusutils.HerodotusUtils;
 import youyihj.herodotusutils.computing.ComputingUnitCapabilityProvider;
 import youyihj.herodotusutils.computing.IComputingUnit;
+import youyihj.herodotusutils.organism.IConditionPlugin;
 import youyihj.herodotusutils.organism.IInputInterface;
 import youyihj.herodotusutils.organism.IOutputInterface;
 
@@ -42,6 +43,9 @@ public class Capabilities {
     @CapabilityInject(IOutputInterface.class)
     public static Capability<IOutputInterface<?>> OUTPUT_INTERFACE_CAPABILITY = null;
 
+    @CapabilityInject(IConditionPlugin.class)
+    public static Capability<IConditionPlugin> CONDITION_PLUGIN_CAPABILITY = null;
+
     @SubscribeEvent
     public static void attachToChunk(AttachCapabilitiesEvent<Chunk> event) {
         Objects.requireNonNull(COMPUTING_UNIT_CAPABILITY);
@@ -62,6 +66,7 @@ public class Capabilities {
         CapabilityManager.INSTANCE.register(ITaint.class, getInvalidStorage(), ITaint.Impl::new);
         CapabilityManager.INSTANCE.register(IInputInterface.class, getInvalidStorage(), Callables.returning(null));
         CapabilityManager.INSTANCE.register(IOutputInterface.class, getInvalidStorage(), Callables.returning(null));
+        CapabilityManager.INSTANCE.register(IConditionPlugin.class, getInvalidStorage(), Callables.returning(null));
     }
 
     @SuppressWarnings("unchecked")

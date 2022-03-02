@@ -8,8 +8,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 import org.apache.commons.lang3.tuple.Pair;
+import youyihj.herodotusutils.block.organism.TileORELauncher;
 import youyihj.herodotusutils.recipe.OrganismRecipe;
 import youyihj.herodotusutils.util.Capabilities;
+import youyihj.herodotusutils.util.Util;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -20,13 +22,19 @@ import java.util.List;
 /**
  * @author youyihj
  */
-public class RecipeContext implements INBTSerializable<NBTTagCompound> {
+public class OrganismRuntimeEnvironment implements INBTSerializable<NBTTagCompound> {
     private final Multimap<IngredientType<?>, IInputInterface<?>> inputInterfaces = Multimaps.newMultimap(new IdentityHashMap<>(), ArrayList::new);
     private final Multimap<IngredientType<?>, IOutputInterface<?>> outputInterfaces = Multimaps.newMultimap(new IdentityHashMap<>(), ArrayList::new);
     private OrganismRecipe currentRecipe;
     private int ticks;
     private Status status = Status.NO_RECIPE_FOUND;
     private int level;
+    private final TileORELauncher launcher;
+    private ConditionManager conditionManager = ConditionManager.EMPTY;
+
+    public OrganismRuntimeEnvironment(TileORELauncher launcher) {
+        this.launcher = launcher;
+    }
 
     public Status getStatus() {
         return status;
@@ -41,12 +49,17 @@ public class RecipeContext implements INBTSerializable<NBTTagCompound> {
         return currentRecipe;
     }
 
+    public ConditionManager getConditionManager() {
+        return conditionManager;
+    }
+
     public void reset() {
         inputInterfaces.clear();
         outputInterfaces.clear();
         currentRecipe = null;
         ticks = 0;
         status = Status.NO_RECIPE_FOUND;
+        conditionManager = ConditionManager.EMPTY;
     }
 
     public void findRecipe() {
@@ -59,6 +72,18 @@ public class RecipeContext implements INBTSerializable<NBTTagCompound> {
             }
         }
         status = Status.NO_RECIPE_FOUND;
+    }
+
+    public void onStartCheckStructure() {
+        conditionManager = new ConditionManager();
+    }
+
+    public void finishCheckStructure() {
+        if (launcher.isStructureComplete()) {
+            conditionManager.calculate(launcher.getWorld());
+        } else {
+            conditionManager = ConditionManager.EMPTY;
+        }
     }
 
     public void setLevel(int level) {
@@ -79,6 +104,11 @@ public class RecipeContext implements INBTSerializable<NBTTagCompound> {
                 outputInterfaces.put(ingredientType, outputInterface);
             }
         }
+    }
+
+    public void checkPlugin(World world, BlockPos pos) {
+        Util.getCapability(world, pos, Capabilities.CONDITION_PLUGIN_CAPABILITY, null)
+                .ifPresent(it -> conditionManager.addPlugin(it, pos));
     }
 
     public void tick() {

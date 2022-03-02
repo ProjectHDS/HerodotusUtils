@@ -9,7 +9,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import youyihj.herodotusutils.organism.LauncherManager;
-import youyihj.herodotusutils.organism.RecipeContext;
+import youyihj.herodotusutils.organism.OrganismRuntimeEnvironment;
 import youyihj.herodotusutils.organism.StructureTier;
 
 /**
@@ -18,11 +18,11 @@ import youyihj.herodotusutils.organism.StructureTier;
 public class TileORELauncher extends TileEntity implements ITickable {
     private StructureTier tier;
     private boolean structureComplete;
-    private final RecipeContext recipeContext = new RecipeContext();
+    private final OrganismRuntimeEnvironment environment = new OrganismRuntimeEnvironment(this);
 
     public TileORELauncher(StructureTier tier) {
         this.tier = tier;
-        recipeContext.setLevel(tier.ordinal());
+        environment.setLevel(tier.ordinal());
     }
 
     @SuppressWarnings("unused")
@@ -32,16 +32,16 @@ public class TileORELauncher extends TileEntity implements ITickable {
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
         compound.setInteger("tier", tier.ordinal());
-        compound.setTag("context", recipeContext.serializeNBT());
+        compound.setTag("context", environment.serializeNBT());
         return compound;
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        recipeContext.deserializeNBT(compound.getCompoundTag("context"));
+        environment.deserializeNBT(compound.getCompoundTag("context"));
         this.tier = StructureTier.values()[compound.getInteger("tier")];
-        recipeContext.setLevel(tier.ordinal());
+        environment.setLevel(tier.ordinal());
         LauncherManager.putLauncher(this, world.getBlockState(pos).getValue(BlockHorizontal.FACING));
     }
 
@@ -49,8 +49,8 @@ public class TileORELauncher extends TileEntity implements ITickable {
         return tier;
     }
 
-    public RecipeContext getRecipeContext() {
-        return recipeContext;
+    public OrganismRuntimeEnvironment getEnvironment() {
+        return environment;
     }
 
     public boolean isStructureComplete() {
@@ -73,18 +73,20 @@ public class TileORELauncher extends TileEntity implements ITickable {
         if (world.isRemote) return;
         if (!structureComplete && world.getTotalWorldTime() % 40 == 0) {
             checkStructure();
+            environment.finishCheckStructure();
         }
         if (structureComplete) {
-            if (recipeContext.getStatus() == RecipeContext.Status.PROCESSING) {
-                recipeContext.tick();
+            if (environment.getStatus() == OrganismRuntimeEnvironment.Status.PROCESSING) {
+                environment.tick();
             } else if (world.getTotalWorldTime() % 20 == 0) {
-                recipeContext.partialTick();
+                environment.partialTick();
             }
         }
     }
 
     public void checkStructure() {
-        recipeContext.reset();
+        environment.reset();
+        environment.onStartCheckStructure();
         AxisAlignedBB boundary = LauncherManager.getBoundary(this);
         AxisAlignedBB internal = boundary.shrink(1);
         internal = internal.grow(0.1);
@@ -102,7 +104,10 @@ public class TileORELauncher extends TileEntity implements ITickable {
                 }
             }
             if (isBoundary) {
-                recipeContext.checkModule(world, pos);
+                environment.checkModule(world, pos);
+            }
+            if (isInternal) {
+                environment.checkPlugin(world, pos);
             }
         }
         structureComplete = true;

@@ -43,6 +43,10 @@ public class ORELauncherGui extends GuiContainer {
         String statusKey = container.isComplete() ? container.getStatus().name().toLowerCase(Locale.ENGLISH) : "structure";
         String prefix = "hdsutils.organism.status";
         this.fontRenderer.drawString(I18n.format(prefix, I18n.format(prefix + "." + statusKey)), 13, 14, -1);
+        container.getClientCondition().getMap().forEach((type, value) -> {
+            String message = I18n.format(type.getLocalizationKey()) + ": " + value;
+            this.fontRenderer.drawString(message, 13 + type.getId() % 2 * 80, 28 + type.getId() / 2 * 14, -1);
+        });
         this.mc.getTextureManager().bindTexture(DEFAULT_TEXTURE);
         double process = ((double) container.getTimer()) / ((double) container.getRequiredTime());
         int length = 160;
