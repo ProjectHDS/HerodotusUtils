@@ -19,6 +19,7 @@ public enum StructureTier {
             putBlock(BlockItemOutputInterface.BRASS);
             putBlock(BlockFluidInputInterface.BRASS);
             putBlock(BlockFluidOutputInterface.BRASS);
+            putBlock(BlockEnergyInputInterface.BRASS);
         }
     };
 
