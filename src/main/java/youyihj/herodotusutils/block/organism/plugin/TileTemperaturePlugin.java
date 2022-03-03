@@ -71,22 +71,46 @@ public class TileTemperaturePlugin extends AbstractTileConditionPlugin implement
         };
     }
 
-    // FIXME: the group can't work properly on re-entering the world
+    @Override
+    public void invalidate() {
+        super.invalidate();
+        group.poses.remove(pos);
+    }
+
     @Override
     public void update() {
-        if (firstTick) {
-            for (EnumFacing facing : EnumFacing.values()) {
-                TileEntity tileEntity = world.getTileEntity(pos.offset(facing));
-                if (tileEntity instanceof TileTemperaturePlugin) {
-                    this.group = ((TileTemperaturePlugin) tileEntity).group;
-                    this.group.poses.add(pos);
-                    return;
+        if (firstTick) { // when all tile entities are ready
+            if (group.poses.isEmpty()) {
+                group.poses.add(pos);
+                for (EnumFacing facing : EnumFacing.values()) {
+                    scanGroup(pos.offset(facing));
                 }
             }
-            this.group = new Group();
-            group.poses.add(pos);
             firstTick = false;
         }
+    }
+
+    private void scanGroup(BlockPos position) {
+        boolean success = addToGroup(position);
+        if (!success)
+            return;
+        for (EnumFacing enumFacing : EnumFacing.values()) {
+            BlockPos offset = position.offset(enumFacing);
+            scanGroup(offset);
+        }
+    }
+
+    private boolean addToGroup(BlockPos position) {
+        TileEntity tileEntity = world.getTileEntity(position);
+        if (tileEntity instanceof TileTemperaturePlugin) {
+            TileTemperaturePlugin plugin = (TileTemperaturePlugin) tileEntity;
+            if (plugin.group != group) {
+                group.poses.add(position);
+                plugin.group = group;
+                return true;
+            }
+        }
+        return false;
     }
 
     private static class Group {
