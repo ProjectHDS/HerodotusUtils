@@ -5,10 +5,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import youyihj.herodotusutils.organism.Condition;
-import youyihj.herodotusutils.organism.ConditionManager;
-import youyihj.herodotusutils.organism.ConditionType;
-import youyihj.herodotusutils.organism.IConditionPlugin;
+import youyihj.herodotusutils.organism.*;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -25,27 +22,7 @@ public class TileTemperaturePlugin extends AbstractTileConditionPlugin implement
 
     @Override
     protected IConditionPlugin createConditionPlugin() {
-        return new IConditionPlugin() {
-            @Override
-            public ConditionType getType() {
-                return ConditionType.TEMPERATURE;
-            }
-
-            @Override
-            public int getBaseValue() {
-                return 10;
-            }
-
-            @Override
-            public Operation getOperation() {
-                return Operation.MULTIPLY;
-            }
-
-            @Override
-            public int getPriority() {
-                return 300;
-            }
-
+        return new AbstractConditionPlugin(ConditionType.TEMPERATURE, 10, 300, IConditionPlugin.Operation.MULTIPLY) {
             @Override
             public double getModifierAmount(World world, BlockPos pos, ConditionManager manager, Condition condition) {
                 double value = 0.9 + 0.1 * group.poses.size();
