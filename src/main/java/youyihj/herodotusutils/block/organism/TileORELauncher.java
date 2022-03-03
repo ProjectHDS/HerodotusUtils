@@ -42,7 +42,6 @@ public class TileORELauncher extends TileEntity implements ITickable {
         environment.deserializeNBT(compound.getCompoundTag("context"));
         this.tier = StructureTier.values()[compound.getInteger("tier")];
         environment.setLevel(tier.ordinal());
-        LauncherManager.putLauncher(this, world.getBlockState(pos).getValue(BlockHorizontal.FACING));
     }
 
     public StructureTier getTier() {
