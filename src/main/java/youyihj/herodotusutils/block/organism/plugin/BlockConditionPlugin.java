@@ -17,7 +17,7 @@ import java.util.function.Supplier;
  * @author youyihj
  */
 public class BlockConditionPlugin extends PlainBlock {
-    public static final BlockConditionPlugin LIGHT = new BlockConditionPlugin("light_plugin", TileLightPlugin::new);
+    public static final BlockConditionPlugin LIGHT = (BlockConditionPlugin) new BlockConditionPlugin("light_plugin", TileLightPlugin::new).setLightLevel(15);
     public static final BlockConditionPlugin HUMIDITY = new BlockConditionPlugin("humidity_plugin", TileHumidityPlugin::new);
     public static final BlockConditionPlugin PRESSURE = new BlockConditionPlugin("pressure_plugin", TilePressurePlugin::new);
     public static final BlockConditionPlugin WATER = new BlockConditionPlugin("water_plugin", TileWaterPlugin::new);
