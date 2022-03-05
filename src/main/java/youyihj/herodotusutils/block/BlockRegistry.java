@@ -119,6 +119,7 @@ public class BlockRegistry {
         GameRegistry.registerTileEntity(TileEnergyInputInterface.class, HerodotusUtils.rl("energy_input_interface"));
         GameRegistry.registerTileEntity(TileFluidInputInterface.class, HerodotusUtils.rl("fluid_input_interface"));
         GameRegistry.registerTileEntity(TileFluidOutputInterface.class, HerodotusUtils.rl("fluid_output_interface"));
+        GameRegistry.registerTileEntity(TileImpetusInputInterface.class, HerodotusUtils.rl("impetus_input_interface"));
         GameRegistry.registerTileEntity(TileHumidityPlugin.class, HerodotusUtils.rl("humidity_plugin"));
         GameRegistry.registerTileEntity(TileLightPlugin.class, HerodotusUtils.rl("light_plugin"));
         GameRegistry.registerTileEntity(TileOxygenPlugin.class, HerodotusUtils.rl("oxygen_plugin"));
