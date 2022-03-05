@@ -1,0 +1,18 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "texture": "hdsutils:blocks/brass_fluid_output_interface"
+    },
+    "model": "hdsutils:organism/fluid_interface",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [
+      {}
+    ],
+    "inventory": [
+      {}
+    ]
+  }
+}
