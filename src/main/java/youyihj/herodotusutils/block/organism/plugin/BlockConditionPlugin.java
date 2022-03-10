@@ -52,8 +52,8 @@ public class BlockConditionPlugin extends PlainBlock {
 
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        worldIn.removeTileEntity(pos);
         LauncherManager.onRefreshStructure(pos);
-        super.breakBlock(worldIn, pos, state);
     }
 
     public ItemBlock getItemBlock() {
