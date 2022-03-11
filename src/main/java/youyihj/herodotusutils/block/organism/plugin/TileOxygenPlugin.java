@@ -10,7 +10,7 @@ import youyihj.herodotusutils.organism.*;
 public class TileOxygenPlugin extends AbstractTileConditionPlugin {
     @Override
     protected IConditionPlugin createConditionPlugin() {
-        return new AbstractConditionPlugin(ConditionType.OXYGEN, 10, 100, IConditionPlugin.Operation.MULTIPLY) {
+        return new AbstractConditionPlugin(ConditionType.OXYGEN, 10, 500, IConditionPlugin.Operation.MULTIPLY) {
             @Override
             public double getModifierAmount(World world, BlockPos pos, ConditionManager manager, Condition condition) {
                 return 1.0;

@@ -27,6 +27,13 @@ public class TileTemperaturePlugin extends AbstractTileConditionPlugin implement
             public double getModifierAmount(World world, BlockPos pos, ConditionManager manager, Condition condition) {
                 double value = 0.9 + 0.1 * group.poses.size();
                 int oxygen = condition.getValue(ConditionType.OXYGEN);
+                boolean nextToHumidity = Arrays.stream(EnumFacing.values())
+                        .map(pos::offset)
+                        .map(manager::getPlugin)
+                        .filter(Objects::nonNull)
+                        .map(IConditionPlugin::getType)
+                        .anyMatch(it -> it == ConditionType.HUMIDITY);
+                if (nextToHumidity) value /= 2;
                 if (oxygen >= 100 && value >= 3.0) {
                     return 0.0;
                 }
@@ -36,13 +43,6 @@ public class TileTemperaturePlugin extends AbstractTileConditionPlugin implement
                 if (oxygen >= 300 && value >= 1.1) {
                     return 0.0;
                 }
-                boolean nextToHumidity = Arrays.stream(EnumFacing.values())
-                        .map(pos::offset)
-                        .map(manager::getPlugin)
-                        .filter(Objects::nonNull)
-                        .map(IConditionPlugin::getType)
-                        .anyMatch(it -> it == ConditionType.HUMIDITY);
-                if (nextToHumidity) value /= 2;
                 return value;
             }
         };
