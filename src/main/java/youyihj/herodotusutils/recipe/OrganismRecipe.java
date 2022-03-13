@@ -2,6 +2,7 @@ package youyihj.herodotusutils.recipe;
 
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
+import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.liquid.ILiquidStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
@@ -62,6 +63,7 @@ public class OrganismRecipe {
         return ((Collection<T>) outputs.get(type));
     }
 
+    @ZenRegister
     @ZenClass("mods.hdsutils.OrganismRecipeBuilder")
     public static class Builder {
         private int time;
