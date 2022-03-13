@@ -4,10 +4,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.Shadow;
@@ -27,7 +25,7 @@ import youyihj.herodotusutils.util.SharedRiftAction;
 @Mixin(EntityFluxRift.class)
 public abstract class MixinEntityFluxRift extends Entity {
 
-    private static final ItemDropSupplier PRIMORDIAL_GRAIN = ItemDropSupplier.of(() -> new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("thaumicwonders:primordial_grain"))));
+    private static final ItemDropSupplier PRIMORDIAL_GRAIN = ItemDropSupplier.ofItem("thaumicwonders:primordial_grain");
 
     @Shadow(remap = false)
     int maxSize;

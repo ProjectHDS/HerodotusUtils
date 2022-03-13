@@ -27,11 +27,11 @@ public class ItemDropSupplier extends Lazy<ItemStack, ItemStack> {
     }
 
     public static ItemDropSupplier ofItem(Item item) {
-        return new ItemDropSupplier(() -> new ItemStack(item));
+        return of(() -> new ItemStack(item));
     }
 
     public static ItemDropSupplier ofItem(String id) {
-        return new ItemDropSupplier(() -> new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(id))));
+        return of(() -> new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(id))));
     }
 
     public static ItemDropSupplier ofOreDict(String oreDict) {

@@ -3,8 +3,6 @@ package youyihj.herodotusutils.block;
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fml.common.Mod;
@@ -26,8 +24,6 @@ import youyihj.herodotusutils.util.ItemDropSupplier;
 
 import java.util.List;
 
-import static net.minecraftforge.fml.common.registry.ForgeRegistries.ITEMS;
-
 /**
  * @author youyihj
  */
@@ -38,17 +34,11 @@ public class BlockRegistry {
     public static final BlockOreBase YELLOW_ORE = new BlockOreBase("yellow", 0xffd701);
     public static final BlockOreBase BLUE_ORE = new BlockOreBase("blue", 0x00a2dd);
     public static final BlockOreBase RHOMBUS_ORE = new BlockOreBase("rhombus", 0xffffff)
-        .setDropItemSupplier(
-            ItemDropSupplier.of(() -> new ItemStack(ITEMS.getValue(new ResourceLocation("contenttweaker", "rhombus"))))
-        );
+        .setDropItemSupplier(ItemDropSupplier.ofItem("contenttweaker:rhombus"));
     public static final BlockOreBase SPHERICAL_ORE = new BlockOreBase("spherical", 0xffffff)
-        .setDropItemSupplier(
-            ItemDropSupplier.of(() -> new ItemStack(ITEMS.getValue(new ResourceLocation("contenttweaker", "spherical"))))
-        );
+        .setDropItemSupplier(ItemDropSupplier.ofItem("contenttweaker:spherical"));
     public static final BlockOreBase SQUARE_ORE = new BlockOreBase("square", 0xffffff)
-        .setDropItemSupplier(
-            ItemDropSupplier.of(() -> new ItemStack(ITEMS.getValue(new ResourceLocation("contenttweaker", "square"))))
-        );
+        .setDropItemSupplier(ItemDropSupplier.ofItem("contenttweaker:square"));
     public static final List<BlockOreBase> ORES = Lists.newArrayList(RED_ORE, YELLOW_ORE, BLUE_ORE, RHOMBUS_ORE, SPHERICAL_ORE, SQUARE_ORE);
     private static final Block FLUID_MANA_BLOCK = new BlockFluidClassic(FluidMana.INSTANCE, Material.WATER).setRegistryName("fluid_mana");
 
