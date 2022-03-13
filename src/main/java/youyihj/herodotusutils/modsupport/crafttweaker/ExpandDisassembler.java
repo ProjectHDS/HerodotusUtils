@@ -2,6 +2,7 @@ package youyihj.herodotusutils.modsupport.crafttweaker;
 
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
+import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.entity.IEntityDefinition;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 /**
  * @author youyihj
  */
+@ZenRegister
 @ZenExpansion("mods.factorytech.Disassembler")
 public class ExpandDisassembler {
     @ZenMethodStatic

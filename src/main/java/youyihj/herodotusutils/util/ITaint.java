@@ -1,5 +1,6 @@
 package youyihj.herodotusutils.util;
 
+import crafttweaker.annotations.ZenRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenGetter;
@@ -13,6 +14,7 @@ import javax.annotation.Nullable;
 /**
  * @author youyihj
  */
+@ZenRegister
 @ZenClass("mods.hdsutils.ITaint")
 public interface ITaint {
     int ORIGIN_MAX_VALUE = 100;

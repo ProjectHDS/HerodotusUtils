@@ -1,5 +1,6 @@
 package youyihj.herodotusutils.recipe;
 
+import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.mc1120.item.MCMutableItemStack;
@@ -13,6 +14,7 @@ import java.util.Arrays;
 /**
  * @author youyihj
  */
+@ZenRegister
 @ZenClass("mods.hdsutils.CreatureData")
 public class CreatureData {
     private static final IItemStack[] items = new IItemStack[16];
