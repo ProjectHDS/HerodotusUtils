@@ -1,5 +1,6 @@
 package youyihj.herodotusutils.modsupport.crafttweaker;
 
+import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.api.util.Position3f;
 import crafttweaker.api.world.IWorld;
@@ -11,6 +12,7 @@ import youyihj.herodotusutils.entity.EntityRedSlime;
 /**
  * @author youyihj
  */
+@ZenRegister
 @ZenClass("mods.hdsutils.HDSUtils")
 public class HDSUtils {
     @ZenMethod

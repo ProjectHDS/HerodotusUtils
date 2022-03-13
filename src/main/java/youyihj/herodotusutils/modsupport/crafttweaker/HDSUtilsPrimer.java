@@ -1,6 +1,7 @@
 package youyihj.herodotusutils.modsupport.crafttweaker;
 
 import crafttweaker.CraftTweakerAPI;
+import crafttweaker.annotations.ZenRegister;
 import hellfirepvp.modularmachinery.common.integration.crafttweaker.RecipePrimer;
 import hellfirepvp.modularmachinery.common.machine.IOType;
 import stanhebben.zenscript.annotations.ZenExpansion;
@@ -13,6 +14,7 @@ import youyihj.herodotusutils.modsupport.modularmachinery.tile.TileAspectListPro
 
 import java.util.Map;
 
+@ZenRegister
 @ZenExpansion("mods.modularmachinery.RecipePrimer")
 public class HDSUtilsPrimer {
 

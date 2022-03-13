@@ -1,5 +1,6 @@
 package youyihj.herodotusutils.modsupport.crafttweaker;
 
+import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
@@ -14,6 +15,7 @@ import thaumcraft.api.crafting.IArcaneRecipe;
 /**
  * @author youyihj
  */
+@ZenRegister
 @ZenClass("mods.thaumcraft.ArcaneRecipe")
 public class ArcaneRecipe implements ICraftingRecipe {
     private final IArcaneRecipe recipe;
