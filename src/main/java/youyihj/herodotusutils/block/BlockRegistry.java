@@ -92,6 +92,7 @@ public class BlockRegistry {
                 BlockConditionPlugin.WATER
         );
         BlockTransporter.getBlockMap().values().forEach(registry::register);
+        BlockGolemCore.BLOCKS.forEach(registry::register);
         ORES.forEach(registry::register);
         StructureTier.BRASS.register(registry::register);
         GameRegistry.registerTileEntity(TileManaLiquidizer.class, HerodotusUtils.rl("mana_liquidizer"));
@@ -113,6 +114,7 @@ public class BlockRegistry {
         GameRegistry.registerTileEntity(TilePrimordialCharger.class, HerodotusUtils.rl("primordial_changer"));
         GameRegistry.registerTileEntity(TileAlchemySeparatorTank.class, HerodotusUtils.rl("alchemy_separator_tank"));
         GameRegistry.registerTileEntity(TileAlchemySeparator.class, HerodotusUtils.rl("alchemy_separator"));
+        GameRegistry.registerTileEntity(TileGolemCore.class, HerodotusUtils.rl("golem_core"));
         GameRegistry.registerTileEntity(TileORELauncher.class, HerodotusUtils.rl("organism_launcher"));
         GameRegistry.registerTileEntity(TileItemInputInterface.class, HerodotusUtils.rl("item_input_interface"));
         GameRegistry.registerTileEntity(TileItemOutputInterface.class, HerodotusUtils.rl("item_output_interface"));

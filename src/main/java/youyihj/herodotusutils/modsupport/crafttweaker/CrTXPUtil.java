@@ -1,6 +1,7 @@
 package youyihj.herodotusutils.modsupport.crafttweaker;
 
 import crafttweaker.annotations.ModOnly;
+import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.api.player.IPlayer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,6 +13,7 @@ import java.lang.reflect.Method;
 /**
  * @author youyihj
  */
+@ZenRegister
 @ZenClass("mods.hdsutils.XPUtil")
 @ModOnly("enderio")
 @SuppressWarnings("unused")

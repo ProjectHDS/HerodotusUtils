@@ -3,8 +3,7 @@ package youyihj.herodotusutils.block.alchemy;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.util.Constants;
-import youyihj.herodotusutils.alchemy.AlchemyFluid;
-import youyihj.herodotusutils.alchemy.IHasAlchemyFluid;
+import youyihj.herodotusutils.alchemy.*;
 
 import javax.annotation.Nullable;
 
@@ -14,6 +13,7 @@ import javax.annotation.Nullable;
 public abstract class AbstractHasAlchemyFluidTileEntity extends AbstractPipeTileEntity implements IHasAlchemyFluid {
     protected AlchemyFluid content;
     private AlchemyFluid cachedContent;
+    private AlchemyModuleCallback emptyCallback;
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
@@ -40,12 +40,15 @@ public abstract class AbstractHasAlchemyFluidTileEntity extends AbstractPipeTile
     }
 
     @Override
-    public boolean handleInput(AlchemyFluid input, EnumFacing inputSide) {
-        if (content == null && inputSide == inputSide()) {
+    public InputResult handleInput(AlchemyFluid input, EnumFacing inputSide) {
+        if (inputSide != inputSide()) {
+            return InputResult.WRONG_SIDE;
+        } else if (content != null) {
+            return InputResult.BLOCK;
+        } else {
             cachedContent = input;
-            return true;
+            return InputResult.SUCCESS;
         }
-        return false;
     }
 
     @Override
@@ -55,11 +58,20 @@ public abstract class AbstractHasAlchemyFluidTileEntity extends AbstractPipeTile
             this.markDirty();
             cachedContent = null;
         }
+        emptyCallback = null;
     }
 
     @Override
     public void emptyFluid() {
         content = null;
+        if (emptyCallback != null) {
+            emptyCallback.work();
+        }
         this.markDirty();
+    }
+
+    @Override
+    public void setEmptyCallback(AlchemyModuleCallback emptyCallback) {
+        this.emptyCallback = emptyCallback;
     }
 }

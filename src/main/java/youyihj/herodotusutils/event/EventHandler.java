@@ -19,6 +19,7 @@ import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.util.ArrayUtil;
 import hellfirepvp.modularmachinery.common.crafting.ComponentType;
 import hellfirepvp.modularmachinery.common.crafting.requirement.type.RequirementType;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -37,10 +38,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -56,6 +54,7 @@ import youyihj.herodotusutils.block.BlockCreatureDataReEncodeInterface;
 import youyihj.herodotusutils.block.BlockMercury;
 import youyihj.herodotusutils.computing.event.ComputingUnitChangeEvent;
 import youyihj.herodotusutils.item.ItemPenumbraRing;
+import youyihj.herodotusutils.item.ItemRiftSword;
 import youyihj.herodotusutils.item.RefinedBottle;
 import youyihj.herodotusutils.modsupport.modularmachinery.crafting.component.ComponentAspectList;
 import youyihj.herodotusutils.modsupport.modularmachinery.crafting.component.ComponentImpetus;
@@ -238,6 +237,18 @@ public class EventHandler {
     public static void register(RegistryEvent.Register<Potion> event) {
         event.getRegistry().register(Starvation.INSTANCE);
         event.getRegistry().register(LithiumAmalgamInfected.INSTANCE);
+    }
+
+    @SubscribeEvent
+    public static void redirectToRiftDamage(LivingAttackEvent event) {
+        Entity immediateSource = event.getSource().getImmediateSource();
+        if (immediateSource instanceof EntityLivingBase && !event.getEntityLiving().world.isRemote) {
+            ItemStack stack = ((EntityLivingBase) immediateSource).getHeldItemMainhand();
+            if (stack.getItem() == ItemRiftSword.INSTANCE) {
+                event.setCanceled(true);
+                SharedRiftAction.attackEntity(event.getEntityLiving(), event.getAmount());
+            }
+        }
     }
 
     @SubscribeEvent

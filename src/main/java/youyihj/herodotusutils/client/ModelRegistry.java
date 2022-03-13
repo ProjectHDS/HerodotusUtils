@@ -23,6 +23,10 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import youyihj.herodotusutils.HerodotusUtils;
 import youyihj.herodotusutils.block.*;
+import youyihj.herodotusutils.block.BlockGolemCore;
+import youyihj.herodotusutils.block.BlockManaLiquidizer;
+import youyihj.herodotusutils.block.BlockOreBase;
+import youyihj.herodotusutils.block.BlockRegistry;
 import youyihj.herodotusutils.block.alchemy.*;
 import youyihj.herodotusutils.block.computing.BlockCalculatorController;
 import youyihj.herodotusutils.block.computing.BlockCalculatorStructure;
@@ -32,8 +36,10 @@ import youyihj.herodotusutils.block.organism.plugin.BlockConditionPlugin;
 import youyihj.herodotusutils.client.render.TileLazyTunnelRender;
 import youyihj.herodotusutils.client.render.TilePrimordialChargerRender;
 import youyihj.herodotusutils.client.render.TileRoundRobinTunnelRender;
+import youyihj.herodotusutils.client.render.*;
 import youyihj.herodotusutils.entity.EntityRedSlime;
 import youyihj.herodotusutils.entity.RenderRedSlime;
+import youyihj.herodotusutils.entity.golem.*;
 import youyihj.herodotusutils.fluid.FluidMana;
 import youyihj.herodotusutils.fluid.FluidMercury;
 import youyihj.herodotusutils.item.*;
@@ -114,6 +120,9 @@ public class ModelRegistry {
                 ItemOilAIOT.INSTANCE,
                 ItemRiftFeed.INSTANCE,
                 ItemPenumbraRing.INSTANCE,
+                ItemRiftSword.INSTANCE,
+                GolemUpperSword.INSTANCE,
+                GolemDownerSword.INSTANCE,
                 BlockAlchemyController.ITEM_BLOCK,
                 BlockAlchemyInputHatch.ITEM_BLOCK,
                 BlockPlainAlchemyTunnel.RIGHT_ANGLE_ITEM,
@@ -144,6 +153,16 @@ public class ModelRegistry {
                 ModelLoader.setCustomModelResourceLocation(ore.getItem(), i, META_ORE_STATE_MAPPER.apply(i));
             }
         }
+        BlockGolemCore.BLOCKS.forEach(block -> ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
+            @Override
+            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                return new ModelResourceLocation(HerodotusUtils.rl("golem_core"), "normal");
+            }
+        }));
+        BlockGolemCore.ITEM_BLOCKS.forEach(item -> {
+            ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(HerodotusUtils.rl("golem_core_item"), "inventory"));
+            item.setTileEntityItemStackRenderer(new TileGolemCoreItemRender(item));
+        });
         for (int i = 0; i < 4; i++) {
             ModelLoader.setCustomModelResourceLocation(BlockAlchemySeparatorTank.ITEM_BLOCK, i, new ModelResourceLocation(Objects.requireNonNull(BlockAlchemySeparatorTank.ITEM_BLOCK.getRegistryName()), "inventory"));
         }
@@ -155,6 +174,9 @@ public class ModelRegistry {
         ClientRegistry.bindTileEntitySpecialRenderer(TileAlchemyRoundRobinTunnel.class, new TileRoundRobinTunnelRender());
         ClientRegistry.bindTileEntitySpecialRenderer(TileAlchemyLazyTunnel.class, new TileLazyTunnelRender());
         ClientRegistry.bindTileEntitySpecialRenderer(TilePrimordialCharger.class, new TilePrimordialChargerRender());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileGolemCore.class, new TileGolemCoreRender());
+        RenderingRegistry.registerEntityRenderingHandler(EntityExtraIronGolem.class, RenderExtraIronGolem::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityExtraSnowman.class, RenderExtraSnowman::new);
     }
 
     @SubscribeEvent

@@ -12,16 +12,30 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 @ParametersAreNonnullByDefault
 public interface IAlchemyModule extends IPipe {
-    static void transferFluid(IHasAlchemyFluid from, IHasAlchemyFluid to, EnumFacing outputSide) {
+    static InputResult transferFluid(IHasAlchemyFluidModule from, IHasAlchemyFluid to, EnumFacing outputSide) {
         AlchemyFluid containedFluid = from.getContainedFluid();
-        if (containedFluid != null && to.handleInput(containedFluid, outputSide.getOpposite())) {
-            from.emptyFluid();
+        if (containedFluid != null) {
+            InputResult result = to.handleInput(containedFluid, outputSide.getOpposite());
+            switch (result) {
+                case SUCCESS:
+                    from.emptyFluid();
+                    break;
+                case BLOCK:
+                    to.setEmptyCallback(new AlchemyModuleCallback(from));
+                    break;
+            }
+            return result;
         }
+        return InputResult.NO_OPERATION;
     }
 
-    static void transferFluid(IHasAlchemyFluid from, World world, BlockPos pos, EnumFacing outputSide) {
+    static void transferFluid(IHasAlchemyFluidModule from, World world, BlockPos pos, EnumFacing outputSide) {
         Util.getTileEntity(world, pos.offset(outputSide), IHasAlchemyFluid.class).ifPresent(iHasAlchemyFluid -> transferFluid(from, iHasAlchemyFluid, outputSide));
     }
 
     void work();
+
+    default void callBackWork() {
+        work();
+    }
 }

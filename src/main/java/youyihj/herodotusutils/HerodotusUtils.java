@@ -13,7 +13,7 @@ import youyihj.herodotusutils.proxy.IProxy;
         modid = HerodotusUtils.MOD_ID,
         name = HerodotusUtils.MOD_NAME,
         version = HerodotusUtils.VERSION,
-        dependencies = "before:contenttweaker"
+        dependencies = "after:qmd" // to replace mercury of qmd
 )
 public class HerodotusUtils {
 

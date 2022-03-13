@@ -2,6 +2,7 @@ package youyihj.herodotusutils.recipe;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.liquid.ILiquidStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
 import net.minecraftforge.fluids.Fluid;
@@ -17,6 +18,7 @@ import java.util.Map;
 /**
  * @author youyihj
  */
+@ZenRegister
 @ZenClass("mods.hdsutils.Alchemy")
 public class AlchemyRecipes {
     private static final BiMap<Fluid, AlchemyFluid> normalFluidToAlchemyMap = HashBiMap.create();

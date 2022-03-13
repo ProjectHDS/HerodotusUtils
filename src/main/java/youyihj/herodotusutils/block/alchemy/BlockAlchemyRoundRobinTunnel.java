@@ -40,7 +40,7 @@ public class BlockAlchemyRoundRobinTunnel extends AbstractPipeBlock implements I
                 EnumFacing facing = facingQuery[i];
                 probeInfo.text(I18n.format("hdsutils.alchemy.round.index", i, getFacingLocalizedInfo(facing)));
             }
-            probeInfo.text(I18n.format("hdsutils.alchemy.round.next", getFacingLocalizedInfo(te.getNextOutputSide(false))));
+            probeInfo.text(I18n.format("hdsutils.alchemy.round.next", getFacingLocalizedInfo(te.getNextOutputSide())));
         });
     }
 

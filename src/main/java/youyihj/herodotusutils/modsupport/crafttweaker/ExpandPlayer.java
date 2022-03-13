@@ -1,5 +1,6 @@
 package youyihj.herodotusutils.modsupport.crafttweaker;
 
+import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.api.player.IPlayer;
 import stanhebben.zenscript.annotations.ZenExpansion;
@@ -12,6 +13,7 @@ import youyihj.herodotusutils.world.AncientVoidTeleporter;
 /**
  * @author youyihj
  */
+@ZenRegister
 @ZenExpansion("crafttweaker.player.IPlayer")
 public class ExpandPlayer {
     @ZenGetter("taint")

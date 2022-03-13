@@ -78,7 +78,7 @@ public class BlockAlchemyController extends AbstractPipeBlock implements IAdjust
     @Override
     public IBlockState getAdjustedResult(IBlockState previous) {
         WorkType value = previous.getValue(WORK_TYPE_PROPERTY);
-        return this.getDefaultState().withProperty(WORK_TYPE_PROPERTY, Util.getCycledNextElement(WorkType.values(), value));
+        return previous.withProperty(WORK_TYPE_PROPERTY, Util.getCycledNextElement(WorkType.values(), value));
     }
 
     @Override
