@@ -2,15 +2,14 @@ package youyihj.herodotusutils.block.alchemy;
 
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import youyihj.herodotusutils.alchemy.AlchemyFluid;
-import youyihj.herodotusutils.alchemy.IAlchemyModule;
-import youyihj.herodotusutils.alchemy.IHasAlchemyFluid;
+import youyihj.herodotusutils.alchemy.*;
 import youyihj.herodotusutils.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author youyihj
@@ -29,14 +28,27 @@ public class TileAlchemyCrafter extends AbstractPipeTileEntity implements IAlche
                 }
             }
         }
+        AtomicBoolean success = new AtomicBoolean(false);
         nearPipes.stream()
                 .map(IHasAlchemyFluid::getContainedFluid)
                 .filter(Objects::nonNull)
                 .reduce(AlchemyFluid::add)
                 .ifPresent(output -> {
                     Util.getTileEntity(world, pos.down(), IHasAlchemyFluid.class)
-                            .ifPresent(pipe -> pipe.handleInput(output, EnumFacing.UP));
+                            .ifPresent(pipe -> {
+                                InputResult result = pipe.handleInput(output, EnumFacing.UP);
+                                switch (result) {
+                                    case BLOCK:
+                                        pipe.setEmptyCallback(new AlchemyModuleCallback(this));
+                                        break;
+                                    case SUCCESS:
+                                        success.set(true);
+                                        break;
+                                }
+                            });
                 });
-        nearPipes.forEach(IHasAlchemyFluid::emptyFluid);
+        if (success.get()) {
+            nearPipes.forEach(IHasAlchemyFluid::emptyFluid);
+        }
     }
 }

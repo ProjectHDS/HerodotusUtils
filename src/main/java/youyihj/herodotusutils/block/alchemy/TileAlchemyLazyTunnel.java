@@ -13,6 +13,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import youyihj.herodotusutils.alchemy.IAdjustableTileEntity;
+import youyihj.herodotusutils.alchemy.InputResult;
 
 import javax.annotation.Nonnull;
 
@@ -45,10 +46,25 @@ public class TileAlchemyLazyTunnel extends TileAlchemyTunnel implements IAdjusta
     public void work() {
         if (content == null)
             return;
-        counter++;
+        if (bound > counter) {
+            counter++;
+        }
         if (bound == counter) {
-            counter = 0;
-            super.work();
+            InputResult result = super.workInternal();
+            if (result == InputResult.SUCCESS) {
+                counter = 0;
+            }
+        }
+        syncToTrackingClients();
+    }
+
+    @Override
+    public void callBackWork() {
+        if (bound == counter) {
+            InputResult result = super.workInternal();
+            if (result == InputResult.SUCCESS) {
+                counter = 0;
+            }
         }
         syncToTrackingClients();
     }

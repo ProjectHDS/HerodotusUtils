@@ -14,6 +14,7 @@
     "bloodmagic.MixinBlockAltar",
     "bloodmagic.MixinItemAltarMaker",
     "factorytech.MixinRiverGrateRemovalAction",
+    "modularmachinery.MixinMachineLoader",
     "modularmagic.MixinJEIComponentAspect",
     "thaumcraft.MixinEntityFluxRift",
     "thaumcraft.MixinResearchStage",

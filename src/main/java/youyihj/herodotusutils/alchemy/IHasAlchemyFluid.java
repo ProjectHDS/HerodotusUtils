@@ -13,13 +13,15 @@ public interface IHasAlchemyFluid extends IPipe {
 
     /**
      * @param input the input stack
-     * @return if the input operator is success
+     * @return the result of the input operation
      */
-    boolean handleInput(AlchemyFluid input, EnumFacing inputSide);
+    InputResult handleInput(AlchemyFluid input, EnumFacing inputSide);
 
     void emptyFluid();
 
     EnumFacing inputSide();
 
     EnumFacing outputSide();
+
+    void setEmptyCallback(AlchemyModuleCallback callback);
 }

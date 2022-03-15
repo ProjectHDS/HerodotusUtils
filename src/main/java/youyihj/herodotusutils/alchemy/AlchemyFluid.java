@@ -68,6 +68,11 @@ public class AlchemyFluid implements INBTSerializable<NBTTagList> {
                 }
                 result[i] = new AlchemyFluid(new AlchemyEssenceStack(stack.getEssence(), thisCount));
             }
+        } else if (stacks.length % targetAmount == 0) {
+            int size = stacks.length / targetAmount;
+            for (int i = 0; i < targetAmount; i++) {
+                result[i] = new AlchemyFluid(Arrays.copyOfRange(stacks, size * i, size * (i + 1)));
+            }
         } else if (stacks.length > targetAmount) {
             for (int i = 0; i < targetAmount - 1; i++) {
                 result[i] = new AlchemyFluid(stacks[i]);

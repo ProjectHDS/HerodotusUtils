@@ -50,7 +50,7 @@ public class HorizontalBlockBoundingBoxes {
             minVec = rotateYCCW(minVec, center);
             maxVec = rotateYCCW(maxVec, center);
         }
-        return new AxisAlignedBB(minVec, maxVec);
+        return new AxisAlignedBB(minVec.x, minVec.y, minVec.z, maxVec.x, maxVec.y, maxVec.z);
     }
 
     private static Vec3d rotateYCCW(Vec3d toRotate, Vec3d center) {

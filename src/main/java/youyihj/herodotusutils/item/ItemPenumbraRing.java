@@ -53,6 +53,7 @@ public class ItemPenumbraRing extends Item implements IBauble {
     public void handlePenumbraTick(EntityPlayer player, boolean isClient) {
         NonNullList<ItemStack> inventory = player.inventory.mainInventory;
         boolean flag = false;
+        if (!player.capabilities.isFlying) return;
         for (int i = 0; i < inventory.size(); i++) {
             ItemStack stack = inventory.get(i);
             if (stack.getItem() == StarlightStorageTiny.INSTANCE) {
@@ -77,7 +78,9 @@ public class ItemPenumbraRing extends Item implements IBauble {
                         }
                     }
                 }
-                break;
+                if (flag) {
+                    break;
+                }
             }
         }
         if (flag) {
