@@ -22,6 +22,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import youyihj.herodotusutils.modsupport.bloodmagic.BloodAltarStructures;
 
+import java.util.Optional;
+
 /**
  * @author youyihj
  */
@@ -47,7 +49,7 @@ public class MixinRenderAltar extends TileEntitySpecialRenderer<TileAltar> {
                 BufferBuilder bufferBuilder = tessellator.getBuffer();
                 bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
                 BlockRendererDispatcher blockRendererDispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
-                blockRendererDispatcher.renderBlock(info.getSampleState(), pos, world, bufferBuilder);
+                blockRendererDispatcher.renderBlock(info.getSampleState(Optional.of(0L)), pos, world, bufferBuilder);
                 tessellator.draw();
                 GlStateManager.popMatrix();
             }

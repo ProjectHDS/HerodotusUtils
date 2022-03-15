@@ -20,6 +20,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import youyihj.herodotusutils.mixins.interfaces.IBloodAltarPatch;
 import youyihj.herodotusutils.modsupport.bloodmagic.BloodAltarStructures;
 
+import java.util.Optional;
+
 /**
  * @author youyihj
  */
@@ -46,7 +48,7 @@ public class MixinBloodAltar implements IBloodAltarPatch {
                     world.setBlockToAir(offset);
                     items.forEach(it -> Block.spawnAsEntity(world, tileAltar.getPos(), it));
                 }
-                world.setBlockState(offset, information.getSampleState());
+                world.setBlockState(offset, information.getSampleState(Optional.of(0L)));
             });
             world.playSound(null, tileAltar.getPos(), SoundEvents.BLOCK_SLIME_PLACE, SoundCategory.BLOCKS, 1.0f, 1.0f);
             if (slice == structure.getMax().getY()) {

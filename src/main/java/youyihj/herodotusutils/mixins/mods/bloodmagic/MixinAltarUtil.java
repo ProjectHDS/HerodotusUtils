@@ -16,7 +16,7 @@ import youyihj.herodotusutils.modsupport.bloodmagic.BloodAltarStructures;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
-
+import java.util.Optional;
 
 
 /**
@@ -54,7 +54,7 @@ public class MixinAltarUtil {
         if (currentTier == AltarTier.ONE) {
             return new AltarUpgrade();
         }
-        Collection<BlockPos> runePoses = Maps.filterValues(BloodAltarStructures.STRUCTURES.get(currentTier).getPattern(), blockArray -> blockArray.getSampleState().getBlock() == RegistrarBloodMagicBlocks.BLOOD_RUNE).keySet();
+        Collection<BlockPos> runePoses = Maps.filterValues(BloodAltarStructures.STRUCTURES.get(currentTier).getPattern(), blockArray -> blockArray.getSampleState(Optional.of(0L)).getBlock() == RegistrarBloodMagicBlocks.BLOOD_RUNE).keySet();
         AltarUpgrade upgrade = new AltarUpgrade();
         for (BlockPos runePos : runePoses) {
             BlockPos componentPos = pos.add(runePos);

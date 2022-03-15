@@ -16,10 +16,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -42,7 +39,7 @@ public class BloodAltarStructures {
         }
         STRUCTURES.forEach(((tier, blockArray) -> {
             List<ItemStack> items = blockArray.getPattern().values().stream()
-                    .map(BlockArray.BlockInformation::getSampleState)
+                    .map(it -> it.getSampleState(Optional.of(0L)))
                     .map(BloodAltarStructures::getItemFromBlockState)
                     .collect(Collectors.groupingBy(ItemMeta::new, Collectors.summingInt(ItemStack::getCount)))
                     .entrySet()

@@ -93,7 +93,7 @@ public class MixinBlockAltar {
             for (Map.Entry<BlockPos, BlockArray.BlockInformation> entry : blockArray.getPattern().entrySet()) {
                 BlockPos offset = pos.add(entry.getKey());
                 if (!entry.getValue().matches(world, offset, true)) {
-                    return Pair.of(offset, entry.getValue().getSampleState());
+                    return Pair.of(offset, entry.getValue().getSampleState(Optional.of(0L)));
                 }
             }
         }

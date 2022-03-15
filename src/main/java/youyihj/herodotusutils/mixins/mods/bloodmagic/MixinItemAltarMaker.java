@@ -15,6 +15,7 @@ import youyihj.herodotusutils.modsupport.bloodmagic.BloodAltarStructures;
 import youyihj.herodotusutils.util.Util;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -39,7 +40,7 @@ public class MixinItemAltarMaker {
 
         BloodAltarStructures.STRUCTURES.get(tierToBuild).getPattern().forEach((offset, info) -> {
             BlockPos posOffset = pos.add(offset);
-            world.setBlockState(posOffset, info.getSampleState());
+            world.setBlockState(posOffset, info.getSampleState(Optional.of(0L)));
         });
 
         Util.getTileEntity(world, pos, IBloodAltar.class).ifPresent(IBloodAltar::checkTier);
