@@ -6,6 +6,7 @@ import WayofTime.bloodmagic.altar.AltarUtil;
 import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import com.google.common.collect.Maps;
+import hellfirepvp.modularmachinery.common.util.BlockArray;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -34,7 +35,9 @@ public class MixinAltarUtil {
         AltarTier checkTier = AltarTier.ONE;
         for (AltarTier altarTier : AltarTier.values()) {
             if (altarTier == AltarTier.ONE) continue;
-            if (BloodAltarStructures.STRUCTURES.get(altarTier).matches(world, pos, false, null)) {
+            BlockArray structure = BloodAltarStructures.STRUCTURES.get(altarTier);
+            if (structure == null) continue;
+            if (structure.matches(world, pos, false, null)) {
                 checkTier = altarTier;
             } else break;
         }

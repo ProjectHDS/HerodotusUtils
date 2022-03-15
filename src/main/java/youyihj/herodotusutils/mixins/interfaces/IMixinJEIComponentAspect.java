@@ -1,4 +1,4 @@
-package youyihj.herodotusutils.util;
+package youyihj.herodotusutils.mixins.interfaces;
 
 import hellfirepvp.modularmachinery.common.crafting.helper.ComponentRequirement.JEIComponent;
 import thaumcraft.api.aspects.AspectList;

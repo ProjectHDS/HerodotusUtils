@@ -12,6 +12,7 @@
     "agricraft.MixinTileEntityCrop",
     "bloodmagic.MixinAltarUtil",
     "bloodmagic.MixinBlockAltar",
+    "bloodmagic.MixinBloodAltar",
     "bloodmagic.MixinItemAltarMaker",
     "factorytech.MixinRiverGrateRemovalAction",
     "modularmachinery.MixinMachineLoader",

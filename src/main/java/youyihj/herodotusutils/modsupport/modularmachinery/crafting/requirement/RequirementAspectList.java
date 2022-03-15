@@ -14,10 +14,10 @@ import net.minecraft.util.math.MathHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import youyihj.herodotusutils.HerodotusUtils;
+import youyihj.herodotusutils.mixins.interfaces.IMixinJEIComponentAspect;
 import youyihj.herodotusutils.modsupport.modularmachinery.crafting.component.ComponentAspectList;
 import youyihj.herodotusutils.modsupport.modularmachinery.tile.MachineComponentAspectListProvider;
 import youyihj.herodotusutils.modsupport.modularmachinery.tile.TileAspectListProvider;
-import youyihj.herodotusutils.util.IMixinJEIComponentAspect;
 
 import javax.annotation.Nonnull;
 import java.util.List;

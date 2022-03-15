@@ -8,8 +8,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import thaumcraft.api.aspects.AspectList;
+import youyihj.herodotusutils.mixins.interfaces.IMixinJEIComponentAspect;
 import youyihj.herodotusutils.modsupport.modularmachinery.crafting.requirement.RequirementAspectList;
-import youyihj.herodotusutils.util.IMixinJEIComponentAspect;
 
 import java.util.List;
 

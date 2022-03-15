@@ -5,6 +5,7 @@ import crafttweaker.api.data.IData;
 import it.unimi.dsi.fastutil.ints.IntCollection;
 import it.unimi.dsi.fastutil.ints.IntIterator;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -12,13 +13,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 import org.apache.commons.lang3.ArrayUtils;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
 
 /**
@@ -85,5 +85,28 @@ public final class Util {
                         InventoryHelper.spawnItemStack(worldIn, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, itemHandler.getStackInSlot(i).copy());
                     }
                 });
+    }
+
+    public static boolean extractItem(IItemHandler itemHandler, ItemStack stack, boolean simulate) {
+        stack = stack.copy();
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
+            ItemStack stack1 = itemHandler.extractItem(i, stack.getCount(), simulate);
+            if (ItemHandlerHelper.canItemStacksStack(stack, stack1)) {
+                stack.shrink(stack1.getCount());
+            }
+            if (stack.isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean extractItems(IItemHandler itemHandler, List<ItemStack> stacks, boolean simulate) {
+        for (ItemStack stack : stacks) {
+            if (!extractItem(itemHandler, stack, simulate)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
