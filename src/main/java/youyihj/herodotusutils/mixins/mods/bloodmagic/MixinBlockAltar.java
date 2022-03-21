@@ -64,7 +64,7 @@ public class MixinBlockAltar {
                 .map(IBloodAltarPatch.class::cast);
         if (!altar.isPresent()) return;
         IBloodAltarPatch altarPatch = altar.get();
-        if (!world.isRemote && player.isSneaking() && !altarPatch.isBuilding()) {
+        if (!world.isRemote && player.isSneaking() && !altarPatch.isBuilding() && hand == EnumHand.MAIN_HAND) {
             Optional<IItemHandler> inventory = Util.getCapability(world, pos.up(), CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
             if (inventory.isPresent()) {
                 IItemHandler itemHandler = inventory.get();
@@ -75,8 +75,14 @@ public class MixinBlockAltar {
                     List<ItemStack> items = BloodAltarStructures.STRUCTURE_ITEMS.get(tier);
                     if (items == null) continue;
                     if (Util.extractItems(itemHandler, items, true)) {
-                        buildingAltar = tier;
-                        break;
+                        BlockArray structure = BloodAltarStructures.STRUCTURES.get(tier);
+                        boolean hasBedrock = structure.getPattern().keySet().stream()
+                                .map(pos::add)
+                                .anyMatch(it -> world.getBlockState(it).getBlockHardness(world, it) < 0.0);
+                        if (!hasBedrock) {
+                            buildingAltar = tier;
+                            break;
+                        }
                     }
                 }
                 if (buildingAltar != null) {
