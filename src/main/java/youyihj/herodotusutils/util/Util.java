@@ -90,6 +90,10 @@ public final class Util {
     public static boolean extractItem(IItemHandler itemHandler, ItemStack stack, boolean simulate) {
         stack = stack.copy();
         for (int i = 0; i < itemHandler.getSlots(); i++) {
+            if (!simulate) {
+                ItemStack stackInSlot = itemHandler.getStackInSlot(i);
+                if (!ItemHandlerHelper.canItemStacksStack(stack, stackInSlot)) continue;
+            }
             ItemStack stack1 = itemHandler.extractItem(i, stack.getCount(), simulate);
             if (ItemHandlerHelper.canItemStacksStack(stack, stack1)) {
                 stack.shrink(stack1.getCount());
