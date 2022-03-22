@@ -36,13 +36,13 @@ import java.util.Optional;
 /**
  * @author youyihj
  */
-@Mixin(value = BlockAltar.class, remap = false)
+@Mixin(value = BlockAltar.class)
 public class MixinBlockAltar {
     /**
      * @author youyihj
      * @reason to edit the enum stuff
      */
-    @Overwrite
+    @Overwrite(remap = false)
     public List<ITextComponent> getDocumentation(EntityPlayer player, World world, BlockPos pos, IBlockState state) {
         List<ITextComponent> docs = new ArrayList<>();
         Util.getTileEntity(world, pos, IBloodAltar.class).ifPresent(altar -> {
