@@ -1,11 +1,14 @@
 package youyihj.herodotusutils.mixins.init;
 
-import org.spongepowered.asm.mixin.Mixins;
-import zone.rong.mixinbooter.MixinLoader;
+import zone.rong.mixinbooter.ILateMixinLoader;
 
-@MixinLoader
-public class MixinInit {
-    public MixinInit() {
-        Mixins.addConfiguration("mixins.hdsutils.json");
+import java.util.Collections;
+import java.util.List;
+
+public class MixinInit implements ILateMixinLoader {
+
+    @Override
+    public List<String> getMixinConfigs() {
+        return Collections.singletonList("mixins.hdsutils.json");
     }
 }
