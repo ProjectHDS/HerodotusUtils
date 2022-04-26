@@ -62,7 +62,8 @@ public class ItemRegistry {
                 BlockCreatureDataAnalyzer.ITEM_BLOCK,
                 BlockCreatureDataReEncodeInterface.ITEM_BLOCK,
                 BlockCatalyzedAltar.ITEM_BLOCK,
-                BlockPrimordialCharger.ITEM_BLOCK
+                BlockPrimordialCharger.ITEM_BLOCK,
+                BlockManaCatalyst.Item.INSTANCE
         );
         BlockRegistry.ORES.stream().map(BlockOreBase::getItem).forEach(registry::register);
         BlockGolemCore.ITEM_BLOCKS.forEach(registry::register);
