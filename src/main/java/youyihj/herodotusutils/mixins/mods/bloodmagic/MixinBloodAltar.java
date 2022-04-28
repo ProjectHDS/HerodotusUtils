@@ -3,7 +3,6 @@ package youyihj.herodotusutils.mixins.mods.bloodmagic;
 import WayofTime.bloodmagic.altar.AltarTier;
 import WayofTime.bloodmagic.altar.BloodAltar;
 import WayofTime.bloodmagic.tile.TileAltar;
-import hellfirepvp.modularmachinery.common.util.BlockArray;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.SoundEvents;
@@ -19,8 +18,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import youyihj.herodotusutils.mixins.interfaces.IBloodAltarPatch;
 import youyihj.herodotusutils.modsupport.bloodmagic.BloodAltarStructures;
-
-import java.util.Optional;
+import youyihj.herodotusutils.util.Multiblock;
 
 /**
  * @author youyihj
@@ -38,9 +36,9 @@ public class MixinBloodAltar implements IBloodAltarPatch {
     private void buildStructure(CallbackInfo ci) {
         if (buildingTier != null && internalCounter % 80 == 0) {
             World world = tileAltar.getWorld();
-            BlockArray structure = BloodAltarStructures.STRUCTURES.get(buildingTier);
-            structure.getPatternSlice(slice).forEach((position, information) -> {
-                BlockPos offset = position.add(tileAltar.getPos());
+            Multiblock structure = BloodAltarStructures.STRUCTURES.get(buildingTier);
+            structure.getSlice(slice).forEach((position, information) -> {
+                BlockPos offset = tileAltar.getPos().add(position);
                 IBlockState prev = world.getBlockState(offset);
                 if (!prev.getBlock().isAir(prev, world, offset)) {
                     NonNullList<ItemStack> items = NonNullList.create();
@@ -48,10 +46,10 @@ public class MixinBloodAltar implements IBloodAltarPatch {
                     world.setBlockToAir(offset);
                     items.forEach(it -> Block.spawnAsEntity(world, tileAltar.getPos(), it));
                 }
-                world.setBlockState(offset, information.getSampleState(Optional.of(0L)));
+                world.setBlockState(offset, information.getSampleBlock());
             });
             world.playSound(null, tileAltar.getPos(), SoundEvents.BLOCK_SLIME_PLACE, SoundCategory.BLOCKS, 1.0f, 1.0f);
-            if (slice == structure.getMax().getY()) {
+            if (slice == structure.getMaxY()) {
                 slice = 0;
                 buildingTier = null;
             } else {
@@ -63,7 +61,7 @@ public class MixinBloodAltar implements IBloodAltarPatch {
     @Override
     public void setBuildingTier(AltarTier tier) {
         buildingTier = tier;
-        slice = BloodAltarStructures.STRUCTURES.get(tier).getMin().getY();
+        slice = BloodAltarStructures.STRUCTURES.get(tier).getMinY();
     }
 
     @Override

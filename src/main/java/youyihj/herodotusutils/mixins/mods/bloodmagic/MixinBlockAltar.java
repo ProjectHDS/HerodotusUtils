@@ -4,13 +4,13 @@ import WayofTime.bloodmagic.altar.AltarTier;
 import WayofTime.bloodmagic.altar.IBloodAltar;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.util.Utils;
-import hellfirepvp.modularmachinery.common.util.BlockArray;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
@@ -26,6 +26,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import youyihj.herodotusutils.mixins.interfaces.IBloodAltarPatch;
 import youyihj.herodotusutils.modsupport.bloodmagic.BloodAltarStructures;
+import youyihj.herodotusutils.util.Multiblock;
 import youyihj.herodotusutils.util.Util;
 
 import java.util.ArrayList;
@@ -75,8 +76,8 @@ public class MixinBlockAltar {
                     List<ItemStack> items = BloodAltarStructures.STRUCTURE_ITEMS.get(tier);
                     if (items == null) continue;
                     if (Util.extractItems(itemHandler, items, true)) {
-                        BlockArray structure = BloodAltarStructures.STRUCTURES.get(tier);
-                        boolean hasBedrock = structure.getPattern().keySet().stream()
+                        Multiblock structure = BloodAltarStructures.STRUCTURES.get(tier);
+                        boolean hasBedrock = structure.getElements().keySet().stream()
                                 .map(pos::add)
                                 .anyMatch(it -> world.getBlockState(it).getBlockHardness(world, it) < 0.0);
                         if (!hasBedrock) {
@@ -95,11 +96,12 @@ public class MixinBlockAltar {
     }
 
     private Pair<BlockPos, IBlockState> getFirstMissingComponent(World world, BlockPos pos) {
-        for (BlockArray blockArray : BloodAltarStructures.STRUCTURES.values()) {
-            for (Map.Entry<BlockPos, BlockArray.BlockInformation> entry : blockArray.getPattern().entrySet()) {
+        for (Multiblock multiblock : BloodAltarStructures.STRUCTURES.values()) {
+            for (Map.Entry<Vec3i, Multiblock.Element> entry : multiblock.getElements().entrySet()) {
                 BlockPos offset = pos.add(entry.getKey());
-                if (!entry.getValue().matches(world, offset, true)) {
-                    return Pair.of(offset, entry.getValue().getSampleState(Optional.of(0L)));
+                IBlockState blockState = world.getBlockState(offset);
+                if (!entry.getValue().matches(blockState)) {
+                    return Pair.of(offset, entry.getValue().getSampleBlock());
                 }
             }
         }

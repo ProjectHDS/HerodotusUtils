@@ -126,7 +126,6 @@ dependencies {
     deobfCompile "curse.maven:topography-297878:3065647"
     deobfCompile "curse.maven:BNBGamingLib-229587:2698688"
     deobfCompile "zone.rong:mixinbooter:4.2"
-    deobfCompile "curse.maven:multiblocked-604054:3768320"
     compile('org.spongepowered:mixin:0.8-SNAPSHOT') {
         exclude module: 'guava'
         exclude module: 'commons-io'

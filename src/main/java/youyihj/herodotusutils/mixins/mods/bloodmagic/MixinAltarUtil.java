@@ -6,17 +6,18 @@ import WayofTime.bloodmagic.altar.AltarUtil;
 import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import com.google.common.collect.Maps;
-import hellfirepvp.modularmachinery.common.util.BlockArray;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import youyihj.herodotusutils.modsupport.bloodmagic.BloodAltarStructures;
+import youyihj.herodotusutils.util.Multiblock;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
-import java.util.Optional;
 
 
 /**
@@ -35,9 +36,9 @@ public class MixinAltarUtil {
         AltarTier checkTier = AltarTier.ONE;
         for (AltarTier altarTier : AltarTier.values()) {
             if (altarTier == AltarTier.ONE) continue;
-            BlockArray structure = BloodAltarStructures.STRUCTURES.get(altarTier);
-            if (structure == null) continue;
-            if (structure.matches(world, pos, false, null)) {
+            Multiblock multiblock = BloodAltarStructures.STRUCTURES.get(altarTier);
+            if (multiblock == null) continue;
+            if (multiblock.matches(world, pos, EnumFacing.NORTH)) {
                 checkTier = altarTier;
             } else break;
         }
@@ -54,9 +55,9 @@ public class MixinAltarUtil {
         if (currentTier == AltarTier.ONE) {
             return new AltarUpgrade();
         }
-        Collection<BlockPos> runePoses = Maps.filterValues(BloodAltarStructures.STRUCTURES.get(currentTier).getPattern(), blockArray -> blockArray.getSampleState(Optional.of(0L)).getBlock() == RegistrarBloodMagicBlocks.BLOOD_RUNE).keySet();
+        Collection<Vec3i> runePoses = Maps.filterValues(BloodAltarStructures.STRUCTURES.get(currentTier).getElements(), blockArray -> blockArray.getSampleBlock().getBlock() == RegistrarBloodMagicBlocks.BLOOD_RUNE).keySet();
         AltarUpgrade upgrade = new AltarUpgrade();
-        for (BlockPos runePos : runePoses) {
+        for (Vec3i runePos : runePoses) {
             BlockPos componentPos = pos.add(runePos);
             IBlockState state = world.getBlockState(componentPos);
             if (state.getBlock() instanceof BlockBloodRune)

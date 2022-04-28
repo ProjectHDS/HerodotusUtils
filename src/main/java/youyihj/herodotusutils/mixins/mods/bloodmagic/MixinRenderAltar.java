@@ -22,8 +22,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import youyihj.herodotusutils.modsupport.bloodmagic.BloodAltarStructures;
 
-import java.util.Optional;
-
 /**
  * @author youyihj
  */
@@ -40,8 +38,8 @@ public class MixinRenderAltar extends TileEntitySpecialRenderer<TileAltar> {
         Tessellator tessellator = Tessellator.getInstance();
         GlStateManager.translate(x, y, z);
         GlStateManager.color(1F, 1F, 1F, 1f);
-        BloodAltarStructures.STRUCTURES.get(tileAltar.getCurrentTierDisplayed()).getPattern().forEach((pos, info) -> {
-            BlockPos absolutePos = pos.add(tileAltar.getPos());
+        BloodAltarStructures.STRUCTURES.get(tileAltar.getCurrentTierDisplayed()).getElements().forEach((vec, info) -> {
+            BlockPos absolutePos = tileAltar.getPos().add(vec);
             IBlockState state = world.getBlockState(absolutePos);
             state = state.getActualState(world, absolutePos);
             if (state.getBlock().isAir(state, world, absolutePos)) {
@@ -49,7 +47,7 @@ public class MixinRenderAltar extends TileEntitySpecialRenderer<TileAltar> {
                 BufferBuilder bufferBuilder = tessellator.getBuffer();
                 bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
                 BlockRendererDispatcher blockRendererDispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
-                blockRendererDispatcher.renderBlock(info.getSampleState(Optional.of(0L)), pos, world, bufferBuilder);
+                blockRendererDispatcher.renderBlock(info.getSampleBlock(), new BlockPos(vec), world, bufferBuilder);
                 tessellator.draw();
                 GlStateManager.popMatrix();
             }

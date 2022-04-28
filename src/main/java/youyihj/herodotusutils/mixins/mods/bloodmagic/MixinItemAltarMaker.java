@@ -15,7 +15,6 @@ import youyihj.herodotusutils.modsupport.bloodmagic.BloodAltarStructures;
 import youyihj.herodotusutils.util.Util;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -38,9 +37,9 @@ public class MixinItemAltarMaker {
         if (tierToBuild == AltarTier.ONE)
             return;
 
-        BloodAltarStructures.STRUCTURES.get(tierToBuild).getPattern().forEach((offset, info) -> {
+        BloodAltarStructures.STRUCTURES.get(tierToBuild).getElements().forEach((offset, info) -> {
             BlockPos posOffset = pos.add(offset);
-            world.setBlockState(posOffset, info.getSampleState(Optional.of(0L)));
+            world.setBlockState(posOffset, info.getSampleBlock());
         });
 
         Util.getTileEntity(world, pos, IBloodAltar.class).ifPresent(IBloodAltar::checkTier);
@@ -48,8 +47,8 @@ public class MixinItemAltarMaker {
 
     @Redirect(method = "destroyAltar", at = @At(value = "INVOKE", target = "LWayofTime/bloodmagic/altar/AltarTier;getAltarComponents()Ljava/util/List;"))
     public List<AltarComponent> getNewDummyComponents(AltarTier tier) {
-        return BloodAltarStructures.STRUCTURES.get(tier).getPattern().keySet().stream()
-                .map(pos -> new AltarComponent(pos, null))
+        return BloodAltarStructures.STRUCTURES.get(tier).getElements().keySet().stream()
+                .map(vec -> new AltarComponent(new BlockPos(vec), null))
                 .collect(Collectors.toList());
     }
 }

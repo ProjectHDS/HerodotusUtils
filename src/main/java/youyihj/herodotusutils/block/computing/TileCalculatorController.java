@@ -1,46 +1,36 @@
 package youyihj.herodotusutils.block.computing;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import hellfirepvp.modularmachinery.common.machine.DynamicMachine;
-import hellfirepvp.modularmachinery.common.util.BlockArray;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import youyihj.herodotusutils.computing.IComputingUnitGenerator;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * @author youyihj
  */
 public class TileCalculatorController extends TileEntity implements ITickable, IComputingUnitGenerator {
-    private static final BlockArray MULTIBLOCK;
+    // TODO: replace to multiblocked way
+//    private static final BlockArray MULTIBLOCK;
     private static final List<BlockPos> MODULE_POSES = new ArrayList<>();
 
-    static {
-        try {
-            Gson gson = new GsonBuilder().registerTypeAdapter(DynamicMachine.class, new DynamicMachine.MachineDeserializer()).create();
-            Reader reader = new InputStreamReader(new FileInputStream("config/hdsutils/calculator_controller.json"));
-            MULTIBLOCK = gson.fromJson(reader, DynamicMachine.class).getPattern();
-            MULTIBLOCK.getPattern().forEach((pos, block) -> {
-                if (block.matchesState(BlockComputingModule.INSTANCE.getDefaultState())) {
-                    MODULE_POSES.add(pos);
-                }
-            });
-        } catch (IOException e) {
-            throw new RuntimeException("cannot read controller parts", e);
-        }
-    }
+//    static {
+//        try {
+//            Gson gson = new GsonBuilder().registerTypeAdapter(DynamicMachine.class, new DynamicMachine.MachineDeserializer()).create();
+//            Reader reader = new InputStreamReader(new FileInputStream("config/hdsutils/calculator_controller.json"));
+//            MULTIBLOCK = gson.fromJson(reader, DynamicMachine.class).getPattern();
+//            MULTIBLOCK.getPattern().forEach((pos, block) -> {
+//                if (block.matchesState(BlockComputingModule.INSTANCE.getDefaultState())) {
+//                    MODULE_POSES.add(pos);
+//                }
+//            });
+//        } catch (IOException e) {
+//            throw new RuntimeException("cannot read controller parts", e);
+//        }
+//    }
 
     private int capacity;
     private boolean complete;
@@ -68,7 +58,7 @@ public class TileCalculatorController extends TileEntity implements ITickable, I
     @Override
     public void update() {
         if (world.getTotalWorldTime() % 20 == 0) {
-            complete = MULTIBLOCK.matches(world, pos, false, null);
+//            complete = MULTIBLOCK.matches(world, pos, false, null);
             generateToChunk(world, pos);
             updateStructure();
         }
@@ -95,15 +85,15 @@ public class TileCalculatorController extends TileEntity implements ITickable, I
     }
 
     private void updateStructure() {
-        Stream.concat(MULTIBLOCK.getPattern().keySet().stream(), Stream.of(BlockPos.ORIGIN)).forEach(pos -> {
-            BlockPos posOffset = this.pos.add(pos);
-            IBlockState state = world.getBlockState(posOffset);
-            Block block = state.getBlock();
-            if (block instanceof BlockCalculatorStructure) {
-                if (complete != state.getValue(BlockCalculatorStructure.ACTIVATED)) {
-                    world.setBlockState(posOffset, state.withProperty(BlockCalculatorStructure.ACTIVATED, complete));
-                }
-            }
-        });
+//        Stream.concat(MULTIBLOCK.getPattern().keySet().stream(), Stream.of(BlockPos.ORIGIN)).forEach(pos -> {
+//            BlockPos posOffset = this.pos.add(pos);
+//            IBlockState state = world.getBlockState(posOffset);
+//            Block block = state.getBlock();
+//            if (block instanceof BlockCalculatorStructure) {
+//                if (complete != state.getValue(BlockCalculatorStructure.ACTIVATED)) {
+//                    world.setBlockState(posOffset, state.withProperty(BlockCalculatorStructure.ACTIVATED, complete));
+//                }
+//            }
+//        });
     }
 }
