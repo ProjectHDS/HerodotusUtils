@@ -23,10 +23,6 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import youyihj.herodotusutils.HerodotusUtils;
 import youyihj.herodotusutils.block.*;
-import youyihj.herodotusutils.block.BlockGolemCore;
-import youyihj.herodotusutils.block.BlockManaLiquidizer;
-import youyihj.herodotusutils.block.BlockOreBase;
-import youyihj.herodotusutils.block.BlockRegistry;
 import youyihj.herodotusutils.block.alchemy.*;
 import youyihj.herodotusutils.block.computing.BlockCalculatorController;
 import youyihj.herodotusutils.block.computing.BlockCalculatorStructure;
@@ -35,12 +31,13 @@ import youyihj.herodotusutils.block.computing.BlockTransporter;
 import youyihj.herodotusutils.client.render.*;
 import youyihj.herodotusutils.entity.EntityRedSlime;
 import youyihj.herodotusutils.entity.RenderRedSlime;
-import youyihj.herodotusutils.entity.golem.*;
+import youyihj.herodotusutils.entity.golem.EntityExtraIronGolem;
+import youyihj.herodotusutils.entity.golem.EntityExtraSnowman;
+import youyihj.herodotusutils.entity.golem.RenderExtraIronGolem;
+import youyihj.herodotusutils.entity.golem.RenderExtraSnowman;
 import youyihj.herodotusutils.fluid.FluidMana;
 import youyihj.herodotusutils.fluid.FluidMercury;
 import youyihj.herodotusutils.item.*;
-import youyihj.herodotusutils.modsupport.modularmachinery.block.BlockAspectListProviderInput;
-import youyihj.herodotusutils.modsupport.modularmachinery.block.BlockImpetusHatch;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
@@ -127,12 +124,8 @@ public class ModelRegistry {
                 BlockAlchemyRoundRobinTunnel.ITEM_BLOCK,
                 BlockLazyAlchemyTunnel.ITEM_BLOCK,
                 BlockAlchemyCrafter.ITEM_BLOCK,
-                BlockAspectListProviderInput.ITEM_BLOCK,
-                BlockImpetusHatch.Input.ITEM_BLOCK,
-                BlockImpetusHatch.Output.ITEM_BLOCK,
                 BlockCatalyzedAltar.ITEM_BLOCK,
                 BlockPrimordialCharger.ITEM_BLOCK,
-                BlockImpetusHatch.Output.ITEM_BLOCK,
                 BlockAlchemyCrafter.ITEM_BLOCK,
                 BlockAlchemySeparator.ITEM_BLOCK
         );

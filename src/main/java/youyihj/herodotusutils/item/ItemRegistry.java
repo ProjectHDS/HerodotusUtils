@@ -11,8 +11,6 @@ import youyihj.herodotusutils.block.computing.BlockCalculatorController;
 import youyihj.herodotusutils.block.computing.BlockCalculatorStructure;
 import youyihj.herodotusutils.block.computing.BlockComputingModule;
 import youyihj.herodotusutils.block.computing.BlockTransporter;
-import youyihj.herodotusutils.modsupport.modularmachinery.block.BlockAspectListProviderInput;
-import youyihj.herodotusutils.modsupport.modularmachinery.block.BlockImpetusHatch;
 
 /**
  * @author youyihj
@@ -52,13 +50,9 @@ public class ItemRegistry {
                 BlockAlchemyRoundRobinTunnel.ITEM_BLOCK,
                 BlockLazyAlchemyTunnel.ITEM_BLOCK,
                 BlockAlchemyCrafter.ITEM_BLOCK,
-                BlockAspectListProviderInput.ITEM_BLOCK,
-                BlockImpetusHatch.Input.ITEM_BLOCK,
-                BlockImpetusHatch.Output.ITEM_BLOCK,
                 BlockAlchemyCrafter.ITEM_BLOCK,
                 BlockAlchemySeparator.ITEM_BLOCK,
                 BlockAlchemySeparatorTank.ITEM_BLOCK,
-                BlockImpetusHatch.Output.ITEM_BLOCK,
                 BlockCreatureDataAnalyzer.ITEM_BLOCK,
                 BlockCreatureDataReEncodeInterface.ITEM_BLOCK,
                 BlockCatalyzedAltar.ITEM_BLOCK,

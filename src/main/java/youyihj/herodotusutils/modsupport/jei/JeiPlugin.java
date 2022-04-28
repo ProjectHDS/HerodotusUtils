@@ -1,24 +1,24 @@
 package youyihj.herodotusutils.modsupport.jei;
 
-import mezz.jei.api.*;
+import mezz.jei.api.IJeiHelpers;
+import mezz.jei.api.IModPlugin;
+import mezz.jei.api.IModRegistry;
+import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.item.ItemStack;
 import youyihj.herodotusutils.alchemy.AlchemyEssence;
 import youyihj.herodotusutils.alchemy.AlchemyEssenceStack;
-import youyihj.herodotusutils.block.alchemy.BlockAlchemyController;
 import youyihj.herodotusutils.block.BlockCatalyzedAltar;
+import youyihj.herodotusutils.block.alchemy.BlockAlchemyController;
 import youyihj.herodotusutils.modsupport.jei.helper.AlchemyEssenceHelper;
-import youyihj.herodotusutils.modsupport.jei.helper.ImpetusHelper;
 import youyihj.herodotusutils.modsupport.jei.recipes.AlchemyFluidRecipeCategory;
 import youyihj.herodotusutils.modsupport.jei.recipes.AlchemyFluidRecipeWrapper;
 import youyihj.herodotusutils.modsupport.jei.recipes.TransformRuleCategory;
 import youyihj.herodotusutils.modsupport.jei.recipes.TransformRuleWrapper;
 import youyihj.herodotusutils.modsupport.jei.render.AlchemyEssenceRender;
-import youyihj.herodotusutils.modsupport.jei.render.ImpetusRender;
 import youyihj.herodotusutils.recipe.AlchemyRecipes;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,7 +50,6 @@ public class JeiPlugin implements IModPlugin {
 
     @Override
     public void registerIngredients(IModIngredientRegistration registry) {
-        registry.register(ModIngredientTypes.IMPETUS, Collections.emptyList(), new ImpetusHelper(), new ImpetusRender());
         List<AlchemyEssenceStack> essenceStacks = AlchemyEssence.getUsedEssences().stream().map(it -> new AlchemyEssenceStack(it, 1)).collect(Collectors.toList());
         registry.register(ModIngredientTypes.ALCHEMY_ESSENCE, essenceStacks, new AlchemyEssenceHelper(), new AlchemyEssenceRender());
     }
