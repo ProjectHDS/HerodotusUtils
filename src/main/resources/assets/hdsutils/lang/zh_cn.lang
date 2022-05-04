@@ -59,6 +59,7 @@ tile.hdsutils.golem_core_blue_square.name=蓝色方形傀儡核心
 tile.hdsutils.golem_core_red_spherical.name=红色球形傀儡核心
 tile.hdsutils.golem_core_yellow_spherical.name=黄色球形傀儡核心
 tile.hdsutils.golem_core_blue_spherical.name=蓝色球形傀儡核心
+tile.hdsutils.mana_catalyst.name=魔力触媒
 hdsutils.empty=空
 hdsutils.computing_unit.bar=算力：%s / %s
 hdsutils.computing_unit.generate=生产 %s 算力
