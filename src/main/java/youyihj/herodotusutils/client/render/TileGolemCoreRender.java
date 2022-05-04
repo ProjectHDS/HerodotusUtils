@@ -4,7 +4,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
@@ -31,7 +30,7 @@ public class TileGolemCoreRender extends TileEntitySpecialRenderer<TileGolemCore
         Pair<Color, Shape> pair = Pair.of(te.getColor(), te.getShape());
         ItemStack item = cacheCores.get(pair);
         if (item == null) {
-            NonNullList<ItemStack> ores = OreDictionary.getOres(te.getShape().name().toLowerCase() + "TierThree" + StringUtil.capitalize(te.getColor().name().toLowerCase()));
+            NonNullList<ItemStack> ores = OreDictionary.getOres(te.getShape().name().toLowerCase() + "Primordial" + StringUtil.capitalize(te.getColor().name().toLowerCase()));
             item = ores.isEmpty() ? ItemStack.EMPTY : ores.get(0);
             cacheCores.put(pair, item);
         }
