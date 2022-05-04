@@ -73,7 +73,8 @@ public class BlockRegistry {
                 BlockCreatureDataReEncodeInterface.INSTANCE,
                 BlockCreatureDataAnalyzer.INSTANCE,
                 BlockCatalyzedAltar.INSTANCE,
-                BlockPrimordialCharger.INSTANCE
+                BlockPrimordialCharger.INSTANCE,
+                BlockManaCatalyst.INSTANCE
         );
         BlockTransporter.getBlockMap().values().forEach(registry::register);
         BlockGolemCore.BLOCKS.forEach(registry::register);
@@ -95,5 +96,6 @@ public class BlockRegistry {
         GameRegistry.registerTileEntity(TileAlchemySeparatorTank.class, HerodotusUtils.rl("alchemy_separator_tank"));
         GameRegistry.registerTileEntity(TileAlchemySeparator.class, HerodotusUtils.rl("alchemy_separator"));
         GameRegistry.registerTileEntity(TileGolemCore.class, HerodotusUtils.rl("golem_core"));
+        GameRegistry.registerTileEntity(TileManaCatalyst.class, HerodotusUtils.rl("mana_catalyst"));
     }
 }

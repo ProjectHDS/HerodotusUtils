@@ -127,7 +127,8 @@ public class ModelRegistry {
                 BlockCatalyzedAltar.ITEM_BLOCK,
                 BlockPrimordialCharger.ITEM_BLOCK,
                 BlockAlchemyCrafter.ITEM_BLOCK,
-                BlockAlchemySeparator.ITEM_BLOCK
+                BlockAlchemySeparator.ITEM_BLOCK,
+                BlockManaCatalyst.Item.INSTANCE
         );
         for (BlockOreBase ore : BlockRegistry.ORES) {
             ModelLoader.setCustomStateMapper(ore, ORE_STATE_MAPPER);

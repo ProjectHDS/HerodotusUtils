@@ -46,6 +46,7 @@ tile.hdsutils.golem_core_blue_square.name=Blue Square Golem Core
 tile.hdsutils.golem_core_red_spherical.name=Red Spherical Golem Core
 tile.hdsutils.golem_core_yellow_spherical.name=Yellow Spherical Golem Core
 tile.hdsutils.golem_core_blue_spherical.name=Blue Spherical Golem Core
+tile.hdsutils.mana_catalyst.name=Mana Catalyst
 item.hdsutils.golem_upper_sword.name=Graciously Giving
 item.hdsutils.golem_downer_sword.name=Irresistibly Dividing
 item.hdsutils.rift_sword.name=Mercilessly Confiscating
