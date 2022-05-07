@@ -113,4 +113,13 @@ public final class Util {
         }
         return true;
     }
+
+    public static BlockPos rotateYCCWNorthUntil(BlockPos pos, EnumFacing facing) {
+        EnumFacing currentFacing = EnumFacing.NORTH;
+        while (facing != currentFacing) {
+            pos = new BlockPos(pos.getZ(), pos.getY(), -pos.getX());
+            currentFacing = currentFacing.rotateYCCW();
+        }
+        return pos;
+    }
 }

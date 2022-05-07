@@ -1,6 +1,5 @@
 package youyihj.herodotusutils.item;
 
-import hellfirepvp.modularmachinery.common.item.ItemDynamicColor;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
@@ -13,6 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import youyihj.herodotusutils.HerodotusUtils;
+import youyihj.herodotusutils.client.IItemHasColor;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.Optional;
 /**
  * @author youyihj
  */
-public class StarlightStorageTiny extends Item implements ItemDynamicColor {
+public class StarlightStorageTiny extends Item implements IItemHasColor {
     private StarlightStorageTiny() {
         this.setRegistryName("tiny_starlight_storage");
         this.setUnlocalizedName(HerodotusUtils.MOD_ID + ".tiny_starlight_storage");
@@ -88,7 +88,7 @@ public class StarlightStorageTiny extends Item implements ItemDynamicColor {
     }
 
     @Override
-    public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+    public int getColorFromItemStack(ItemStack stack, int tintIndex) {
         if (stack.getMetadata() != 1 && tintIndex == 1) {
             int starlight = Optional.ofNullable(stack.getTagCompound())
                     .map(nbt -> nbt.getInteger(StarlightStorageTiny.TAG_STARLIGHT))

@@ -1,7 +1,5 @@
 package youyihj.herodotusutils.block;
 
-import hellfirepvp.modularmachinery.common.block.BlockDynamicColor;
-import hellfirepvp.modularmachinery.common.item.ItemDynamicColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -19,13 +17,15 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import youyihj.herodotusutils.HerodotusUtils;
+import youyihj.herodotusutils.client.IBlockHasColor;
+import youyihj.herodotusutils.client.IItemHasColor;
 
 import javax.annotation.Nullable;
 import java.util.Locale;
 import java.util.Random;
 import java.util.function.Supplier;
 
-public class BlockOreBase extends PlainBlock implements BlockDynamicColor, ItemDynamicColor {
+public class BlockOreBase extends PlainBlock implements IBlockHasColor, IItemHasColor {
     public static final PropertyEnum<Type> PROPERTY_TYPE = PropertyEnum.create("type", Type.class);
     private Supplier<ItemStack> dropItemSupplier;
     private final Item item;
@@ -132,7 +132,7 @@ public class BlockOreBase extends PlainBlock implements BlockDynamicColor, ItemD
     }
 
     @Override
-    public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+    public int getColorFromItemStack(ItemStack stack, int tintIndex) {
         return color;
     }
 

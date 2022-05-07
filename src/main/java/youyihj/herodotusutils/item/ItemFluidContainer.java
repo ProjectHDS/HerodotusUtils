@@ -1,6 +1,5 @@
 package youyihj.herodotusutils.item;
 
-import hellfirepvp.modularmachinery.common.item.ItemDynamicColor;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import mezz.jei.color.ColorThief;
 import net.minecraft.client.Minecraft;
@@ -23,6 +22,7 @@ import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import youyihj.herodotusutils.HerodotusUtils;
+import youyihj.herodotusutils.client.IItemHasColor;
 
 import javax.annotation.Nullable;
 import javax.imageio.ImageIO;
@@ -34,7 +34,7 @@ import java.util.Optional;
 /**
  * @author youyihj
  */
-public abstract class ItemFluidContainer extends Item implements ItemDynamicColor {
+public abstract class ItemFluidContainer extends Item implements IItemHasColor {
     public static final Object2IntArrayMap<Fluid> COLORS = new Object2IntArrayMap<>();
 
     @SideOnly(Side.CLIENT)
@@ -113,7 +113,7 @@ public abstract class ItemFluidContainer extends Item implements ItemDynamicColo
 
 
     @Override
-    public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+    public int getColorFromItemStack(ItemStack stack, int tintIndex) {
         if (tintIndex != 1) return -1;
         FluidStack fluidStack = FluidUtil.getFluidContained(stack);
         if (fluidStack == null) return -1;

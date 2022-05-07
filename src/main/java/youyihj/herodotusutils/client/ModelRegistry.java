@@ -1,7 +1,5 @@
 package youyihj.herodotusutils.client;
 
-import hellfirepvp.modularmachinery.common.block.BlockDynamicColor;
-import hellfirepvp.modularmachinery.common.item.ItemDynamicColor;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -165,13 +163,13 @@ public class ModelRegistry {
     public static void itemColor(ColorHandlerEvent.Item event) {
         ItemColors itemColors = event.getItemColors();
         Stream.concat(ForgeRegistries.ITEMS.getValuesCollection().stream(), ForgeRegistries.BLOCKS.getValuesCollection().stream())
-                .filter(ItemDynamicColor.class::isInstance)
+                .filter(IItemHasColor.class::isInstance)
                 .filter(entry -> entry.getRegistryName().getResourceDomain().equals(HerodotusUtils.MOD_ID))
                 .forEach(entry -> {
                     if (entry instanceof Item) {
-                        itemColors.registerItemColorHandler(((ItemDynamicColor) entry)::getColorFromItemstack, ((Item) entry));
+                        itemColors.registerItemColorHandler(((IItemHasColor) entry)::getColorFromItemStack, ((Item) entry));
                     } else if (entry instanceof Block) {
-                        itemColors.registerItemColorHandler(((ItemDynamicColor) entry)::getColorFromItemstack, ((Block) entry));
+                        itemColors.registerItemColorHandler(((IItemHasColor) entry)::getColorFromItemStack, ((Block) entry));
                     }
                 });
     }
@@ -182,8 +180,8 @@ public class ModelRegistry {
         for (Map.Entry<ResourceLocation, Block> entry : ForgeRegistries.BLOCKS.getEntries()) {
             if (entry.getKey().getResourceDomain().equals(HerodotusUtils.MOD_ID)) {
                 Block block = entry.getValue();
-                if (block instanceof BlockDynamicColor) {
-                    blockColors.registerBlockColorHandler(((BlockDynamicColor) block)::getColorMultiplier, block);
+                if (block instanceof IBlockHasColor) {
+                    blockColors.registerBlockColorHandler(((IBlockHasColor) block)::getColorMultiplier, block);
                 }
             }
         }

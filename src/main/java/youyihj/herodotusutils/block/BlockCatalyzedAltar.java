@@ -5,7 +5,6 @@ import com.infinityraider.agricraft.api.v1.AgriApi;
 import com.infinityraider.agricraft.api.v1.plant.IAgriPlant;
 import com.infinityraider.agricraft.api.v1.seed.AgriSeed;
 import com.infinityraider.agricraft.tiles.TileEntityCrop;
-import hellfirepvp.modularmachinery.common.util.MiscUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -179,7 +178,7 @@ public class BlockCatalyzedAltar extends PlainBlock {
                 int flags = 0;
                 for (int i = 0; i < 8; i++) {
                     Pair<BlockPos, Aspect> pair = in.get(i);
-                    BlockPos offset = pos.add(MiscUtils.rotateYCCWNorthUntil(pair.getLeft(), facing));
+                    BlockPos offset = pos.add(Util.rotateYCCWNorthUntil(pair.getLeft(), facing));
                     boolean matches = getAspectPlant(world, offset, true).filter(pair.getValue()::equals).isPresent();
                     flags |= (matches ? 1 : 0) << i;
                 }
