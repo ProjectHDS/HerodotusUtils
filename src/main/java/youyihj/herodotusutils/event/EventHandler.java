@@ -113,8 +113,11 @@ public class EventHandler {
                     if (itemStack.getItem() == RefinedBottle.INSTANCE)
                         continue;
                     FluidStack fluidStack = FluidUtil.getFluidContained(itemStack);
-                    if (fluidStack != null && fluidStack.getFluid().getName().equals("mercury")) {
-                        entity.addPotionEffect(new PotionEffect(MobEffects.POISON, 100, 3));
+                    if (fluidStack != null) {
+                        String name = fluidStack.getFluid().getName();
+                        if (name.equals("mercury") || name.endsWith("mercury_suspension")) {
+                            entity.addPotionEffect(new PotionEffect(MobEffects.POISON, 100, 3));
+                        }
                     }
                 }
             }
