@@ -1,7 +1,12 @@
 package youyihj.herodotusutils.modsupport.thaumcraft;
 
+import net.minecraft.util.ResourceLocation;
+import org.apache.commons.lang3.text.WordUtils;
 import thaumcraft.api.aspects.Aspect;
 import youyihj.herodotusutils.HerodotusUtils;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class AspectHandler {
     public static Aspect NETHER;
@@ -26,6 +31,32 @@ public class AspectHandler {
         Aspect.ELDRITCH.setComponents(null);
         Aspect.mixList.remove((Aspect.ENTROPY.getTag() + Aspect.MAGIC.getTag()).hashCode());
         Aspect.mixList.remove((Aspect.VOID.getTag() + Aspect.DARKNESS.getTag()).hashCode());
+
+        int red = 0xfc0d20;
+        int yellow = 0xffd701;
+        int blue = 0x00a2dd;
+        List<String> shapes = Arrays.asList("rhombus", "sphaericus", "quadrata");
+        new Aspect("rubrum", red, null, HerodotusUtils.rl("textures/aspects/red.png"), 1);
+        new Aspect("flavum", yellow, null, HerodotusUtils.rl("textures/aspects/yellow.png"), 1);
+        new Aspect("caeruleum", blue, null, HerodotusUtils.rl("textures/aspects/blue.png"), 1);
+        for (String shape : shapes) {
+            ResourceLocation texture = HerodotusUtils.rl("textures/aspects/" + shape + ".png");
+            new Aspect(shape, 0xffffff, null, texture, 1);
+            new CustomAspect("rubrum_" + shape, red, null, texture, 1);
+            new CustomAspect("flavum_" + shape, yellow, null, texture, 1);
+            new CustomAspect("caeruleum_" + shape, blue, null, texture, 1);
+        }
+    }
+
+    public static class CustomAspect extends Aspect {
+        public CustomAspect(String tag, int color, Aspect[] components, ResourceLocation image, int blend) {
+            super(tag, color, components, image, blend);
+        }
+
+        @Override
+        public String getName() {
+            return WordUtils.capitalizeFully(getTag(), '_', ' ').replace('_', ' ');
+        }
     }
 
 }
