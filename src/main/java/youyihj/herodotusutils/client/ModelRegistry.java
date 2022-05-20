@@ -3,7 +3,6 @@ package youyihj.herodotusutils.client;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.color.BlockColors;
@@ -40,7 +39,6 @@ import youyihj.herodotusutils.item.*;
 import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.IntFunction;
 import java.util.stream.Stream;
 
 /**
@@ -48,33 +46,6 @@ import java.util.stream.Stream;
  */
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class ModelRegistry {
-    private static final IStateMapper ORE_STATE_MAPPER = new StateMapperBase() {
-        @Override
-        protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-            switch (state.getValue(BlockOreBase.PROPERTY_TYPE)) {
-                case POOR:
-                    return new ModelResourceLocation(HerodotusUtils.rl("poor_ore"), "normal");
-                case NORMAL:
-                    return new ModelResourceLocation(HerodotusUtils.rl("normal_ore"), "normal");
-                case DENSE:
-                    return new ModelResourceLocation(HerodotusUtils.rl("dense_ore"), "normal");
-                default:
-                    return null;
-            }
-        }
-    };
-
-    private static final IntFunction<ModelResourceLocation> META_ORE_STATE_MAPPER = meta -> {
-        switch (meta) {
-            case 1:
-                return new ModelResourceLocation(HerodotusUtils.rl("poor_ore"), "inventory");
-            case 2:
-                return new ModelResourceLocation(HerodotusUtils.rl("dense_ore"), "inventory");
-            default:
-                return new ModelResourceLocation(HerodotusUtils.rl("normal_ore"), "inventory");
-        }
-    };
-
     @SubscribeEvent
     public static void register(ModelRegistryEvent event) {
         ModelLoader.setCustomStateMapper(FluidMana.INSTANCE.getBlock(), new StateMapperBase() {
@@ -128,12 +99,18 @@ public class ModelRegistry {
                 BlockAlchemySeparator.ITEM_BLOCK,
                 BlockManaCatalyst.Item.INSTANCE
         );
-        for (BlockOreBase ore : BlockRegistry.ORES) {
-            ModelLoader.setCustomStateMapper(ore, ORE_STATE_MAPPER);
-            for (int i = 0; i < BlockOreBase.Type.values().length; i++) {
-                ModelLoader.setCustomModelResourceLocation(ore.getItem(), i, META_ORE_STATE_MAPPER.apply(i));
+        BlockRegistry.ORES.forEach(block -> {
+            ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
+                @Override
+                protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                    return new ModelResourceLocation(HerodotusUtils.rl("ore"), "type=" + state.getValue(BlockOreBase.PROPERTY_TYPE).getName());
+                }
+            });
+            Item item = block.getItem();
+            for (BlockOreBase.Type type : BlockOreBase.Type.values()) {
+                ModelLoader.setCustomModelResourceLocation(item, type.ordinal(), new ModelResourceLocation(HerodotusUtils.rl("ore"), "type=" + type.getName()));
             }
-        }
+        });
         BlockGolemCore.BLOCKS.forEach(block -> ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
             @Override
             protected ModelResourceLocation getModelResourceLocation(IBlockState state) {

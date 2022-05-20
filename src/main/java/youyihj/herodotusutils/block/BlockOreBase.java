@@ -84,6 +84,11 @@ public class BlockOreBase extends PlainBlock implements IBlockHasColor, IItemHas
     }
 
     @Override
+    public BlockRenderLayer getBlockLayer() {
+        return BlockRenderLayer.CUTOUT;
+    }
+
+    @Override
     public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
         Random rand = world instanceof World ? ((World) world).rand : RANDOM;
 
@@ -127,23 +132,13 @@ public class BlockOreBase extends PlainBlock implements IBlockHasColor, IItemHas
     }
 
     @Override
-    public int getColorMultiplier(IBlockState state, @Nullable IBlockAccess worldIn, @Nullable BlockPos pos, int tintIndex) {
-        return color;
-    }
-
-    @Override
     public int getColorFromItemStack(ItemStack stack, int tintIndex) {
-        return color;
+        return tintIndex == 0 ? color : -1;
     }
 
     @Override
     public String getLocalizedName() {
         return new ItemStack(this, 1, 0).getDisplayName();
-    }
-
-    @Override
-    public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
-        return layer == BlockRenderLayer.TRANSLUCENT;
     }
 
     public void registerOreDict() {
@@ -161,6 +156,11 @@ public class BlockOreBase extends PlainBlock implements IBlockHasColor, IItemHas
             i = 0;
         }
         return originAmount * (i + 1);
+    }
+
+    @Override
+    public int getColorMultiplier(IBlockState state, @Nullable IBlockAccess worldIn, @Nullable BlockPos pos, int tintIndex) {
+        return tintIndex == 0 ? color : -1;
     }
 
     public enum Type implements IStringSerializable {

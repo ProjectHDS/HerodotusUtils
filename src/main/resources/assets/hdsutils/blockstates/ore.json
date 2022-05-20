@@ -1,0 +1,35 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "base": "blocks/stone",
+      "ore": "base:blocks/ore"
+    },
+    "model": "astralsorcery:ore"
+  },
+  "variants": {
+    "normal": [
+      {}
+    ],
+    "inventory": [
+      {}
+    ],
+    "type=normal": [
+      {}
+    ],
+    "type=dense": [
+      {
+        "textures": {
+          "ore": "base:blocks/dense_ore"
+        }
+      }
+    ],
+    "type=poor": [
+      {
+        "textures": {
+          "ore": "base:blocks/poor_ore"
+        }
+      }
+    ]
+  }
+}
