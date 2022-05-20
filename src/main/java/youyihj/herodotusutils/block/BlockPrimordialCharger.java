@@ -104,8 +104,7 @@ public class BlockPrimordialCharger extends PlainBlock {
         BlockPos downPos = pos.down();
         int space = 2;
         while (space < 8) {
-            Optional<BlockCatalyzedAltar> catalyzedAltar = Util.getTileEntity(worldIn, downPos.north(space), BlockCatalyzedAltar.class);
-            if (catalyzedAltar.isPresent())
+            if (worldIn.getBlockState(downPos.north(space)).getBlock().getClass() == BlockCatalyzedAltar.class)
                 break;
             space++;
         }
