@@ -41,7 +41,7 @@ public class BlockComputingModule extends BlockCalculatorStructure {
     public static final Item ITEM_BLOCK = new ItemBlock(INSTANCE).setRegistryName("computing_module");
 
     @Override
-    public EnumPushReaction getMobilityFlag(IBlockState state) {
+    public EnumPushReaction getPushReaction(IBlockState state) {
         return EnumPushReaction.BLOCK;
     }
 

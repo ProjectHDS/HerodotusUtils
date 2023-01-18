@@ -1,159 +1,221 @@
 buildscript {
     repositories {
         maven {
-            name = "forge"
-            url = "https://maven.minecraftforge.net/"
-        }
-        maven {
-            name = "sponge"
-            url = "https://repo.spongepowered.org/maven"
+            name = 'SpongePowered'
+            url = 'https://repo.spongepowered.org/repository/maven-public'
         }
     }
     dependencies {
-        classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
-        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 
-apply plugin: "net.minecraftforge.gradle.forge"
-apply plugin: 'org.spongepowered.mixin'
-
-group = 'youyihj'
-version = '1.1'
-archivesBaseName = 'herodotusutils'
-
-// change FG2's default maven url to the new one.
-repositories.each {
-    if (it instanceof MavenArtifactRepository && it.url.toString() == "https://files.minecraftforge.net/maven") {
-        it.url = "https://maven.minecraftforge.net/"
-    }
+plugins {
+    id 'java'
+    id 'idea'
+    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'wtf.gofancy.fancygradle' version '1.1.+'
 }
+
+version = project.mod_version
+group = project.maven_group
+archivesBaseName = project.archives_base_name
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 minecraft {
-    version = project.forgeVersion
-    runDir = "run"
+    mappings channel: 'stable', version: '39-1.12'
+    accessTransformer = file('src/main/resources/META-INF/hdsutils_at.cfg')
+    runs {
+        client {
+            workingDirectory project.file('run')
 
-    // the mappings can be changed at any time, and must be in the following format.
-    // snapshot_YYYYMMDD   snapshot are built nightly.
-    // stable_#            stables are built at the discretion of the MCP team.
-    // Use non-default mappings at your own risk. they may not always work.
-    // simply re-run your setup task after changing the mappings to update your workspace.
-    mappings = project.mcpVersion
-    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
 
-    def args = [
-            "-Dmixin.debug.export=true",
-            '-Dmixin.hotSwap=true',
-            '-Dmixin.checks.interfaces=true'
-    ]
+            jvmArg '-Dmixin.hotSwap=true'
+			jvmArg '-Dmixin.checks.interfaces=true'
+			jvmArg '-Dmixin.debug=true'
 
-    clientJvmArgs.addAll(args)
-    serverJvmArgs.addAll(args)
+            environment 'MC_VERSION', '1.12.2'
+
+            mods {
+                hdsutils {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+
+            jvmArg '-Dmixin.hotSwap=true'
+			jvmArg '-Dmixin.checks.interfaces=true'
+
+            environment 'MC_VERSION', '1.12.2'
+
+            mods {
+                hdsutils {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+sourceSets {
+    main {
+        ext.refMap = 'mixins.' + archives_base_name + '.refmap.json'
+
+        java {
+            srcDirs = ["src/main/java"]
+        }
+
+        resources {
+            srcDirs = ["src/main/java", "src/main/resources"]
+        }
+    }
+
+    test {
+        java {
+            srcDirs = ["src/test/java"]
+        }
+        resources {
+            srcDirs = ["src/test/resources"]
+        }
+    }
+
+    main.output.setResourcesDir(main.java.outputDir)
 }
 
 repositories {
     mavenCentral()
     maven {
-        name = 'jared maven'
-        url = 'https://maven.blamejared.com/'
-    }
-    maven {
-        name = "thiakil"
-        url = "http://maven.thiakil.com"
+        name = 'thiakil'
+        url = 'https://maven.thiakil.com'
     }
     maven {
         name = 'blamejared'
         url = 'https://maven.blamejared.com'
     }
     maven {
-        name = "cofh"
-        url = "https://maven.covers1624.net"
+        name = 'cofh'
+        url = 'https://maven.covers1624.net'
     }
     maven {
-        name 'jei'
-        url 'https://dvs1.progwml6.com/files/maven'
+        name = 'jei'
+        url = 'https://dvs1.progwml6.com/files/maven'
     }
     maven {
-        name 'tterrag maven'
-        url "https://maven.tterrag.com/"
+        name = 'tterrag'
+        url = 'https://maven.tterrag.com/'
     }
     maven {
         name = 'youyihj'
-        url  "https://friendlyhj.github.io/maven"
+        url = 'https://friendlyhj.github.io/maven'
     }
     maven {
         name = 'hellfirepvp'
         url = 'https://maven.hellfiredev.net/'
     }
     maven {
-        name = "sponge"
-        url = "https://repo.spongepowered.org/maven"
+        name = 'SpongePowered'
+        url = 'https://repo.spongepowered.org/maven'
     }
     maven {
-        name = "curseforge"
-        url "https://cfa2.cursemaven.com"
+        name = "CurseMaven"
+        url = 'https://cfa2.cursemaven.com'
     }
     maven {
-        url "https://maven.cleanroommc.com"
+        name = 'CleanroomMC'
+        url = 'https://maven.cleanroommc.com'
     }
 }
 
-mixin {
-    add sourceSets.main, "mixins.hdsutils.refmap.json"
+configurations {
+    embedded
+
+    compileOnly.extendsFrom provided
+    implementation.extendsFrom embedded
 }
 
 dependencies {
-    deobfCompile "vazkii.botania:Botania:r1.10-363.148"
-    deobfCompile "com.azanor.baubles:Baubles:1.12-1.5.2"
-    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.674"
-    deobfCompile "com.teamacronymcoders.base:base:1.12.2-3.13.0-SNAPSHOT.+"
-    deobfCompile "com.teamacronymcoders:ContentTweaker:1.12.2-4.9.1"
-    deobfCompile "cofh:RedstoneFlux:1.12-2.1.0.+:universal"
-    deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.28-17"
-    deobfCompile "mezz.jei:jei_1.12.2:4.16.1.302"
-    deobfCompile "youyihj:zenutils:1.10.2"
-    deobfCompile "curse.maven:agricraft-225635:2609648"
-    deobfCompile "curse.maven:infinitylib-251396:2537265"
-    deobfCompile "curse.maven:thaumcraft-223628:2629023"
-    deobfCompile "curse.maven:factorytech-278822:3178832"
-    deobfCompile "hellfirepvp.astralsorcery:astralsorcery:1.12.2-1.10.23-v161"
-    deobfCompile "curse.maven:bloodmagic-224791:2822288"
-    deobfCompile "curse.maven:guideapi-228832:2645992"
-    deobfCompile "curse.maven:thaumic-augmentation-319441:3536155"
-    deobfCompile "curse.maven:topography-297878:3065647"
-    deobfCompile "curse.maven:BNBGamingLib-229587:2698688"
-    deobfCompile "zone.rong:mixinbooter:4.2"
-    compile('org.spongepowered:mixin:0.8-SNAPSHOT') {
-        exclude module: 'guava'
-        exclude module: 'commons-io'
-        exclude module: 'gson'
-    }
+    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
+
+    // Mixin related
+    embedded fg.deobf('zone.rong:mixinbooter:7.0')
+    annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
+
+    // Tweaked mods
+    embedded fg.deobf('vazkii.botania:Botania:r1.10-363.148')
+    embedded fg.deobf('com.azanor.baubles:Baubles:1.12-1.5.2')
+    embedded fg.deobf("CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.682")
+    embedded fg.deobf("CraftTweaker2:CraftTweaker2-API:4.1.9.6")
+    embedded fg.deobf("CraftTweaker2:ZenScript:4.1.9.6")
+    embedded fg.deobf('com.teamacronymcoders.base:base:1.12.2-3.13.0-SNAPSHOT.+')
+    embedded fg.deobf('com.teamacronymcoders:ContentTweaker:1.12.2-4.9.1')
+    embedded fg.deobf('cofh:RedstoneFlux:1.12-2.1.0.+:universal')
+    embedded fg.deobf('mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.28-17')
+    embedded fg.deobf('mezz.jei:jei_1.12.2:4.16.1.302')
+    embedded fg.deobf('youyihj:zenutils:1.10.2')
+    embedded fg.deobf('curse.maven:agricraft-225635:2609648')
+    embedded fg.deobf('curse.maven:infinitylib-251396:2537265')
+    embedded fg.deobf('curse.maven:thaumcraft-223628:2629023')
+    embedded fg.deobf('curse.maven:factorytech-278822:3178832')
+    embedded fg.deobf('hellfirepvp.astralsorcery:astralsorcery:1.12.2-1.10.23-v161')
+    embedded fg.deobf('curse.maven:bloodmagic-224791:2822288')
+    embedded fg.deobf('curse.maven:guideapi-228832:2645992')
+    embedded fg.deobf('curse.maven:thaumic-augmentation-319441:3536155')
+    embedded fg.deobf('curse.maven:topography-297878:3065647')
+    embedded fg.deobf('curse.maven:BNBGamingLib-229587:2698688')
 }
 
-processResources {
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include "mcmod.info"
-
-        // replace version and mcversion
-        expand "version": project.version, "mcversion": project.minecraft.version
-    }
-
-    // copy everything else, thats not the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude "mcmod.info"
+fancyGradle {
+    patches {
+        resources
+        coremods
+        asm
     }
 }
 
 jar {
     manifest {
         attributes([
-                "ForceLoadAsMod": true,
-                'FMLAT': 'hdsutils_at.cfg'
+                "Specification-Title"     : "hdsutils",
+                "Specification-Vendor"    : "youyihj, GBLodb",
+                "Specification-Version"   : "1",
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : project.jar.archiveVersion,
+                "Specification-Vendor"    : "youyihj, GBLodb",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "ForceLoadAsMod"          : true,
+                'TweakClass'              : 'org.spongepowered.asm.launch.MixinTweaker',
+                "FMLAT"                   : "hdsutils_at.cfg"
         ])
+    }
+}
+
+jar.finalizedBy('reobfJar')
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+processResources {
+    duplicatesStrategy = 'include'
+
+    inputs.property 'version', version
+    inputs.property 'mcversion', '1.12.2'
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version': version, 'mcversion': '1.12.2'
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
     }
 }

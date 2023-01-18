@@ -51,12 +51,12 @@ public abstract class MixinEntityFluxRift extends Entity {
     @Shadow(remap = false)
     public abstract void setRiftStability(float s);
 
-    @Redirect(method = "onUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z"))
+    @Redirect(method = "onUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z"), remap = false)
     public boolean injectOnUpdate(Entity entity, DamageSource source, float amount) {
         return SharedRiftAction.attackEntity(entity, amount);
     }
 
-    @Redirect(method = "onUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setDead()V"))
+    @Redirect(method = "onUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setDead()V"), remap = false)
     public void injectOnUpdate(Entity entity) {
         EntityItem entityItem = (EntityItem) entity;
         ItemStack item = entityItem.getItem();
@@ -75,13 +75,13 @@ public abstract class MixinEntityFluxRift extends Entity {
         entity.setDead();
     }
 
-    @Redirect(method = "completeCollapse", at = @At(value = "INVOKE", target = "Lthaumcraft/common/entities/EntityFluxRift;entityDropItem(Lnet/minecraft/item/ItemStack;F)Lnet/minecraft/entity/item/EntityItem;", ordinal = 0))
+    @Redirect(method = "completeCollapse", remap = false, at = @At(value = "INVOKE", target = "Lthaumcraft/common/entities/EntityFluxRift;entityDropItem(Lnet/minecraft/item/ItemStack;F)Lnet/minecraft/entity/item/EntityItem;", ordinal = 0))
     public EntityItem removePrimordialPearl(EntityFluxRift instance, ItemStack itemStack, float v) {
         // NO-OP
         return null;
     }
 
-    @Inject(method = "completeCollapse", at = @At(value = "INVOKE", target = "Lthaumcraft/common/entities/EntityFluxRift;setDead()V"))
+    @Inject(method = "completeCollapse", at = @At(value = "INVOKE", target = "Lthaumcraft/common/entities/EntityFluxRift;setDead()V"), remap = false)
     public void addPrimordialGrain(CallbackInfo ci) {
         this.entityDropItem(PRIMORDIAL_GRAIN.get(), 0.0f);
     }

@@ -41,7 +41,7 @@ public class BlockCalculatorController extends BlockCalculatorStructure {
     }
 
     @Override
-    public EnumPushReaction getMobilityFlag(IBlockState state) {
+    public EnumPushReaction getPushReaction(IBlockState state) {
         return EnumPushReaction.BLOCK;
     }
 

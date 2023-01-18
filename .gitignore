@@ -1,6 +1,5 @@
 # User-specific stuff
 .idea/
-annotations.xml
 
 *.iml
 *.ipr

@@ -1,1 +1,15 @@
-rootProject.name = 'herodotusutils'
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven {
+            name = 'MinecraftForge'
+            url = 'https://maven.minecraftforge.net/'
+        }
+        maven {
+            name = 'FancyGradle'
+            url = 'https://gitlab.com/api/v4/projects/26758973/packages/maven'
+        }
+    }
+}
+
+rootProject.name = 'HerodotusUtils'

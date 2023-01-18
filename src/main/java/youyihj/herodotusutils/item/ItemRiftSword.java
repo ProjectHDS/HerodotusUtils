@@ -14,7 +14,7 @@ public class ItemRiftSword extends ItemSword {
     public ItemRiftSword() {
         super(VOID_METAL);
         this.setRegistryName("rift_sword");
-        this.setUnlocalizedName(HerodotusUtils.MOD_ID + ".rift_sword");
+        this.setTranslationKey(HerodotusUtils.MOD_ID + ".rift_sword");
         this.setFull3D();
     }
 }
