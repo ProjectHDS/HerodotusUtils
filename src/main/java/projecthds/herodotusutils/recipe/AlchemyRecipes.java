@@ -1,0 +1,48 @@
+package projecthds.herodotusutils.recipe;
+
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import crafttweaker.annotations.ZenRegister;
+import crafttweaker.api.liquid.ILiquidStack;
+import crafttweaker.api.minecraft.CraftTweakerMC;
+import net.minecraftforge.fluids.Fluid;
+import projecthds.herodotusutils.alchemy.AlchemyEssence;
+import projecthds.herodotusutils.alchemy.AlchemyEssenceStack;
+import projecthds.herodotusutils.alchemy.AlchemyFluid;
+import stanhebben.zenscript.annotations.ZenClass;
+import stanhebben.zenscript.annotations.ZenMethod;
+
+import javax.annotation.Nullable;
+import java.util.Map;
+
+/**
+ * @author youyihj
+ */
+@ZenRegister
+@ZenClass("mods.hdsutils.Alchemy")
+public class AlchemyRecipes {
+    private static final BiMap<Fluid, AlchemyFluid> normalFluidToAlchemyMap = HashBiMap.create();
+
+    @ZenMethod
+    public static void setAlchemyFluid(ILiquidStack liquid, Map<Integer, Integer> essences) {
+        AlchemyEssenceStack[] stacks = essences.entrySet().stream()
+                .map((entry) -> new AlchemyEssenceStack(AlchemyEssence.indexOf(entry.getKey()), entry.getValue()))
+                .toArray(AlchemyEssenceStack[]::new);
+        normalFluidToAlchemyMap.put(CraftTweakerMC.getFluid(liquid.getDefinition()), new AlchemyFluid(stacks));
+    }
+
+    public static BiMap<Fluid, AlchemyFluid> getNormalFluidToAlchemyMap() {
+        return normalFluidToAlchemyMap;
+    }
+
+    @Nullable
+    public static Fluid alchemyToNormal(AlchemyFluid alchemyFluid) {
+        return normalFluidToAlchemyMap.inverse().get(alchemyFluid);
+    }
+
+    @Nullable
+    public static AlchemyFluid normalToAlchemy(Fluid fluid) {
+        return normalFluidToAlchemyMap.get(fluid);
+    }
+
+}

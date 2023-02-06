@@ -1,7 +1,7 @@
 {
   "required": true,
   "compatibilityLevel": "JAVA_8",
-  "package": "youyihj.herodotusutils.mixins.mods",
+  "package": "projecthds.herodotusutils.mixins.mods",
   "minVersion": "0.7.11",
   "setSourceFile": true,
   "priority": 0,
