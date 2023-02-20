@@ -33,7 +33,7 @@ public class HerodotusUtils {
     @Mod.Instance(MOD_ID)
     public static HerodotusUtils INSTANCE;
 
-    @SidedProxy(serverSide = "proxy.projecthds.herodotusutils.CommonProxy", clientSide = "proxy.projecthds.herodotusutils.ClientProxy")
+    @SidedProxy(serverSide = "projecthds.herodotusutils.proxy.CommonProxy", clientSide = "projecthds.herodotusutils.proxy.ClientProxy")
     public static IProxy proxy;
 
     /**

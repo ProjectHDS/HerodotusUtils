@@ -1,21 +1,19 @@
 buildscript {
-    repositories {
-        maven {
-            name = 'SpongePowered'
-            url = 'https://repo.spongepowered.org/repository/maven-public'
-        }
-    }
+    repositories {}
     dependencies {
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:5.1.+'
+        classpath group: 'wtf.gofancy.fancygradle', name: 'wtf.gofancy.fancygradle.gradle.plugin', version: '1.1.+'
     }
 }
 
 plugins {
     id 'java'
     id 'idea'
-    id 'net.minecraftforge.gradle' version '5.1.+'
-    id 'wtf.gofancy.fancygradle' version '1.1.+'
 }
+
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'wtf.gofancy.fancygradle'
 
 version = project.mod_version
 group = project.maven_group
@@ -171,6 +169,12 @@ dependencies {
     embedded fg.deobf('curse.maven:thaumic-augmentation-319441:3536155')
     embedded fg.deobf('curse.maven:topography-297878:3065647')
     embedded fg.deobf('curse.maven:BNBGamingLib-229587:2698688')
+    embedded fg.deobf('curse.maven:GregTechCEu-557242:4390983')
+
+    /*embedded fg.deobf('curse.maven:FTBLibrary-237167:2985811') yes yes I'm working on it
+    embedded fg.deobf('curse.maven:ItemFilters-309674:3003364')
+    embedded fg.deobf('curse.maven:FTBQuests-289412:3156637')*/
+
 }
 
 fancyGradle {
