@@ -46,7 +46,7 @@ public class CommonProxy implements IProxy {
     public void init(FMLInitializationEvent event) {
         BloodAltarStructures.loadStructures();
         BlockRegistry.ORES.forEach(BlockOreBase::registerOreDict);
-        FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "theoneprobe.modsupport.projecthds.herodotusutils.TOPHandler");
+        FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "projecthds.herodotusutils.modsupport.theoneprobe.TOPHandler");
     }
 
     @Override
