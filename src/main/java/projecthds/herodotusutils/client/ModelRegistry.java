@@ -79,6 +79,8 @@ public class ModelRegistry {
                 ItemLithiumAmalgam.INSTANCE,
                 StarlightStorageTiny.INSTANCE,
                 ItemOilAIOT.INSTANCE,
+                ItemFlintAIOT.INSTANCE,
+                ItemBoneAIOT.INSTANCE,
                 ItemRiftFeed.INSTANCE,
                 ItemPenumbraRing.INSTANCE,
                 ItemRiftSword.INSTANCE,

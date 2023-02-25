@@ -171,6 +171,10 @@ dependencies {
     embedded fg.deobf('curse.maven:BNBGamingLib-229587:2698688')
     embedded fg.deobf('curse.maven:GregTechCEu-557242:4390983')
     embedded fg.deobf('curse.maven:RailCraft-51195:3853491')
+    embedded fg.deobf('curse.maven:Pyrotech-306676:4132140')
+    embedded fg.deobf('curse.maven:Athenaeum-284350:3533386')
+    embedded fg.deobf('curse.maven:Dropt-284973:3758733')
+    embedded fg.deobf('curse.maven:Patchouli-306770:3162874')
 
     /*embedded fg.deobf('curse.maven:FTBLibrary-237167:2985811') yes yes I'm working on it
     embedded fg.deobf('curse.maven:ItemFilters-309674:3003364')

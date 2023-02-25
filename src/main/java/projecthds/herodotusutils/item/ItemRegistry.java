@@ -37,6 +37,8 @@ public class ItemRegistry {
                 ItemRiftSword.INSTANCE,
                 StarlightStorageTiny.INSTANCE,
                 ItemOilAIOT.INSTANCE,
+                ItemFlintAIOT.INSTANCE,
+                ItemBoneAIOT.INSTANCE,
                 ItemRiftFeed.INSTANCE,
                 ItemPenumbraRing.INSTANCE,
                 GolemUpperSword.INSTANCE,
