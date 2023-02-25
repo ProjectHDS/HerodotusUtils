@@ -52,7 +52,7 @@ public class ItemOilAIOT extends ItemHoe {
 
     @Override
     public float getDestroySpeed(ItemStack stack, IBlockState state) {
-        return stack.getItemDamage() == MAX_DAMAGE ? 1.0f : toolMaterial.getEfficiency();
+        return stack.getItemDamage() == MAX_DAMAGE ? 1.4f : (float) (toolMaterial.getEfficiency() * 1.4);
     }
 
     @Override
