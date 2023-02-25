@@ -17,7 +17,8 @@
     "factorytech.MixinRiverGrateRemovalAction",
     "thaumcraft.MixinEntityFluxRift",
     "thaumcraft.MixinResearchStage",
-    "thaumcraft.MixinTileCrucible"
+    "thaumcraft.MixinTileCrucible",
+    "railcraft.MixinBetaWarning"
   ],
   "client": [
     "bloodmagic.MixinRenderAltar"

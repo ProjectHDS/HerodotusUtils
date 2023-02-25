@@ -170,6 +170,7 @@ dependencies {
     embedded fg.deobf('curse.maven:topography-297878:3065647')
     embedded fg.deobf('curse.maven:BNBGamingLib-229587:2698688')
     embedded fg.deobf('curse.maven:GregTechCEu-557242:4390983')
+    embedded fg.deobf('curse.maven:RailCraft-51195:3853491')
 
     /*embedded fg.deobf('curse.maven:FTBLibrary-237167:2985811') yes yes I'm working on it
     embedded fg.deobf('curse.maven:ItemFilters-309674:3003364')
