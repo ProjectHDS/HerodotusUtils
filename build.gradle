@@ -175,6 +175,8 @@ dependencies {
     embedded fg.deobf('curse.maven:Athenaeum-284350:3533386')
     embedded fg.deobf('curse.maven:Dropt-284973:3758733')
     embedded fg.deobf('curse.maven:Patchouli-306770:3162874')
+    embedded fg.deobf('codechicken:CodeChickenLib:1.12.2-3.2.3.358:universal')
+    embedded fg.deobf('curse.maven:LogisticsPipes-232838:4411480')
 
     /*embedded fg.deobf('curse.maven:FTBLibrary-237167:2985811') yes yes I'm working on it
     embedded fg.deobf('curse.maven:ItemFilters-309674:3003364')
@@ -184,6 +186,7 @@ dependencies {
 
 fancyGradle {
     patches {
+        codeChickenLib
         resources
         coremods
         asm

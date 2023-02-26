@@ -21,6 +21,7 @@
     "railcraft.MixinBetaWarning"
   ],
   "client": [
-    "bloodmagic.MixinRenderAltar"
+    "bloodmagic.MixinRenderAltar",
+    "logisticspipes.MixinHardcodedText"
   ]
 }
