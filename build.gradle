@@ -1,93 +1,43 @@
 buildscript {
-    repositories {}
+    repositories {
+        mavenCentral()
+        maven {
+            name = 'forge'
+            url = 'https://files.minecraftforge.net/maven'
+        }
+        maven {
+            name = 'sponge'
+            url = 'https://repo.spongepowered.org/maven'
+        }
+    }
     dependencies {
-        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
-        classpath 'net.minecraftforge.gradle:ForgeGradle:5.1.+'
-        classpath group: 'wtf.gofancy.fancygradle', name: 'wtf.gofancy.fancygradle.gradle.plugin', version: '1.1.+'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
     }
 }
 
-plugins {
-    id 'java'
-    id 'idea'
-}
+apply plugin: "net.minecraftforge.gradle.forge"
+apply plugin: 'org.spongepowered.mixin'
 
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'wtf.gofancy.fancygradle'
+minecraft {
+    version = project.forgeVersion
+    runDir = "run"
+    mappings = project.mcpVersion
+
+
+    def args = [
+        '-Dmixin.debug.export=true',
+        '-Dmixin.hotSwap=true',
+        '-Dmixin.checks.interfaces=true'
+    ]
+
+    clientJvmArgs.addAll(args)
+    serverJvmArgs.addAll(args)
+}
 
 version = project.mod_version
 group = project.maven_group
 archivesBaseName = project.archives_base_name
-
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
-
-minecraft {
-    mappings channel: 'stable', version: '39-1.12'
-    accessTransformer = file('src/main/resources/META-INF/hdsutils_at.cfg')
-    runs {
-        client {
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-
-            jvmArg '-Dmixin.hotSwap=true'
-			jvmArg '-Dmixin.checks.interfaces=true'
-			jvmArg '-Dmixin.debug=true'
-
-            environment 'MC_VERSION', '1.12.2'
-
-            mods {
-                hdsutils {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        server {
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-
-            jvmArg '-Dmixin.hotSwap=true'
-			jvmArg '-Dmixin.checks.interfaces=true'
-
-            environment 'MC_VERSION', '1.12.2'
-
-            mods {
-                hdsutils {
-                    source sourceSets.main
-                }
-            }
-        }
-    }
-}
-
-sourceSets {
-    main {
-        ext.refMap = 'mixins.' + archives_base_name + '.refmap.json'
-
-        java {
-            srcDirs = ["src/main/java"]
-        }
-
-        resources {
-            srcDirs = ["src/main/java", "src/main/resources"]
-        }
-    }
-
-    test {
-        java {
-            srcDirs = ["src/test/java"]
-        }
-        resources {
-            srcDirs = ["src/test/resources"]
-        }
-    }
-
-    main.output.setResourcesDir(main.java.outputDir)
-}
 
 repositories {
     mavenCentral()
@@ -133,64 +83,47 @@ repositories {
     }
 }
 
-configurations {
-    embedded
-
-    compileOnly.extendsFrom provided
-    implementation.extendsFrom embedded
-}
-
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
 
     // Mixin related
-    embedded fg.deobf('zone.rong:mixinbooter:7.0')
+    deobfCompile 'zone.rong:mixinbooter:7.0'
     annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
 
     // Tweaked mods
-    embedded fg.deobf('vazkii.botania:Botania:r1.10-363.148')
-    embedded fg.deobf('com.azanor.baubles:Baubles:1.12-1.5.2')
-    embedded fg.deobf("CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.682")
-    embedded fg.deobf("CraftTweaker2:CraftTweaker2-API:4.1.9.6")
-    embedded fg.deobf("CraftTweaker2:ZenScript:4.1.9.6")
-    embedded fg.deobf('com.teamacronymcoders.base:base:1.12.2-3.13.0-SNAPSHOT.+')
-    embedded fg.deobf('com.teamacronymcoders:ContentTweaker:1.12.2-4.9.1')
-    embedded fg.deobf('cofh:RedstoneFlux:1.12-2.1.0.+:universal')
-    embedded fg.deobf('mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.28-17')
-    embedded fg.deobf('mezz.jei:jei_1.12.2:4.16.1.302')
-    embedded fg.deobf('youyihj:zenutils:1.10.2')
-    embedded fg.deobf('curse.maven:agricraft-225635:2609648')
-    embedded fg.deobf('curse.maven:infinitylib-251396:2537265')
-    embedded fg.deobf('curse.maven:thaumcraft-223628:2629023')
-    embedded fg.deobf('curse.maven:factorytech-278822:3178832')
-    // embedded fg.deobf('hellfirepvp.astralsorcery:astralsorcery:1.12.2-1.10.23-v161')
-    embedded fg.deobf('curse.maven:bloodmagic-224791:2822288')
-    embedded fg.deobf('curse.maven:guideapi-228832:2645992')
-    embedded fg.deobf('curse.maven:thaumic-augmentation-319441:3536155')
-    embedded fg.deobf('curse.maven:topography-297878:3065647')
-    embedded fg.deobf('curse.maven:BNBGamingLib-229587:2698688')
-    embedded fg.deobf('curse.maven:GregTechCEu-557242:4390983')
-    embedded fg.deobf('curse.maven:RailCraft-51195:3853491')
-    embedded fg.deobf('curse.maven:Pyrotech-306676:4132140')
-    embedded fg.deobf('curse.maven:Athenaeum-284350:3533386')
-    embedded fg.deobf('curse.maven:Dropt-284973:3758733')
-    embedded fg.deobf('curse.maven:Patchouli-306770:3162874')
-    embedded fg.deobf('codechicken:CodeChickenLib:1.12.2-3.2.3.358:universal')
-    embedded fg.deobf('curse.maven:LogisticsPipes-232838:4411480')
+    deobfCompile 'vazkii.botania:Botania:r1.10-363.148'
+    deobfCompile 'com.azanor.baubles:Baubles:1.12-1.5.2'
+    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.685"
+    deobfCompile 'com.teamacronymcoders.base:base:1.12.2-3.13.0-SNAPSHOT.+'
+    deobfCompile 'com.teamacronymcoders:ContentTweaker:1.12.2-4.9.1'
+    deobfCompile 'cofh:RedstoneFlux:1.12-2.1.0.+:universal'
+    deobfCompile 'mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.28-17'
+    deobfCompile 'mezz.jei:jei_1.12.2:4.16.1.302'
+    deobfCompile 'youyihj:zenutils:1.10.2'
+    deobfCompile 'curse.maven:agricraft-225635:2609648'
+    deobfCompile 'curse.maven:infinitylib-251396:2537265'
+    deobfCompile 'curse.maven:thaumcraft-223628:2629023'
+    deobfCompile 'curse.maven:factorytech-278822:3178832'
+    // deobfCompile 'hellfirepvp.astralsorcery:astralsorcery:1.12.2-1.10.23-v161'
+    deobfCompile 'curse.maven:bloodmagic-224791:2822288'
+    deobfCompile 'curse.maven:guideapi-228832:2645992'
+    deobfCompile 'curse.maven:thaumic-augmentation-319441:3536155'
+    deobfCompile 'curse.maven:topography-297878:3065647'
+    deobfCompile 'curse.maven:BNBGamingLib-229587:2698688'
+    deobfCompile 'curse.maven:GregTechCEu-557242:4390983'
+    deobfCompile 'curse.maven:RailCraft-51195:3853491'
+    deobfCompile 'curse.maven:Pyrotech-306676:4132140'
+    deobfCompile 'curse.maven:Athenaeum-284350:3533386'
+    deobfCompile 'curse.maven:Dropt-284973:3758733'
+    deobfCompile 'curse.maven:Patchouli-306770:3162874'
+    deobfCompile 'codechicken:CodeChickenLib:1.12.2-3.2.3.358:universal'
+    deobfCompile 'curse.maven:LogisticsPipes-232838:4411480'
+    deobfCompile 'curse.maven:BrandonsCore-231382:3408276'
+    deobfCompile 'curse.maven:ProjectIntslligence-306028:2833640'
 
-    /*embedded fg.deobf('curse.maven:FTBLibrary-237167:2985811') yes yes I'm working on it
-    embedded fg.deobf('curse.maven:ItemFilters-309674:3003364')
-    embedded fg.deobf('curse.maven:FTBQuests-289412:3156637')*/
+    /*deobfCompile 'curse.maven:FTBLibrary-237167:2985811') yes yes I'm working on it
+    deobfCompile 'curse.maven:ItemFilters-309674:3003364')
+    deobfCompile 'curse.maven:FTBQuests-289412:3156637')*/
 
-}
-
-fancyGradle {
-    patches {
-        codeChickenLib
-        resources
-        coremods
-        asm
-    }
 }
 
 jar {
@@ -200,11 +133,11 @@ jar {
                 "Specification-Vendor"    : "youyihj, GBLodb",
                 "Specification-Version"   : "1",
                 "Implementation-Title"    : project.name,
-                "Implementation-Version"  : project.jar.archiveVersion,
+                "Implementation-Version"  : project.mod_version,
                 "Specification-Vendor"    : "youyihj, GBLodb",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
                 "ForceLoadAsMod"          : true,
-                'TweakClass'              : 'org.spongepowered.asm.launch.MixinTweaker',
+                "ForceLoadAsMod"          : true,
                 "FMLAT"                   : "hdsutils_at.cfg"
         ])
     }
@@ -212,22 +145,20 @@ jar {
 
 jar.finalizedBy('reobfJar')
 
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include "mcmod.info"
+        expand "version": project.version, "mcversion": project.minecraft.version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude "mcmod.info"
+    }
 }
 
-processResources {
-    duplicatesStrategy = 'include'
-
-    inputs.property 'version', version
-    inputs.property 'mcversion', '1.12.2'
-
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-        expand 'version': version, 'mcversion': '1.12.2'
-    }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
 }
