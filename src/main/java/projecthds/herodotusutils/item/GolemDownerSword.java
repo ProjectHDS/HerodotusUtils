@@ -18,7 +18,7 @@ public class GolemDownerSword extends Item {
 
     private GolemDownerSword() {
         this.setRegistryName("golem_downer_sword");
-        this.setTranslationKey(HerodotusUtils.MOD_ID + ".golem_downer_sword");
+        this.setUnlocalizedName(HerodotusUtils.MOD_ID + ".golem_downer_sword");
         this.setCreativeTab(CreativeTabs.TOOLS);
         this.setMaxDamage(10);
         this.setFull3D();

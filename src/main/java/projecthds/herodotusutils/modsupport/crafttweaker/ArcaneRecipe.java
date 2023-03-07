@@ -28,7 +28,7 @@ public class ArcaneRecipe implements ICraftingRecipe {
 
     @Override
     public String getName() {
-        return recipe.getRegistryName().getPath();
+        return recipe.getRegistryName().getResourcePath();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ArcaneRecipe implements ICraftingRecipe {
 
     @Override
     public String getResourceDomain() {
-        return recipe.getRegistryName().getNamespace();
+        return recipe.getRegistryName().getResourceDomain();
     }
 
     @Override

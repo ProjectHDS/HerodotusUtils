@@ -85,7 +85,7 @@ public class BlockPrimordialCharger extends PlainBlock {
     }
 
     @Override
-    public BlockRenderLayer getRenderLayer() {
+    public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
     }
 

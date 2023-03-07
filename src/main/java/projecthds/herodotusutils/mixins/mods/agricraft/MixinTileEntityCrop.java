@@ -26,7 +26,7 @@ public abstract class MixinTileEntityCrop extends TileEntityBase {
             ))
     private void sendBlockUpdate(int stage, CallbackInfoReturnable<Boolean> cir) {
         IBlockState blockState = getState();
-        Chunk chunk = world.getChunk(pos);
+        Chunk chunk = world.getChunkFromBlockCoords(pos);
         world.markAndNotifyBlock(pos, chunk, blockState, blockState, Constants.BlockFlags.DEFAULT);
     }
 }

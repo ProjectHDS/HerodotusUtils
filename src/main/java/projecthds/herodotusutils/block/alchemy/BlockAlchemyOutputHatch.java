@@ -47,7 +47,7 @@ public class BlockAlchemyOutputHatch extends AbstractPipeBlock implements IAdjus
     @SuppressWarnings("deprecation")
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byHorizontalIndex(meta));
+        return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getHorizontal(meta));
     }
 
     @SuppressWarnings("deprecation")

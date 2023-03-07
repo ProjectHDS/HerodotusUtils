@@ -21,11 +21,11 @@ public class ComputingUnitChangeEvent extends BaseEvent {
         return computingUnit;
     }
 
-    public Chunk getChunk() {
+    public Chunk getChunkFromBlockCoords() {
         return chunk;
     }
 
     public World getWorld() {
-        return getChunk().getWorld();
+        return getChunkFromBlockCoords().getWorld();
     }
 }

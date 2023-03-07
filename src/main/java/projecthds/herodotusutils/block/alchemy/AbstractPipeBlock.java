@@ -43,7 +43,7 @@ public abstract class AbstractPipeBlock extends PlainBlock {
     }
 
     @Override
-    public BlockRenderLayer getRenderLayer() {
+    public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
     }
 

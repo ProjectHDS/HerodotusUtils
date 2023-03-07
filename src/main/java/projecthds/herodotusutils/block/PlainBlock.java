@@ -15,6 +15,6 @@ public class PlainBlock extends Block {
         this.setCreativeTab(CreativeTabs.MISC);
         this.blockHardness = 5.0f;
         this.blockResistance = 50.0f;
-        this.setTranslationKey(HerodotusUtils.MOD_ID + "." + name);
+        this.setUnlocalizedName(HerodotusUtils.MOD_ID + "." + name);
     }
 }

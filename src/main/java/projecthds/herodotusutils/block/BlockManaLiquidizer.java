@@ -35,7 +35,7 @@ public class BlockManaLiquidizer extends PlainBlock {
     }
 
     @Override
-    public EnumPushReaction getPushReaction(IBlockState state) {
+    public EnumPushReaction getMobilityFlag(IBlockState state) {
         return EnumPushReaction.BLOCK;
     }
 }

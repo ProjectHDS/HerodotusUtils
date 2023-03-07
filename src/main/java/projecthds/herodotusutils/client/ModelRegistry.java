@@ -143,7 +143,7 @@ public class ModelRegistry {
         ItemColors itemColors = event.getItemColors();
         Stream.concat(ForgeRegistries.ITEMS.getValuesCollection().stream(), ForgeRegistries.BLOCKS.getValuesCollection().stream())
                 .filter(IItemHasColor.class::isInstance)
-                .filter(entry -> entry.getRegistryName().getNamespace().equals(HerodotusUtils.MOD_ID))
+                .filter(entry -> entry.getRegistryName().getResourceDomain().equals(HerodotusUtils.MOD_ID))
                 .forEach(entry -> {
                     if (entry instanceof Item) {
                         itemColors.registerItemColorHandler(((IItemHasColor) entry)::getColorFromItemStack, ((Item) entry));
@@ -157,7 +157,7 @@ public class ModelRegistry {
     public static void blockColor(ColorHandlerEvent.Block event) {
         BlockColors blockColors = event.getBlockColors();
         for (Map.Entry<ResourceLocation, Block> entry : ForgeRegistries.BLOCKS.getEntries()) {
-            if (entry.getKey().getNamespace().equals(HerodotusUtils.MOD_ID)) {
+            if (entry.getKey().getResourceDomain().equals(HerodotusUtils.MOD_ID)) {
                 Block block = entry.getValue();
                 if (block instanceof IBlockHasColor) {
                     blockColors.registerBlockColorHandler(((IBlockHasColor) block)::getColorMultiplier, block);

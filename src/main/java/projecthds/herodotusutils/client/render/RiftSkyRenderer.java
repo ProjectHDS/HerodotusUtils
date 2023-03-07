@@ -159,8 +159,8 @@ public class RiftSkyRenderer extends IRenderHandler {
         GlStateManager.depthMask(false);
         renderSkyEnd();
 
-        if (mc.profiler.profilingEnabled) {
-            mc.profiler.startSection("riftSkyRender");
+        if (mc.mcProfiler.profilingEnabled) {
+            mc.mcProfiler.startSection("riftSkyRender");
         }
 
         GlStateManager.disableLighting();
@@ -175,8 +175,8 @@ public class RiftSkyRenderer extends IRenderHandler {
         GlStateManager.color(1f, 1f, 1f, 1f);
         GlStateManager.depthMask(true);
 
-        if (mc.profiler.profilingEnabled) {
-            mc.profiler.endSection();
+        if (mc.mcProfiler.profilingEnabled) {
+            mc.mcProfiler.endSection();
         }
 
     }

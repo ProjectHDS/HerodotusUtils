@@ -84,7 +84,7 @@ public class BlockOreBase extends PlainBlock implements IBlockHasColor, IItemHas
     }
 
     @Override
-    public BlockRenderLayer getRenderLayer() {
+    public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
     }
 

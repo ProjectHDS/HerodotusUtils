@@ -132,7 +132,7 @@ public class BlockGolemCore extends PlainBlock {
     }
 
     @Override
-    public BlockRenderLayer getRenderLayer() {
+    public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
     }
 

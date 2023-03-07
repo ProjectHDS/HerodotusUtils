@@ -27,7 +27,7 @@ public class ItemAlchemyPipeWrench extends Item {
 
     private ItemAlchemyPipeWrench() {
         this.setRegistryName(NAME);
-        this.setTranslationKey(HerodotusUtils.MOD_ID + "." + NAME);
+        this.setUnlocalizedName(HerodotusUtils.MOD_ID + "." + NAME);
         this.setMaxStackSize(1);
         MinecraftForge.EVENT_BUS.register(this);
     }

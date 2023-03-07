@@ -22,7 +22,7 @@ public class ItemPenumbraRing extends Item implements IBauble {
 
     private ItemPenumbraRing() {
         this.setRegistryName("penumbra_ring");
-        this.setTranslationKey(HerodotusUtils.MOD_ID + ".penumbra_ring");
+        this.setUnlocalizedName(HerodotusUtils.MOD_ID + ".penumbra_ring");
         this.setCreativeTab(CreativeTabs.MISC);
     }
 

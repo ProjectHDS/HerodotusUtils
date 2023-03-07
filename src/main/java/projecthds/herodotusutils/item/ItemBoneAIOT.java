@@ -23,7 +23,7 @@ public class ItemBoneAIOT extends ItemHoeBase {
         this.setHarvestLevel("axe", 3);
         this.setHarvestLevel("shovel", 3);
         this.setRegistryName("bone_aiot");
-        this.setTranslationKey(HerodotusUtils.MOD_ID + ".bone_aiot");
+        this.setUnlocalizedName(HerodotusUtils.MOD_ID + ".bone_aiot");
         this.setFull3D();
     }
 

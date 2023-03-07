@@ -28,7 +28,7 @@ public class ItemOilAIOT extends ItemHoeBase {
         this.setHarvestLevel("axe", 3);
         this.setHarvestLevel("shovel", 3);
         this.setRegistryName("oil_aiot");
-        this.setTranslationKey(HerodotusUtils.MOD_ID + ".oil_aiot");
+        this.setUnlocalizedName(HerodotusUtils.MOD_ID + ".oil_aiot");
         this.setFull3D();
     }
 

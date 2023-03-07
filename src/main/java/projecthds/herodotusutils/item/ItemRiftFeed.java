@@ -10,7 +10,7 @@ import projecthds.herodotusutils.HerodotusUtils;
 public class ItemRiftFeed extends Item {
     private ItemRiftFeed() {
         this.setRegistryName("rift_feed");
-        this.setTranslationKey(HerodotusUtils.MOD_ID + ".rift_feed");
+        this.setUnlocalizedName(HerodotusUtils.MOD_ID + ".rift_feed");
         this.setCreativeTab(CreativeTabs.MISC);
     }
 

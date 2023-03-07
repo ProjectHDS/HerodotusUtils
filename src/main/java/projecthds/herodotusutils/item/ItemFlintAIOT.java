@@ -23,7 +23,7 @@ public class ItemFlintAIOT extends ItemHoeBase {
         this.setHarvestLevel("axe", 3);
         this.setHarvestLevel("shovel", 3);
         this.setRegistryName("flint_aiot");
-        this.setTranslationKey(HerodotusUtils.MOD_ID + ".flint_aiot");
+        this.setUnlocalizedName(HerodotusUtils.MOD_ID + ".flint_aiot");
         this.setFull3D();
     }
 

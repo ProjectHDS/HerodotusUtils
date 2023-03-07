@@ -24,7 +24,7 @@ import java.util.Optional;
 public class StarlightStorageTiny extends Item implements IItemHasColor {
     private StarlightStorageTiny() {
         this.setRegistryName("tiny_starlight_storage");
-        this.setTranslationKey(HerodotusUtils.MOD_ID + ".tiny_starlight_storage");
+        this.setUnlocalizedName(HerodotusUtils.MOD_ID + ".tiny_starlight_storage");
         this.setCreativeTab(CreativeTabs.MISC);
         this.setMaxStackSize(1);
         this.hasSubtypes = true;
@@ -79,11 +79,11 @@ public class StarlightStorageTiny extends Item implements IItemHasColor {
     }
 
     @Override
-    public String getTranslationKey(ItemStack stack) {
+    public String getUnlocalizedName(ItemStack stack) {
         if (stack.getMetadata() != 1) {
-            return super.getTranslationKey(stack);
+            return super.getUnlocalizedName(stack);
         } else {
-            return super.getTranslationKey(stack) + "_full";
+            return super.getUnlocalizedName(stack) + "_full";
         }
     }
 

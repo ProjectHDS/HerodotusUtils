@@ -146,7 +146,7 @@ public class EventHandler {
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
         World world = event.world;
         if (event.phase == TickEvent.Phase.END && world instanceof WorldServer) {
-            for (Chunk chunk : ((WorldServer) world).getChunkProvider().getLoadedChunks()) {
+            for (Chunk chunk : ((WorldServer) world).getChunkFromBlockCoordsProvider().getLoadedChunks()) {
                 if (world.rand.nextInt(5000) == 0) {
                     chunk.getCapability(ZenWorldCapabilityHandler.ZEN_WORLD_CAPABILITY, null).updateData(Util.createDataMap(BlockMercury.TAG_POLLUTION, new DataInt(0)));
                 }
