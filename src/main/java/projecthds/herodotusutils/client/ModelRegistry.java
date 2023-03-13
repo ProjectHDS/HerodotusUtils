@@ -101,18 +101,6 @@ public class ModelRegistry {
                 BlockAlchemySeparator.ITEM_BLOCK,
                 BlockManaCatalyst.Item.INSTANCE
         );
-        BlockRegistry.ORES.forEach(block -> {
-            ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
-                @Override
-                protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-                    return new ModelResourceLocation(HerodotusUtils.rl("ore"), "type=" + state.getValue(BlockOreBase.PROPERTY_TYPE).getName());
-                }
-            });
-            Item item = block.getItem();
-            for (BlockOreBase.Type type : BlockOreBase.Type.values()) {
-                ModelLoader.setCustomModelResourceLocation(item, type.ordinal(), new ModelResourceLocation(HerodotusUtils.rl("ore"), "type=" + type.getName()));
-            }
-        });
         BlockGolemCore.BLOCKS.forEach(block -> ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
             @Override
             protected ModelResourceLocation getModelResourceLocation(IBlockState state) {

@@ -1,10 +1,7 @@
 package projecthds.herodotusutils.block;
 
-import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fml.common.Mod;
@@ -15,11 +12,6 @@ import projecthds.herodotusutils.fluid.FluidMana;
 import projecthds.herodotusutils.HerodotusUtils;
 import projecthds.herodotusutils.block.alchemy.*;
 import projecthds.herodotusutils.block.computing.*;
-import projecthds.herodotusutils.util.ItemDropSupplier;
-
-import java.util.List;
-
-import static net.minecraftforge.fml.common.registry.ForgeRegistries.ITEMS;
 
 /**
  * @author youyihj
@@ -27,22 +19,6 @@ import static net.minecraftforge.fml.common.registry.ForgeRegistries.ITEMS;
 @Mod.EventBusSubscriber
 public class BlockRegistry {
 
-    public static final BlockOreBase RED_ORE = new BlockOreBase("red", 0xfc0d20);
-    public static final BlockOreBase YELLOW_ORE = new BlockOreBase("yellow", 0xffd701);
-    public static final BlockOreBase BLUE_ORE = new BlockOreBase("blue", 0x00a2dd);
-    public static final BlockOreBase RHOMBUS_ORE = new BlockOreBase("rhombus", 0xffffff)
-        .setDropItemSupplier(
-            ItemDropSupplier.of(() -> new ItemStack(ITEMS.getValue(new ResourceLocation("contenttweaker", "rhombus"))))
-        );
-    public static final BlockOreBase SPHERICAL_ORE = new BlockOreBase("spherical", 0xffffff)
-        .setDropItemSupplier(
-            ItemDropSupplier.of(() -> new ItemStack(ITEMS.getValue(new ResourceLocation("contenttweaker", "spherical"))))
-        );
-    public static final BlockOreBase SQUARE_ORE = new BlockOreBase("square", 0xffffff)
-        .setDropItemSupplier(
-            ItemDropSupplier.of(() -> new ItemStack(ITEMS.getValue(new ResourceLocation("contenttweaker", "square"))))
-        );
-    public static final List<BlockOreBase> ORES = Lists.newArrayList(RED_ORE, YELLOW_ORE, BLUE_ORE, RHOMBUS_ORE, SPHERICAL_ORE, SQUARE_ORE);
     private static final Block FLUID_MANA_BLOCK = new BlockFluidClassic(FluidMana.INSTANCE, Material.WATER).setRegistryName("fluid_mana");
 
     @SubscribeEvent
@@ -78,7 +54,6 @@ public class BlockRegistry {
         );
         BlockTransporter.getBlockMap().values().forEach(registry::register);
         BlockGolemCore.BLOCKS.forEach(registry::register);
-        ORES.forEach(registry::register);
         GameRegistry.registerTileEntity(TileManaLiquidizer.class, HerodotusUtils.rl("mana_liquidizer"));
         GameRegistry.registerTileEntity(TileCalculatorController.class, HerodotusUtils.rl("calculator_controller"));
         GameRegistry.registerTileEntity(TileComputingModule.class, HerodotusUtils.rl("computing_module"));

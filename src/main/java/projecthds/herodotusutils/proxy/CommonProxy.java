@@ -10,8 +10,6 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import projecthds.herodotusutils.HerodotusUtils;
-import projecthds.herodotusutils.block.BlockOreBase;
-import projecthds.herodotusutils.block.BlockRegistry;
 import projecthds.herodotusutils.fluid.FluidAlchemyWaste;
 import projecthds.herodotusutils.fluid.FluidMana;
 import projecthds.herodotusutils.fluid.FluidMercury;
@@ -45,7 +43,6 @@ public class CommonProxy implements IProxy {
     @Override
     public void init(FMLInitializationEvent event) {
         BloodAltarStructures.loadStructures();
-        BlockRegistry.ORES.forEach(BlockOreBase::registerOreDict);
         FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "projecthds.herodotusutils.modsupport.theoneprobe.TOPHandler");
     }
 
