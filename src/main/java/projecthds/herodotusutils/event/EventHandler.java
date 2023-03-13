@@ -17,6 +17,10 @@ import crafttweaker.api.recipes.IRecipeFunction;
 import crafttweaker.mc1120.events.ActionApplyEvent;
 import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.util.ArrayUtil;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -35,15 +39,19 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.oredict.OreDictionary;
@@ -54,6 +62,7 @@ import projecthds.herodotusutils.computing.event.ComputingUnitChangeEvent;
 import projecthds.herodotusutils.item.ItemPenumbraRing;
 import projecthds.herodotusutils.item.ItemRiftSword;
 import projecthds.herodotusutils.item.RefinedBottle;
+import projecthds.herodotusutils.modsupport.i18nupdatemod.I18nDetectedScreen;
 import projecthds.herodotusutils.potion.LithiumAmalgamInfected;
 import projecthds.herodotusutils.potion.Starvation;
 import projecthds.herodotusutils.proxy.CommonProxy;
@@ -64,10 +73,6 @@ import projecthds.herodotusutils.util.Util;
 import projecthds.herodotusutils.world.PlainTeleporter;
 import youyihj.zenutils.api.world.ZenUtilsWorld;
 import youyihj.zenutils.impl.capability.ZenWorldCapabilityHandler;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author youyihj
@@ -146,7 +151,7 @@ public class EventHandler {
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
         World world = event.world;
         if (event.phase == TickEvent.Phase.END && world instanceof WorldServer) {
-            for (Chunk chunk : ((WorldServer) world).getChunkFromBlockCoordsProvider().getLoadedChunks()) {
+            for (Chunk chunk : ((WorldServer) world).getChunkProvider().getLoadedChunks()) {
                 if (world.rand.nextInt(5000) == 0) {
                     chunk.getCapability(ZenWorldCapabilityHandler.ZEN_WORLD_CAPABILITY, null).updateData(Util.createDataMap(BlockMercury.TAG_POLLUTION, new DataInt(0)));
                 }
@@ -261,5 +266,16 @@ public class EventHandler {
         }
         CraftTweakerAPI.recipes.addHiddenShapeless("creature_data_analyzer_channel", analyzer, new IIngredient[]{analyzer, new IngredientAnyExcept(analyzer)}, recipeFunction, null);
         CraftTweakerAPI.recipes.addHiddenShapeless("creature_data_encode_interface_channel", encodeInterface, new IIngredient[]{encodeInterface, new IngredientAnyExcept(encodeInterface)}, recipeFunction, null);
+    }
+
+    public static boolean shouldDisplay = true;
+
+  @SubscribeEvent
+  @SideOnly(Side.CLIENT)
+  public static void mainMenuOpen(GuiOpenEvent event) {
+    if (shouldDisplay && event.getGui() instanceof GuiMainMenu && Loader.isModLoaded("i18nmod")) {
+            event.setGui(new I18nDetectedScreen());
+            shouldDisplay = false;
+        }
     }
 }
