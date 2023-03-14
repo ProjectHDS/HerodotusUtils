@@ -19,7 +19,8 @@
     "thaumcraft.MixinResearchStage",
     "thaumcraft.MixinTileCrucible",
     "railcraft.MixinBetaWarning",
-    "biomesoplenty.MixinBopOreGen"
+    "biomesoplenty.MixinOreCluster",
+    "biomesoplenty.MixinOreSingle"
   ],
   "client": [
     "bloodmagic.MixinRenderAltar",
