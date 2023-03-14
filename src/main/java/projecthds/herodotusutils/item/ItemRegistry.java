@@ -61,6 +61,7 @@ public class ItemRegistry {
                 BlockPrimordialCharger.ITEM_BLOCK,
                 BlockManaCatalyst.Item.INSTANCE
         );
+        BlockRegistry.ORES.stream().map(BlockOreBase::getItem).forEach(registry::register);
         BlockGolemCore.ITEM_BLOCKS.forEach(registry::register);
         BlockTransporter.getItemBlockMap().values().forEach(registry::register);
     }
