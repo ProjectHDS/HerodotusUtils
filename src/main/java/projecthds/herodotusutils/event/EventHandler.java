@@ -270,10 +270,10 @@ public class EventHandler {
 
     public static boolean shouldDisplay = true;
 
-  @SubscribeEvent
-  @SideOnly(Side.CLIENT)
-  public static void mainMenuOpen(GuiOpenEvent event) {
-    if (shouldDisplay && event.getGui() instanceof GuiMainMenu && Loader.isModLoaded("i18nmod")) {
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
+    public static void mainMenuOpen(GuiOpenEvent event) {
+        if (shouldDisplay && event.getGui() instanceof GuiMainMenu && Loader.isModLoaded("i18nmod")) {
             event.setGui(new I18nDetectedScreen());
             shouldDisplay = false;
         }

@@ -18,7 +18,8 @@
     "thaumcraft.MixinEntityFluxRift",
     "thaumcraft.MixinResearchStage",
     "thaumcraft.MixinTileCrucible",
-    "railcraft.MixinBetaWarning"
+    "railcraft.MixinBetaWarning",
+    "biomesoplenty.MixinBopOreGen"
   ],
   "client": [
     "bloodmagic.MixinRenderAltar",
