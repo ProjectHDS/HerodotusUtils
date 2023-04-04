@@ -24,6 +24,7 @@
   ],
   "client": [
     "bloodmagic.MixinRenderAltar",
-    "logisticspipes.MixinHardcodedText"
+    "logisticspipes.MixinHardcodedText",
+    "chisel.MixinChiselSpeedHandler"
   ]
 }

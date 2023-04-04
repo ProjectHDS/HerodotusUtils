@@ -127,6 +127,8 @@ dependencies {
     deobfCompile 'curse.maven:BrandonsCore-231382:3408276'
     deobfCompile 'curse.maven:ProjectIntslligence-306028:2833640'
     deobfCompile 'curse.maven:BiomesOPlenty-220318:2842510'
+    deobfCompile 'team.chisel.ctm:CTM:MC1.12.2-1.0.2.31'
+    deobfCompile 'team.chisel:Chisel:MC1.12.2-1.0.2.45'
 
     /*deobfCompile 'curse.maven:FTBLibrary-237167:2985811') yes yes I'm working on it
     deobfCompile 'curse.maven:ItemFilters-309674:3003364')
