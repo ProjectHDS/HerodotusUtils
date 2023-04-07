@@ -1,8 +1,6 @@
 package projecthds.herodotusutils.modsupport.crafttweaker;
 
 import crafttweaker.annotations.ZenRegister;
-import java.util.Arrays;
-import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
@@ -61,13 +59,13 @@ public class ApacheStringUtils {
     }
 
     @ZenMethod
-    public static List<String> stripAll(String... strings) {
-        return Arrays.asList(StringUtils.stripAll(strings));
+    public static String[] stripAll(String[] strings) {
+        return StringUtils.stripAll(strings);
     }
 
     @ZenMethod
-    public static List<String> stripAll(List<String> strings, String stripChars) {
-        return Arrays.asList(StringUtils.stripAll(String.valueOf(strings)));
+    public static String[] stripAll(String[] strings, String stripChars) {
+        return StringUtils.stripAll(String.valueOf(strings));
     }
 
     @ZenMethod
@@ -161,63 +159,63 @@ public class ApacheStringUtils {
     }
 
     @ZenMethod
-    public static List<String> split(String str) {
-        return Arrays.asList(StringUtils.split(str));
+    public static String[] split(String str) {
+        return StringUtils.split(str);
     }
 
     @ZenMethod
-    public static List<String> split(String str, String separatorChar) {
-        return Arrays.asList(StringUtils.split(str, separatorChar));
+    public static String[] split(String str, String separatorChar) {
+        return StringUtils.split(str, separatorChar);
     }
 
     @ZenMethod
-    public static List<String> split(String str, String separatorChars, int max) {
-        return Arrays.asList(StringUtils.split(str, separatorChars, max));
+    public static String[] split(String str, String separatorChars, int max) {
+        return StringUtils.split(str, separatorChars, max);
     }
 
     @ZenMethod
-    public static List<String> splitByWholeSeparator(String str, String separator) {
-        return Arrays.asList(StringUtils.splitByWholeSeparator(str, separator));
+    public static String[] splitByWholeSeparator(String str, String separator) {
+        return StringUtils.splitByWholeSeparator(str, separator);
     }
 
     @ZenMethod
-    public static List<String> splitByWholeSeparator( String str, String separator, int max) {
-        return Arrays.asList(StringUtils.splitByWholeSeparator(str, separator, max));
+    public static String[] splitByWholeSeparator( String str, String separator, int max) {
+        return StringUtils.splitByWholeSeparator(str, separator, max);
     }
 
     @ZenMethod
-    public static List<String> splitByWholeSeparatorPreserveAllTokens(String str, String separator) {
-        return Arrays.asList(StringUtils.splitByWholeSeparatorPreserveAllTokens(str, separator));
+    public static String[] splitByWholeSeparatorPreserveAllTokens(String str, String separator) {
+        return StringUtils.splitByWholeSeparatorPreserveAllTokens(str, separator);
     }
 
     @ZenMethod
-    public static List<String> splitByWholeSeparatorPreserveAllTokens(String str, String separator, int max) {
-        return Arrays.asList(StringUtils.splitByWholeSeparatorPreserveAllTokens(str, separator, max));
+    public static String[] splitByWholeSeparatorPreserveAllTokens(String str, String separator, int max) {
+        return StringUtils.splitByWholeSeparatorPreserveAllTokens(str, separator, max);
     }
 
     @ZenMethod
-    public static List<String> splitPreserveAllTokens(String str) {
-        return Arrays.asList(StringUtils.splitPreserveAllTokens(str));
+    public static String[] splitPreserveAllTokens(String str) {
+        return StringUtils.splitPreserveAllTokens(str);
     }
 
     @ZenMethod
-    public static List<String> splitPreserveAllTokens(String str, String separatorChar) {
-        return Arrays.asList(StringUtils.splitPreserveAllTokens(str, separatorChar));
+    public static String[] splitPreserveAllTokens(String str, String separatorChar) {
+        return StringUtils.splitPreserveAllTokens(str, separatorChar);
     }
     
     @ZenMethod
-    public static List<String> splitPreserveAllTokens(String str, String separatorChars, int max) {
-        return Arrays.asList(StringUtils.splitPreserveAllTokens(str, separatorChars, max));
+    public static String[] splitPreserveAllTokens(String str, String separatorChars, int max) {
+        return StringUtils.splitPreserveAllTokens(str, separatorChars, max);
     }
 
     @ZenMethod
-    public static List<String> splitByCharacterType(String str) {
-        return Arrays.asList(StringUtils.splitByCharacterType(str));
+    public static String[] splitByCharacterType(String str) {
+        return StringUtils.splitByCharacterType(str);
     }
     
     @ZenMethod
-    public static List<String> splitByCharacterTypeCamelCase(String str) {
-        return Arrays.asList(StringUtils.splitByCharacterTypeCamelCase(str));
+    public static String[] splitByCharacterTypeCamelCase(String str) {
+        return StringUtils.splitByCharacterTypeCamelCase(str);
     }
     
     @ZenMethod
@@ -316,13 +314,13 @@ public class ApacheStringUtils {
     }
     
     @ZenMethod
-    public static String replaceEach(String text, List<String> searchList, List<String> replacementList) {
-        return StringUtils.replaceEach(text, searchList.toArray(new String[0]), replacementList.toArray(new String[0]));
+    public static String replaceEach(String text, String[] searchList, String[] replacementList) {
+        return StringUtils.replaceEach(text, searchList, replacementList);
     }
 
     @ZenMethod
-    public static String replaceEachRepeatedly(String text, List<String> searchList, List<String> replacementList) {
-        return StringUtils.replaceEachRepeatedly(text, searchList.toArray(new String[0]), replacementList.toArray(new String[0]));
+    public static String replaceEachRepeatedly(String text, String[] searchList, String[] replacementList) {
+        return StringUtils.replaceEachRepeatedly(text, searchList, replacementList);
     }
 
     @ZenMethod
@@ -456,7 +454,7 @@ public class ApacheStringUtils {
     }
 
     @ZenMethod
-    public static String getCommonPrefix(String... strs) {
+    public static String getCommonPrefix(String[] strs) {
         return StringUtils.getCommonPrefix(strs);
     }
 
@@ -486,12 +484,12 @@ public class ApacheStringUtils {
     }
 
     @ZenMethod
-    public static boolean isAnyEmpty(String... css) {
+    public static boolean isAnyEmpty(String[] css) {
         return StringUtils.isAnyEmpty(css);
     }
 
     @ZenMethod
-    public static boolean isNoneEmpty(String... css) {
+    public static boolean isNoneEmpty(String[] css) {
         return StringUtils.isNoneEmpty(css);
     }
 
@@ -506,12 +504,12 @@ public class ApacheStringUtils {
     }
 
     @ZenMethod
-    public static boolean isAnyBlank(String... css) {
+    public static boolean isAnyBlank(String[] css) {
         return StringUtils.isAnyBlank(css);
     }
 
     @ZenMethod
-    public static boolean isNoneBlank(String... css) {
+    public static boolean isNoneBlank(String[] css) {
         return StringUtils.isNoneBlank(css);
     }
 
@@ -526,12 +524,12 @@ public class ApacheStringUtils {
     }
 
     @ZenMethod
-    public static boolean equalsAny(String string, String... searchStrings) {
+    public static boolean equalsAny(String string, String[] searchStrings) {
         return StringUtils.equalsAny(string, searchStrings);
     }
 
     @ZenMethod
-    public static boolean equalsAnyIgnoreCase(String string, String...searchStrings) {
+    public static boolean equalsAnyIgnoreCase(String string, String[]searchStrings) {
         return StringUtils.equalsAnyIgnoreCase(string, searchStrings);
     }
 
@@ -636,7 +634,7 @@ public class ApacheStringUtils {
     }
 
     @ZenMethod
-    public static boolean containsAny(String cs, String... searchStrings) {
+    public static boolean containsAny(String cs, String[] searchStrings) {
         return StringUtils.containsAny(cs, searchStrings);
     }
 
@@ -656,12 +654,12 @@ public class ApacheStringUtils {
     }
 
     @ZenMethod
-    public static int indexOfAny(String str, String... searchStrs) {
+    public static int indexOfAny(String str, String[] searchStrs) {
         return StringUtils.indexOfAny(str, searchStrs);
     }
 
     @ZenMethod
-    public static int lastIndexOfAny(String str, String... searchStrs) {
+    public static int lastIndexOfAny(String str, String[] searchStrs) {
         return StringUtils.lastIndexOfAny(str, searchStrs);
     }
 
@@ -726,7 +724,7 @@ public class ApacheStringUtils {
     }
 
     @ZenMethod
-    public static String joinWith(String separator, Object... objects) {
+    public static String joinWith(String separator, Object[] objects) {
         return StringUtils.joinWith(separator, objects);
     }
 
@@ -796,7 +794,7 @@ public class ApacheStringUtils {
     }
 
     @ZenMethod
-    public static int indexOfDifference(String... css) {
+    public static int indexOfDifference(String[] css) {
         return StringUtils.indexOfDifference(css);
     }
 
@@ -826,7 +824,7 @@ public class ApacheStringUtils {
     }
 
     @ZenMethod
-    public static boolean startsWithAny(String sequence, String... searchStrings) {
+    public static boolean startsWithAny(String sequence, String[] searchStrings) {
         return StringUtils.startsWithAny(sequence, searchStrings);
     }
 
@@ -841,27 +839,27 @@ public class ApacheStringUtils {
     }
 
     @ZenMethod
-    public static boolean endsWithAny(String sequence, String... searchStrings) {
+    public static boolean endsWithAny(String sequence, String[] searchStrings) {
         return StringUtils.endsWithAny(sequence, searchStrings);
     }
 
     @ZenMethod
-    public static String appendIfMissing(String str, String suffix, String... suffixes) {
+    public static String appendIfMissing(String str, String suffix, String[] suffixes) {
         return StringUtils.appendIfMissing(str, suffix, suffixes);
     }
 
     @ZenMethod
-    public static String appendIfMissingIgnoreCase(String str, String suffix, String... suffixes) {
+    public static String appendIfMissingIgnoreCase(String str, String suffix, String[] suffixes) {
         return StringUtils.appendIfMissingIgnoreCase(str, suffix, suffixes);
     }
 
     @ZenMethod
-    public static String prependIfMissing(String str, String prefix, String... prefixes) {
+    public static String prependIfMissing(String str, String prefix, String[] prefixes) {
         return StringUtils.prependIfMissing(str, prefix, prefixes);
     }
 
     @ZenMethod
-    public static String prependIfMissingIgnoreCase(String str, String prefix, String... prefixes) {
+    public static String prependIfMissingIgnoreCase(String str, String prefix, String[] prefixes) {
         return StringUtils.prependIfMissingIgnoreCase(str, prefix, prefixes);
     }
 }
