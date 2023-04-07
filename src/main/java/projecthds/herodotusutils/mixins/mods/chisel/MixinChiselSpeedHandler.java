@@ -19,8 +19,12 @@ public class MixinChiselSpeedHandler {
     @Shadow(remap = false)
     private static MovementInput manualInputCheck;
 
-  @Overwrite
-  public static void speedupPlayer(PlayerTickEvent event) {
+    /**
+     * @author Gary Bryson Luis Jr.
+     * @reason Rework logic.
+     * */
+    @Overwrite
+    public static void speedupPlayer(PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.START && event.side.isClient() && event.player.onGround && event.player instanceof EntityPlayerSP) {
             if (manualInputCheck == null) {
                 manualInputCheck = new MovementInputFromOptions(Minecraft.getMinecraft().gameSettings);
