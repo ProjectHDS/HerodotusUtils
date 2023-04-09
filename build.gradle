@@ -93,7 +93,8 @@ repositories {
 dependencies {
 
     // Mixin related
-    compile 'zone.rong:mixinbooter:7.0'
+    compile 'zone.rong:mixinbooter:7.1'
+    compile 'org.jooq:joor-java-8:0.9.14'
     annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
 
     // Tweaked mods

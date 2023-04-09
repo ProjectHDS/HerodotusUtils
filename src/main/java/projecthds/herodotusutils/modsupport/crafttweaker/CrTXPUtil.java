@@ -4,11 +4,10 @@ import crafttweaker.annotations.ModOnly;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.api.player.IPlayer;
-import net.minecraft.entity.player.EntityPlayer;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
-import java.lang.reflect.Method;
+import static org.joor.Reflect.onClass;
 
 /**
  * @author youyihj
@@ -20,24 +19,12 @@ import java.lang.reflect.Method;
 public class CrTXPUtil {
     @ZenMethod
     public static int getPlayerXP(IPlayer player) {
-        try {
-            Class<?> xpUtil = Class.forName("crazypants.enderio.base.xp.XpUtil");
-            Method getPlayerXPMethod = xpUtil.getMethod("getPlayerXP", EntityPlayer.class);
-            return ((int) getPlayerXPMethod.invoke(null, CraftTweakerMC.getPlayer(player)));
-        } catch (Exception e) {
-            return 0;
-        }
+        return onClass("crazypants.enderio.base.xp.XpUtil").call("getPlayerXP", CraftTweakerMC.getPlayer(player)).get();
     }
 
     @ZenMethod
     public static void addPlayerXP(IPlayer player, int amount) {
-        try {
-            Class<?> xpUtil = Class.forName("crazypants.enderio.base.xp.XpUtil");
-            Method addPlayerXPMethod = xpUtil.getMethod("addPlayerXP", EntityPlayer.class, int.class);
-            addPlayerXPMethod.invoke(null, CraftTweakerMC.getPlayer(player), amount);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        onClass("crazypants.enderio.base.xp.XpUtil").call("addPlayerXP", CraftTweakerMC.getPlayer(player), amount);
     }
 
     @ZenMethod
