@@ -66,7 +66,7 @@ public class BlockAlchemyController extends AbstractPipeBlock implements IAdjust
     public IBlockState getStateFromMeta(int meta) {
         int horizontalIndex = meta % 4;
         int workType = meta / 4;
-        return getDefaultState().withProperty(WORK_TYPE_PROPERTY, WorkType.valueOf(workType)).withProperty(BlockHorizontal.FACING, EnumFacing.getHorizontal(horizontalIndex));
+        return getDefaultState().withProperty(WORK_TYPE_PROPERTY, WorkType.valueOf(workType)).withProperty(BlockHorizontal.FACING, EnumFacing.byHorizontalIndex(horizontalIndex));
     }
 
     @Nonnull

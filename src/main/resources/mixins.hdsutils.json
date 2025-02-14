@@ -1,0 +1,28 @@
+{
+	"package": "projecthds.herodotusutils.mixins.mods",
+	"required": true,
+	"refmap": "mixins.hdsutils.refmap.json",
+	"target": "@env(DEFAULT)",
+	"minVersion": "0.8.5",
+	"compatibilityLevel": "JAVA_8",
+	"mixins": [
+		"agricraft.MixinAgriPlant",
+		"agricraft.MixinJsonPlant",
+		"agricraft.MixinTileEntityCrop",
+		"bloodmagic.MixinAltarUtil",
+		"bloodmagic.MixinBlockAltar",
+		"bloodmagic.MixinBloodAltar",
+		"bloodmagic.MixinItemAltarMaker",
+		"factorytech.MixinRiverGrateRemovalAction",
+		"thaumcraft.MixinEntityFluxRift",
+		"thaumcraft.MixinResearchStage",
+		"thaumcraft.MixinTileCrucible",
+		"railcraft.MixinBetaWarning"
+	],
+	"client": [
+		"bloodmagic.MixinRenderAltar",
+		"logisticspipes.MixinHardcodedText",
+		"chisel.MixinChiselSpeedHandler"
+	],
+	"server": []
+}

@@ -5,6 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import projecthds.herodotusutils.util.interfaces.ITaint;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

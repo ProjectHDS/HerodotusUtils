@@ -16,7 +16,7 @@ public class GolemUpperSword extends Item {
 
     private GolemUpperSword() {
         this.setRegistryName("golem_upper_sword");
-        this.setUnlocalizedName(HerodotusUtils.MOD_ID + ".golem_upper_sword");
+        this.setTranslationKey(HerodotusUtils.MOD_ID + ".golem_upper_sword");
         this.setCreativeTab(CreativeTabs.TOOLS);
         this.setMaxDamage(10);
         this.setFull3D();

@@ -1,0 +1,90 @@
+apply from: 'gradle/scripts/helpers.gradle'
+
+repositories {
+    mavenCentral()
+    exclusiveContent {
+        forRepository {
+            maven {
+                name 'CurseMaven'
+                url 'https://cursemaven.com'
+            }
+        }
+        filter {
+            includeGroup 'curse.maven'
+        }
+    }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name 'Modrinth'
+                url 'https://api.modrinth.com/maven'
+            }
+        }
+        filter {
+            includeGroup 'maven.modrinth'
+        }
+    }
+    maven {
+        name 'thiakil'
+        url 'https://maven.thiakil.com'
+    }
+    maven {
+        name 'blamejared'
+        url 'https://maven.blamejared.com'
+    }
+    maven {
+        name 'cofh'
+        url 'https://maven.covers1624.net'
+    }
+    maven {
+        name 'tterrag'
+        url 'https://maven.tterrag.com'
+    }
+    maven {
+        name 'hellfirepvp'
+        url 'https://maven.hellfiredev.net'
+    }
+    maven {
+        name 'GTCEu Maven'
+        url 'https://maven.gtceu.com'
+    }
+    mavenLocal()
+}
+
+dependencies {
+    runtimeOnly 'com.cleanroommc:strip-latest-forge-requirements:1.0'
+    runtimeOnly 'com.cleanroommc:osxnarratorblocker:1.0'
+
+    compileOnly 'mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.28-17'
+
+    implementation 'org.jooq:joor-java-8:0.9.14'
+    implementation 'com.cleanroommc:configanytime:3.0'
+    implementation 'com.cleanroommc:modularui:2.5.0-rc3'
+    implementation 'mezz.jei:jei_1.12.2:4.16.1.1012'
+    implementation 'vazkii.botania:Botania:r1.10-363.148'
+    implementation 'com.azanor.baubles:Baubles:1.12-1.5.2'
+    implementation "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.702"
+    implementation 'com.teamacronymcoders.base:base:1.12.2-3.13.0-SNAPSHOT.+'
+    implementation 'com.teamacronymcoders:ContentTweaker:1.12.2-4.9.1'
+    implementation 'cofh:RedstoneFlux:1.12-2.1.0.+:universal'
+    implementation ('gregtech:gregtech:2.8.10-beta') {transitive = false}
+    implementation 'team.chisel.ctm:CTM:MC1.12.2-1.0.2.31'
+    implementation 'team.chisel:Chisel:MC1.12.2-1.0.2.45'
+    implementation 'codechicken:CodeChickenLib:1.12.2-3.2.3.358:universal'
+
+    implementation rfg.deobf('curse.maven:zenutil-401178:6091806')
+    implementation rfg.deobf('curse.maven:agricraft-225635:2609648')
+    implementation rfg.deobf('curse.maven:infinitylib-251396:2537265')
+    implementation rfg.deobf('curse.maven:thaumcraft-223628:2629023')
+    implementation rfg.deobf('curse.maven:factorytech-278822:3178832')
+    implementation rfg.deobf('curse.maven:bloodmagic-224791:2822288')
+    implementation rfg.deobf('curse.maven:guideapi-228832:2645992')
+    implementation rfg.deobf('curse.maven:thaumic-augmentation-319441:3536155')
+    implementation rfg.deobf('curse.maven:topography-297878:3065647')
+    implementation rfg.deobf('curse.maven:BNBGamingLib-229587:2698688')
+    implementation rfg.deobf('curse.maven:RailCraft-51195:3853491')
+    implementation rfg.deobf('curse.maven:Patchouli-306770:3162874')
+    implementation rfg.deobf('curse.maven:LogisticsPipes-232838:4411480')
+    implementation rfg.deobf('curse.maven:BrandonsCore-231382:3408276')
+    implementation rfg.deobf('curse.maven:ProjectIntslligence-306028:2833640')
+}

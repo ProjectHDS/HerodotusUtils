@@ -23,6 +23,7 @@ import projecthds.herodotusutils.block.computing.BlockCalculatorController;
 import projecthds.herodotusutils.block.computing.BlockCalculatorStructure;
 import projecthds.herodotusutils.block.computing.BlockComputingModule;
 import projecthds.herodotusutils.block.computing.BlockTransporter;
+import projecthds.herodotusutils.block.dimcrystal.*;
 import projecthds.herodotusutils.entity.EntityRedSlime;
 import projecthds.herodotusutils.entity.RenderRedSlime;
 import projecthds.herodotusutils.entity.golem.EntityExtraIronGolem;
@@ -79,11 +80,10 @@ public class ModelRegistry {
                 ItemLithiumAmalgam.INSTANCE,
                 StarlightStorageTiny.INSTANCE,
                 ItemOilAIOT.INSTANCE,
-                ItemFlintAIOT.INSTANCE,
-                ItemBoneAIOT.INSTANCE,
                 ItemRiftFeed.INSTANCE,
                 ItemPenumbraRing.INSTANCE,
                 ItemRiftSword.INSTANCE,
+                ItemLithiumQuartzPowder.INSTANCE,
                 GolemUpperSword.INSTANCE,
                 GolemDownerSword.INSTANCE,
                 BlockAlchemyController.ITEM_BLOCK,
@@ -99,20 +99,18 @@ public class ModelRegistry {
                 BlockPrimordialCharger.ITEM_BLOCK,
                 BlockAlchemyCrafter.ITEM_BLOCK,
                 BlockAlchemySeparator.ITEM_BLOCK,
-                BlockManaCatalyst.Item.INSTANCE
+                BlockManaCatalyst.Item.INSTANCE,
+                BlockPlainDimCrystal.ITEM_BLOCK,
+                BlockLithiumQuartz.ITEM_BLOCK,
+                BlockLithiumQuartzPowderBlock.ITEM_BLOCK,
+                BlockRedstoneAmalgam.ITEM_BLOCK
         );
-        BlockRegistry.ORES.forEach(block -> {
-            ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
-                @Override
-                protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-                    return new ModelResourceLocation(HerodotusUtils.rl("ore"), "type=" + state.getValue(BlockOreBase.PROPERTY_TYPE).getName());
-                }
-            });
-            Item item = block.getItem();
-            for (BlockOreBase.Type type : BlockOreBase.Type.values()) {
-                ModelLoader.setCustomModelResourceLocation(item, type.ordinal(), new ModelResourceLocation(HerodotusUtils.rl("ore"), "type=" + type.getName()));
+        BlockOreDimCrystal.BLOCKS.forEach(block -> ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
+            @Override
+            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                return new ModelResourceLocation(HerodotusUtils.rl("dimcrystal"), "normal");
             }
-        });
+        }));
         BlockGolemCore.BLOCKS.forEach(block -> ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
             @Override
             protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
@@ -143,7 +141,7 @@ public class ModelRegistry {
         ItemColors itemColors = event.getItemColors();
         Stream.concat(ForgeRegistries.ITEMS.getValuesCollection().stream(), ForgeRegistries.BLOCKS.getValuesCollection().stream())
                 .filter(IItemHasColor.class::isInstance)
-                .filter(entry -> entry.getRegistryName().getResourceDomain().equals(HerodotusUtils.MOD_ID))
+                .filter(entry -> entry.getRegistryName().getNamespace().equals(HerodotusUtils.MOD_ID))
                 .forEach(entry -> {
                     if (entry instanceof Item) {
                         itemColors.registerItemColorHandler(((IItemHasColor) entry)::getColorFromItemStack, ((Item) entry));
@@ -157,7 +155,7 @@ public class ModelRegistry {
     public static void blockColor(ColorHandlerEvent.Block event) {
         BlockColors blockColors = event.getBlockColors();
         for (Map.Entry<ResourceLocation, Block> entry : ForgeRegistries.BLOCKS.getEntries()) {
-            if (entry.getKey().getResourceDomain().equals(HerodotusUtils.MOD_ID)) {
+            if (entry.getKey().getNamespace().equals(HerodotusUtils.MOD_ID)) {
                 Block block = entry.getValue();
                 if (block instanceof IBlockHasColor) {
                     blockColors.registerBlockColorHandler(((IBlockHasColor) block)::getColorMultiplier, block);

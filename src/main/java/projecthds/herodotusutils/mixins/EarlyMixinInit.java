@@ -1,4 +1,4 @@
-package projecthds.herodotusutils.mixins.init;
+package projecthds.herodotusutils.mixins;
 
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import zone.rong.mixinbooter.IEarlyMixinLoader;
@@ -8,7 +8,7 @@ import java.util.List;import java.util.Map;
 public class EarlyMixinInit implements IEarlyMixinLoader, IFMLLoadingPlugin {
     @Override
     public List<String> getMixinConfigs() {
-        return Collections.singletonList("early_mixins.hdsutils.json");
+        return Collections.singletonList("mixins.hdsutils.json");
     }
 
     @Override public String[] getASMTransformerClass() { return new String[0]; }

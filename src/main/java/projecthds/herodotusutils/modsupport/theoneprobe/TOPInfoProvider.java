@@ -37,7 +37,7 @@ public enum TOPInfoProvider implements IProbeInfoProvider {
     public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
         TileEntity tileEntity = world.getTileEntity(data.getPos());
         if (tileEntity instanceof IComputingUnitInteract) {
-            Chunk chunk = world.getChunkFromBlockCoords(data.getPos());
+            Chunk chunk = world.getChunk(data.getPos());
             IComputingUnit computingUnit = chunk.getCapability(Capabilities.COMPUTING_UNIT_CAPABILITY, null);
             new ComputingUnitChangeEvent(computingUnit, chunk).post();
             probeInfo.element(new ElementTextComponent(TextStyleClass.INFO, new TextComponentTranslation("hdsutils.computing_unit.bar", computingUnit.totalConsumePower(), computingUnit.totalGeneratePower())));

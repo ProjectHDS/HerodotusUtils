@@ -44,7 +44,7 @@ public class TileAlchemyRoundRobinTunnel extends AbstractHasAlchemyFluidTileEnti
         for (int i = 0; i < facingQuerySource.length; i++) {
             byte b = facingQuerySource[i];
             if (b != -1) {
-                facingQuery[i] = EnumFacing.getHorizontal(b);
+                facingQuery[i] = EnumFacing.byHorizontalIndex(b);
             } else {
                 facingQuery[i] = null;
             }

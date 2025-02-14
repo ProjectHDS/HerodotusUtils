@@ -8,6 +8,7 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.monster.EntityEndermite;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.util.Constants;
+import projecthds.herodotusutils.util.interfaces.ITaint;
 
 /**
  * @author youyihj

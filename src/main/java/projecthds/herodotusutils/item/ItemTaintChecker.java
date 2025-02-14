@@ -8,7 +8,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import projecthds.herodotusutils.util.ITaint;
+import projecthds.herodotusutils.util.interfaces.ITaint;
 import projecthds.herodotusutils.HerodotusUtils;
 import projecthds.herodotusutils.modsupport.crafttweaker.ExpandPlayer;
 
@@ -21,7 +21,7 @@ import java.util.List;
 public class ItemTaintChecker extends Item {
     private ItemTaintChecker() {
         this.setRegistryName("taint_checker");
-        this.setUnlocalizedName(HerodotusUtils.MOD_ID + ".taint_checker");
+        this.setTranslationKey(HerodotusUtils.MOD_ID + ".taint_checker");
         this.setCreativeTab(CreativeTabs.MISC);
         this.setMaxStackSize(1);
     }

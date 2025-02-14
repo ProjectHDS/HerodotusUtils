@@ -45,11 +45,11 @@ public abstract class ItemFluidContainer extends Item implements IItemHasColor {
             if (color == -1) { // Some fluid colors are undefined.
                 BufferedImage image;
                 ResourceLocation texture = fluid.getStill();
-                String newPath = "textures/" + texture.getResourcePath();
+                String newPath = "textures/" + texture.getPath();
                 if (!newPath.endsWith(".png")) {
                     newPath += ".png";
                 }
-                texture = new ResourceLocation(texture.getResourceDomain(), newPath);
+                texture = new ResourceLocation(texture.getNamespace(), newPath);
                 try (IResource resource = Minecraft.getMinecraft().getResourceManager().getResource(texture)) {
                     image = ImageIO.read(resource.getInputStream());
                 } catch (IOException e) {
@@ -69,7 +69,7 @@ public abstract class ItemFluidContainer extends Item implements IItemHasColor {
 
     protected ItemFluidContainer(String name) {
         this.setRegistryName(name);
-        this.setUnlocalizedName(HerodotusUtils.MOD_ID + "." + name);
+        this.setTranslationKey(HerodotusUtils.MOD_ID + "." + name);
         this.addPropertyOverride(HerodotusUtils.rl("has_fluid"), new IItemPropertyGetter() {
             @Override
             @SideOnly(Side.CLIENT)
@@ -101,7 +101,7 @@ public abstract class ItemFluidContainer extends Item implements IItemHasColor {
     @Override
     @SuppressWarnings("deprecation")
     public String getItemStackDisplayName(ItemStack stack) {
-        String unlocalizedName = this.getUnlocalizedName(stack) + ".name";
+        String unlocalizedName = this.getTranslationKey(stack) + ".name";
         IFluidHandlerItem fluidHandlerItem = FluidUtil.getFluidHandler(stack);
         return I18n.translateToLocalFormatted(unlocalizedName,
                 Optional.ofNullable(fluidHandlerItem)

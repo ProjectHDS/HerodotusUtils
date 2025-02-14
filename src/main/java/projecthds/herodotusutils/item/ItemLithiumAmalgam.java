@@ -17,7 +17,7 @@ import projecthds.herodotusutils.potion.LithiumAmalgamInfected;
 public class ItemLithiumAmalgam extends Item {
     private ItemLithiumAmalgam() {
         this.setRegistryName("lithium_amalgam");
-        this.setUnlocalizedName(HerodotusUtils.MOD_ID + ".lithium_amalgam");
+        this.setTranslationKey(HerodotusUtils.MOD_ID + ".lithium_amalgam");
         this.setCreativeTab(CreativeTabs.MISC);
     }
 

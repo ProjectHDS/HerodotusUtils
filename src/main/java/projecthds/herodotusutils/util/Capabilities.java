@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import projecthds.herodotusutils.HerodotusUtils;
 import projecthds.herodotusutils.computing.ComputingUnitCapabilityProvider;
 import projecthds.herodotusutils.computing.IComputingUnit;
+import projecthds.herodotusutils.util.interfaces.ITaint;
 
 import javax.annotation.Nullable;
 import java.util.Objects;

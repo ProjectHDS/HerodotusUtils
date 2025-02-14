@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import projecthds.herodotusutils.modsupport.crafttweaker.ExpandPlayer;
-import projecthds.herodotusutils.util.ITaint;
+import projecthds.herodotusutils.util.interfaces.ITaint;
 
 /**
  * @author youyihj

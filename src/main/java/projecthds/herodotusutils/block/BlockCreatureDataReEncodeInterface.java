@@ -32,8 +32,8 @@ public class BlockCreatureDataReEncodeInterface extends PlainBlock {
     public static final String NAME = "creature_data_re_encode_interface";
     public static final Item ITEM_BLOCK = new ItemBlock(INSTANCE) {
         @Override
-        public String getUnlocalizedName(ItemStack stack) {
-            return super.getUnlocalizedName(stack) + "." + stack.getMetadata();
+        public String getTranslationKey(ItemStack stack) {
+            return super.getTranslationKey(stack) + "." + stack.getMetadata();
         }
 
         @Override

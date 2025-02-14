@@ -1,4 +1,4 @@
-package projecthds.herodotusutils.util;
+package projecthds.herodotusutils.util.interfaces;
 
 import crafttweaker.annotations.ZenRegister;
 import net.minecraft.entity.player.EntityPlayer;

@@ -67,7 +67,7 @@ import projecthds.herodotusutils.potion.LithiumAmalgamInfected;
 import projecthds.herodotusutils.potion.Starvation;
 import projecthds.herodotusutils.proxy.CommonProxy;
 import projecthds.herodotusutils.util.Capabilities;
-import projecthds.herodotusutils.util.ITaint;
+import projecthds.herodotusutils.util.interfaces.ITaint;
 import projecthds.herodotusutils.util.SharedRiftAction;
 import projecthds.herodotusutils.util.Util;
 import projecthds.herodotusutils.world.PlainTeleporter;

@@ -11,6 +11,7 @@ import projecthds.herodotusutils.block.computing.BlockComputingModule;
 import projecthds.herodotusutils.block.computing.BlockTransporter;
 import projecthds.herodotusutils.block.*;
 import projecthds.herodotusutils.block.alchemy.*;
+import projecthds.herodotusutils.block.dimcrystal.*;
 
 /**
  * @author youyihj
@@ -37,10 +38,9 @@ public class ItemRegistry {
                 ItemRiftSword.INSTANCE,
                 StarlightStorageTiny.INSTANCE,
                 ItemOilAIOT.INSTANCE,
-                ItemFlintAIOT.INSTANCE,
-                ItemBoneAIOT.INSTANCE,
                 ItemRiftFeed.INSTANCE,
                 ItemPenumbraRing.INSTANCE,
+                ItemLithiumQuartzPowder.INSTANCE,
                 GolemUpperSword.INSTANCE,
                 GolemDownerSword.INSTANCE,
                 BlockAlchemyController.ITEM_BLOCK,
@@ -59,10 +59,14 @@ public class ItemRegistry {
                 BlockCreatureDataReEncodeInterface.ITEM_BLOCK,
                 BlockCatalyzedAltar.ITEM_BLOCK,
                 BlockPrimordialCharger.ITEM_BLOCK,
-                BlockManaCatalyst.Item.INSTANCE
+                BlockManaCatalyst.Item.INSTANCE,
+                BlockPlainDimCrystal.ITEM_BLOCK,
+                BlockLithiumQuartz.ITEM_BLOCK,
+                BlockLithiumQuartzPowderBlock.ITEM_BLOCK,
+                BlockRedstoneAmalgam.ITEM_BLOCK
         );
-        BlockRegistry.ORES.stream().map(BlockOreBase::getItem).forEach(registry::register);
         BlockGolemCore.ITEM_BLOCKS.forEach(registry::register);
+        BlockOreDimCrystal.ITEM_BLOCKS.forEach(registry::register);
         BlockTransporter.getItemBlockMap().values().forEach(registry::register);
     }
 }
