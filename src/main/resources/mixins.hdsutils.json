@@ -2,7 +2,7 @@
 	"package": "projecthds.herodotusutils.mixins.mods",
 	"required": true,
 	"refmap": "mixins.hdsutils.refmap.json",
-	"target": "@env(DEFAULT)",
+	"target": "@env(MOD)",
 	"minVersion": "0.8.5",
 	"compatibilityLevel": "JAVA_8",
 	"mixins": [

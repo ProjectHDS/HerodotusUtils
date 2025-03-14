@@ -16,7 +16,7 @@ import team.chisel.common.config.Configurations;
 
 @Mixin(value = BlockSpeedHandler.class, remap = false)
 public class MixinChiselSpeedHandler {
-    @Shadow(remap = false)
+    @Shadow
     private static MovementInput manualInputCheck;
 
     /**

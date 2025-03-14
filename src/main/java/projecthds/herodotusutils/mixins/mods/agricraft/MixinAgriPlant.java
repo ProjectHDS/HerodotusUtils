@@ -10,14 +10,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @SuppressWarnings("deprecation")
-@Mixin(value = AgriPlant.class, remap = false)
+@Mixin(AgriPlant.class)
 public abstract class MixinAgriPlant {
 
-    @Shadow
     @Final
+    @Shadow(remap = false)
     private String id;
 
-    @Inject(method = "getSeedName", at = @At(value = "RETURN"), cancellable = true)
+    @Inject(method = "getSeedName", at = @At(value = "RETURN"), cancellable = true, remap = false)
     public void injectGetSeedName(CallbackInfoReturnable<String> ci) {
 
         String translationKey = "hdsutils.agricraft." + this.id + ".seed";
@@ -26,7 +26,7 @@ public abstract class MixinAgriPlant {
         }
     }
 
-    @Inject(method = "getPlantName", at = @At(value = "RETURN"), cancellable = true)
+    @Inject(method = "getPlantName", at = @At(value = "RETURN"), cancellable = true, remap = false)
     public void injectGetPlantName(CallbackInfoReturnable<String> ci) {
         String translationKey = "hdsutils.agricraft." + this.id + ".plant";
         if (I18n.canTranslate(translationKey)) {

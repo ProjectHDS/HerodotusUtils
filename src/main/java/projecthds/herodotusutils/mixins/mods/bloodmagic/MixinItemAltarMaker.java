@@ -20,16 +20,16 @@ import java.util.stream.Collectors;
 /**
  * @author youyihj
  */
-@Mixin(value = ItemAltarMaker.class, remap = false)
+@Mixin(ItemAltarMaker.class)
 public class MixinItemAltarMaker {
-    @Shadow
+    @Shadow(remap = false)
     private AltarTier tierToBuild;
 
     /**
      * @author youyihj
      * @reason build the new structure
      */
-    @Overwrite
+    @Overwrite(remap = false)
     public void buildAltar(World world, BlockPos pos) {
         if (world.isRemote)
             return;
@@ -45,7 +45,7 @@ public class MixinItemAltarMaker {
         Util.getTileEntity(world, pos, IBloodAltar.class).ifPresent(IBloodAltar::checkTier);
     }
 
-    @Redirect(method = "destroyAltar", at = @At(value = "INVOKE", target = "LWayofTime/bloodmagic/altar/AltarTier;getAltarComponents()Ljava/util/List;"))
+    @Redirect(method = "destroyAltar", at = @At(value = "INVOKE", target = "LWayofTime/bloodmagic/altar/AltarTier;getAltarComponents()Ljava/util/List;", remap = false), remap = false)
     public List<AltarComponent> getNewDummyComponents(AltarTier tier) {
         return BloodAltarStructures.STRUCTURES.get(tier).getElements().keySet().stream()
                 .map(vec -> new AltarComponent(new BlockPos(vec), null))

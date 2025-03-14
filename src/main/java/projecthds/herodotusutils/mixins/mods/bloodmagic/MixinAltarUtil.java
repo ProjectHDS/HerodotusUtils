@@ -23,7 +23,7 @@ import java.util.Collection;
 /**
  * @author youyihj
  */
-@Mixin(value = AltarUtil.class, remap = false)
+@Mixin(AltarUtil.class)
 public class MixinAltarUtil {
 
     /**
@@ -31,7 +31,7 @@ public class MixinAltarUtil {
      * @reason edit the structure of altar
      */
     @Nonnull
-    @Overwrite
+    @Overwrite(remap = false)
     public static AltarTier getTier(World world, BlockPos pos) {
         AltarTier checkTier = AltarTier.ONE;
         for (AltarTier altarTier : AltarTier.values()) {
@@ -50,7 +50,7 @@ public class MixinAltarUtil {
      * @reason edit the structure of altar
      */
     @Nonnull
-    @Overwrite
+    @Overwrite(remap = false)
     public static AltarUpgrade getUpgrades(World world, BlockPos pos, AltarTier currentTier) {
         if (currentTier == AltarTier.ONE) {
             return new AltarUpgrade();

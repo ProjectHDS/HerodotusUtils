@@ -37,7 +37,7 @@ import java.util.Optional;
 /**
  * @author youyihj
  */
-@Mixin(value = BlockAltar.class)
+@Mixin(BlockAltar.class)
 public class MixinBlockAltar {
     /**
      * @author youyihj
@@ -57,7 +57,7 @@ public class MixinBlockAltar {
         return docs;
     }
 
-    @Inject(method = "onBlockActivated", at = @At("HEAD"), remap = false)
+    @Inject(method = "onBlockActivated", at = @At("HEAD"))
     private void setBuildingAltar(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ, CallbackInfoReturnable<Boolean> cir) {
         AltarTier buildingAltar = null;
         Optional<IBloodAltarPatch> altar = Util.getCapability(world, pos, CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null) // gets the internal blood altar

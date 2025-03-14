@@ -7,13 +7,13 @@ import thaumcraft.api.research.ResearchStage;
 /**
  * @author youyihj
  */
-@Mixin(value = ResearchStage.class, remap = false)
+@Mixin(ResearchStage.class)
 public class MixinResearchStage {
     /**
      * @author youyihj
      * @reason disable warp gain when unlocked research
      */
-    @Overwrite
+    @Overwrite(remap = false)
     public int getWarp() {
         return 0;
     }

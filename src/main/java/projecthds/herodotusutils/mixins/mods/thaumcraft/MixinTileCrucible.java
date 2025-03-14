@@ -8,13 +8,13 @@ import thaumcraft.common.tiles.crafting.TileCrucible;
 /**
  * @author youyihj
  */
-@Mixin(value = TileCrucible.class, remap = false)
+@Mixin(TileCrucible.class)
 public class MixinTileCrucible {
     /**
      * @author youyihj
      * @reason to disable crucible smelt
      */
-    @Overwrite
+    @Overwrite(remap = false)
     public ItemStack attemptSmelt(ItemStack item, String username) {
         return item;
     }

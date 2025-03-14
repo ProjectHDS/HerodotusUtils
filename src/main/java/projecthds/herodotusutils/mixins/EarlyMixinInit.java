@@ -2,8 +2,10 @@ package projecthds.herodotusutils.mixins;
 
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import zone.rong.mixinbooter.IEarlyMixinLoader;
-import javax.annotation.Nullable;import java.util.Collections;
-import java.util.List;import java.util.Map;
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public class EarlyMixinInit implements IEarlyMixinLoader, IFMLLoadingPlugin {
     @Override

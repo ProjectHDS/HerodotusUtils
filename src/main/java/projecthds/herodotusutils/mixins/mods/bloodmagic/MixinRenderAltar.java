@@ -25,9 +25,9 @@ import projecthds.herodotusutils.modsupport.bloodmagic.BloodAltarStructures;
 /**
  * @author youyihj
  */
-@Mixin(value = RenderAltar.class)
+@Mixin(RenderAltar.class)
 public class MixinRenderAltar extends TileEntitySpecialRenderer<TileAltar> {
-    @Inject(method = "render(LWayofTime/bloodmagic/tile/TileAltar;DDDFIF)V",remap = false, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GlStateManager;popMatrix()V", shift = At.Shift.AFTER),cancellable = true)
+    @Inject(method = "render(LWayofTime/bloodmagic/tile/TileAltar;DDDFIF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GlStateManager;popMatrix()V", shift = At.Shift.AFTER),cancellable = true)
     private void renderMissingBlocks(TileAltar tileAltar, double x, double y, double z, float partialTicks, int destroyStage, float alpha, CallbackInfo ci) {
         if (tileAltar.getCurrentTierDisplayed() == AltarTier.ONE) return;
         World world = tileAltar.getWorld();

@@ -17,12 +17,12 @@ import java.util.Optional;
 /**
  * @author youyihj
  */
-@Mixin(value = JsonPlant.class, remap = false)
+@Mixin(JsonPlant.class)
 public abstract class MixinJsonPlant {
-    @Shadow
+    @Shadow(remap = false)
     public abstract Collection<FuzzyStack> getSeedItems();
 
-    @Inject(method = "getSeed", at = @At("RETURN"))
+    @Inject(method = "getSeed", at = @At("RETURN"), remap = false)
     private void mergeOriginTag(CallbackInfoReturnable<ItemStack> cir) {
         Optional<NBTTagCompound> originTag = getSeedItems().stream().map(FuzzyStack::getTagCompound).findFirst();
         ItemStack item = cir.getReturnValue();

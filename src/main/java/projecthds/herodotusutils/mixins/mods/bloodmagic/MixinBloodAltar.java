@@ -23,16 +23,19 @@ import projecthds.herodotusutils.util.Multiblock;
 /**
  * @author youyihj
  */
-@Mixin(value = BloodAltar.class, remap = false)
+@Mixin(BloodAltar.class)
 public class MixinBloodAltar implements IBloodAltarPatch {
-    @Shadow
+
+    @Shadow(remap = false)
     private int internalCounter;
-    @Shadow
+
+    @Shadow(remap = false)
     private TileAltar tileAltar;
+
     private AltarTier buildingTier;
     private int slice;
 
-    @Inject(method = "update", at = @At(value = "INVOKE", target = "LWayofTime/bloodmagic/altar/BloodAltar;updateAltar()V"))
+    @Inject(method = "update", at = @At(value = "INVOKE", target = "LWayofTime/bloodmagic/altar/BloodAltar;updateAltar()V"), remap = false)
     private void buildStructure(CallbackInfo ci) {
         if (buildingTier != null && internalCounter % 80 == 0) {
             World world = tileAltar.getWorld();

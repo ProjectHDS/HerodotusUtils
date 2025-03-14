@@ -10,16 +10,16 @@ import org.spongepowered.asm.mixin.Shadow;
 /**
  * @author youyihj
  */
-@Mixin(targets = "dalapo.factech.plugins.crafttweaker.RiverGrate$Remove", remap = false)
+@Mixin(targets = "dalapo.factech.plugins.crafttweaker.RiverGrate$Remove")
 public abstract class MixinRiverGrateRemovalAction {
-    @Shadow
+    @Shadow(remap = false)
     private IItemStack output;
 
     /**
      * @author youyihj
      * @reason origin implementation is totally wrong
      */
-    @Overwrite
+    @Overwrite(remap = false)
     public void apply() {
         MachineRecipes.RIVER_GRATE.removeIf(recipe -> this.output.matches(new MCItemStack(recipe.getOutputStack())));
     }

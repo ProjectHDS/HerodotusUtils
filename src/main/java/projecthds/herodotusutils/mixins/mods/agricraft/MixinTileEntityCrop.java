@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 /**
  * @author youyihj
  */
-@Mixin(value = TileEntityCrop.class, remap = false)
+@Mixin(TileEntityCrop.class)
 public abstract class MixinTileEntityCrop extends TileEntityBase {
 
     @Inject(
@@ -22,8 +22,11 @@ public abstract class MixinTileEntityCrop extends TileEntityBase {
             at = @At(
                     value = "FIELD",
                     target = "Lcom/infinityraider/agricraft/tiles/TileEntityCrop;growthStage:I",
-                    opcode = Opcodes.PUTFIELD
-            ))
+                    opcode = Opcodes.PUTFIELD,
+                    remap = false
+            ),
+            remap = false
+    )
     private void sendBlockUpdate(int stage, CallbackInfoReturnable<Boolean> cir) {
         IBlockState blockState = getState();
         Chunk chunk = world.getChunk(pos);

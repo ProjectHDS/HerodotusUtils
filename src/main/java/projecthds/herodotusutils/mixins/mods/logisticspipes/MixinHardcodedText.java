@@ -9,14 +9,14 @@ import org.spongepowered.asm.mixin.Overwrite;
 
 import java.util.List;
 
-@Mixin(value = ItemUpgrade.class, remap = false)
+@Mixin(ItemUpgrade.class)
 public class MixinHardcodedText {
     /**
      * @author Gary Bryson Luis Jr.
      * @reason Provide translation key for some connective phrases.
      * */
-    @Overwrite
     @SideOnly(Side.CLIENT)
+    @Overwrite(remap = false)
     private String join(List<String> join) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < join.size() - 2; i++) {
