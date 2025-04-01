@@ -17,17 +17,15 @@ import crafttweaker.api.recipes.IRecipeFunction;
 import crafttweaker.mc1120.events.ActionApplyEvent;
 import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.util.ArrayUtil;
-
-import java.util.*;
-
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumAction;
@@ -37,15 +35,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.stats.StatList;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fluids.FluidStack;
@@ -92,17 +87,6 @@ public class EventHandler {
             Items.RABBIT,
             Items.PORKCHOP
     );
-    private static final List<EntityFallingBlock> TRACKED_BLOCKS = new ArrayList<>();
-
-    @SubscribeEvent
-    public void onEntityJoinWorld(EntityJoinWorldEvent event) {
-        if (event.getEntity() instanceof EntityFallingBlock) {
-            EntityFallingBlock fallingBlock = (EntityFallingBlock) event.getEntity();
-            if (fallingBlock.getBlock().getBlock() == Blocks.SAND || fallingBlock.getBlock().getBlock() == Blocks.GRAVEL) {
-                TRACKED_BLOCKS.add(fallingBlock);
-            }
-        }
-    }
 
     @SubscribeEvent
     public static void onEntityLivingUpdate(LivingEvent.LivingUpdateEvent event) {
@@ -170,27 +154,6 @@ public class EventHandler {
             for (Chunk chunk : ((WorldServer) world).getChunkProvider().getLoadedChunks()) {
                 if (world.rand.nextInt(5000) == 0) {
                     chunk.getCapability(ZenWorldCapabilityHandler.ZEN_WORLD_CAPABILITY, null).updateData(Util.createDataMap(BlockMercury.TAG_POLLUTION, new DataInt(0)));
-                }
-            }
-            Iterator<EntityFallingBlock> iterator = TRACKED_BLOCKS.iterator();
-            while (iterator.hasNext()) {
-                EntityFallingBlock block = iterator.next();
-                if (block.isDead) {
-                    BlockPos pos = new BlockPos(block.posX, block.posY, block.posZ);
-                    if (event.world.getBlockState(pos) == block.getBlock()) {
-
-                        AxisAlignedBB area = new AxisAlignedBB(pos).grow(0);
-                        world.getEntitiesWithinAABB(EntityItem.class, area).forEach(item -> {
-                            if (item.getItem().getItem() == Items.COAL) {
-                                EntityItem diamond = new EntityItem(world, item.posX, item.posY, item.posZ,
-                                        new ItemStack(Items.DIAMOND, item.getItem().getCount()));
-                                world.spawnEntity(diamond);
-                                world.setBlockState(pos, Blocks.AIR.getBlockState().getBaseState());
-                                item.setDead();
-                            }
-                        });
-                    }
-                    iterator.remove();
                 }
             }
         }
