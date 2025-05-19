@@ -20,6 +20,8 @@ import crafttweaker.util.ArrayUtil;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -35,6 +37,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.stats.StatList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -43,6 +46,7 @@ import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.common.Loader;
@@ -58,6 +62,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import projecthds.herodotusutils.block.BlockCreatureDataAnalyzer;
 import projecthds.herodotusutils.block.BlockCreatureDataReEncodeInterface;
 import projecthds.herodotusutils.block.BlockMercury;
+import projecthds.herodotusutils.block.dimcrystal.BlockLithiumQuartzPowderBlock;
 import projecthds.herodotusutils.computing.event.ComputingUnitChangeEvent;
 import projecthds.herodotusutils.item.ItemPenumbraRing;
 import projecthds.herodotusutils.item.ItemRiftSword;
@@ -156,6 +161,16 @@ public class EventHandler {
                     chunk.getCapability(ZenWorldCapabilityHandler.ZEN_WORLD_CAPABILITY, null).updateData(Util.createDataMap(BlockMercury.TAG_POLLUTION, new DataInt(0)));
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onBlockUpdate(BlockEvent.NeighborNotifyEvent event) {
+        if (!event.getWorld().isRemote) {
+            BlockPos pos = event.getPos();
+            World world = event.getWorld();
+            Block block = event.getState().getBlock();
+            BlockLithiumQuartzPowderBlock.recordSurroundingUpdate(pos, world);
         }
     }
 
