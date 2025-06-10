@@ -17,10 +17,6 @@ import crafttweaker.api.recipes.IRecipeFunction;
 import crafttweaker.mc1120.events.ActionApplyEvent;
 import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.util.ArrayUtil;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
 import gregtech.api.GregTechAPI;
 import gregtech.api.unification.material.event.MaterialEvent;
 import gregtech.api.unification.material.event.MaterialRegistryEvent;
@@ -78,12 +74,16 @@ import projecthds.herodotusutils.potion.Starvation;
 import projecthds.herodotusutils.proxy.CommonProxy;
 import projecthds.herodotusutils.unification.HDSMaterials;
 import projecthds.herodotusutils.util.Capabilities;
-import projecthds.herodotusutils.util.interfaces.ITaint;
 import projecthds.herodotusutils.util.SharedRiftAction;
 import projecthds.herodotusutils.util.Util;
+import projecthds.herodotusutils.util.interfaces.ITaint;
 import projecthds.herodotusutils.world.PlainTeleporter;
 import youyihj.zenutils.api.world.ZenUtilsWorld;
 import youyihj.zenutils.impl.capability.ZenWorldCapabilityHandler;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author youyihj
