@@ -21,6 +21,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import gregtech.api.GregTechAPI;
+import gregtech.api.unification.material.event.MaterialEvent;
+import gregtech.api.unification.material.event.MaterialRegistryEvent;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.entity.Entity;
@@ -51,6 +54,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -59,6 +63,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.oredict.OreDictionary;
+import projecthds.herodotusutils.HerodotusUtils;
 import projecthds.herodotusutils.block.BlockCreatureDataAnalyzer;
 import projecthds.herodotusutils.block.BlockCreatureDataReEncodeInterface;
 import projecthds.herodotusutils.block.BlockMercury;
@@ -71,6 +76,7 @@ import projecthds.herodotusutils.modsupport.i18nupdatemod.I18nDetectedScreen;
 import projecthds.herodotusutils.potion.LithiumAmalgamInfected;
 import projecthds.herodotusutils.potion.Starvation;
 import projecthds.herodotusutils.proxy.CommonProxy;
+import projecthds.herodotusutils.unification.HDSMaterials;
 import projecthds.herodotusutils.util.Capabilities;
 import projecthds.herodotusutils.util.interfaces.ITaint;
 import projecthds.herodotusutils.util.SharedRiftAction;
@@ -293,4 +299,15 @@ public class EventHandler {
             shouldDisplay = false;
         }
     }
-}
+
+    @SubscribeEvent
+    public static void registerMaterialRegistry(MaterialRegistryEvent event) {
+        GregTechAPI.materialManager.createRegistry(HerodotusUtils.MOD_ID);
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public static void registerMaterials(MaterialEvent event) {
+        HDSMaterials.init();
+    }
+
+    }

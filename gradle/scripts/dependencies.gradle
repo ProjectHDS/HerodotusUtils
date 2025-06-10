@@ -87,4 +87,6 @@ dependencies {
     implementation rfg.deobf('curse.maven:LogisticsPipes-232838:4411480')
     implementation rfg.deobf('curse.maven:BrandonsCore-231382:3408276')
     implementation rfg.deobf('curse.maven:ProjectIntslligence-306028:2833640')
+
+    runtimeOnly("curse.maven:biometweaker-228895:3112142")
 }
