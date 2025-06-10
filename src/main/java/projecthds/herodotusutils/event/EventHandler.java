@@ -308,6 +308,8 @@ public class EventHandler {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void registerMaterials(MaterialEvent event) {
         HDSMaterials.init();
+        HDSMaterials.addFlag();
+        HDSMaterials.addProperty();
     }
 
     }

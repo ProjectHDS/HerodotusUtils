@@ -1,6 +1,9 @@
 package projecthds.herodotusutils.unification;
 
 import gregtech.api.unification.material.Material;
+import gregtech.api.unification.material.Materials;
+import gregtech.api.unification.material.properties.IngotProperty;
+import gregtech.api.unification.material.properties.PropertyKey;
 
 import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static gregtech.api.unification.material.info.MaterialIconSet.WOOD;
@@ -37,6 +40,14 @@ public class HDSMaterials {
                 .color(0x8C648C).iconSet(WOOD)
                 .flags(NO_UNIFICATION, GENERATE_PLATE, GENERATE_GEAR, GENERATE_SMALL_GEAR, GENERATE_ROD, GENERATE_LONG_ROD, GENERATE_RING, GENERATE_BOLT_SCREW)
                 .build();
+    }
+
+    public static void addFlag() {
+        Materials.Wood.addFlags(GENERATE_SMALL_GEAR, GENERATE_RING);
+    }
+
+    public static void addProperty() {
+        Materials.Wood.setProperty(PropertyKey.INGOT, new IngotProperty());
     }
 
 }
