@@ -138,6 +138,10 @@ tc.aspect.rubrum_quadrata=Red Square
 tc.aspect.flavum_quadrata=Yellow Square
 tc.aspect.caeruleum_quadrata=Blue Square
 entity.hdsutils.golem.name=%s %s Golem (Tier %s)
+hdsutils.material.copper_coated_wood=Copper Coated Wood
+hdsutils.material.iron_coated_wood=Iron Coated Wood
+hdsutils.material.tin_coated_wood=Tin Coated Wood
+hdsutils.material.lead_coated_wood=Lead Coated Wood
 
 hdsutils.tips.i18ndetected.0=HerodotusUtils 检测到您正在使用 I18nUpdateMod 模组
 hdsutils.tips.i18ndetected.1=Herodotus 整合包内置了同隶属于 ProjectHDS 的翻译项目 https://github.com/ProjectHDS/Hermes，无需使用其他第三方汉化包

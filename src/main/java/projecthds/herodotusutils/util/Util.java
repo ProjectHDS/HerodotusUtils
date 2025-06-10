@@ -8,6 +8,7 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -17,6 +18,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.apache.commons.lang3.ArrayUtils;
+import projecthds.herodotusutils.HerodotusUtils;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -122,5 +124,9 @@ public final class Util {
             currentFacing = currentFacing.rotateYCCW();
         }
         return pos;
+    }
+
+    public static ResourceLocation hdsId(String path) {
+        return new ResourceLocation(HerodotusUtils.MOD_ID, path);
     }
 }

@@ -17,6 +17,7 @@ import projecthds.herodotusutils.modsupport.bloodmagic.BloodAltarStructures;
 import projecthds.herodotusutils.modsupport.thaumcraft.AspectHandler;
 import projecthds.herodotusutils.modsupport.topography.HackTopographyDummyProxy;
 import projecthds.herodotusutils.network.GuiHandler;
+import projecthds.herodotusutils.unification.HDSMaterials;
 import projecthds.herodotusutils.util.Capabilities;
 import projecthds.herodotusutils.world.AncientVoidDimensionProvider;
 
