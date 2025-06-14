@@ -116,6 +116,8 @@ public class BlockLithiumQuartzPowder extends PlainBlock {
             if(!(event.getWorld().getBlockState(event.getPos()).getBlock() instanceof BlockLithiumQuartzPowder) || event.getWorld().isRemote) {return;}
 
             if(event.getEntity() instanceof EntityPlayer){
+                if(!event.getEntityPlayer().capabilities.isCreativeMode){return;}
+
                 TileLithiumQuartzPowderBlock tile = (TileLithiumQuartzPowderBlock) event.getWorld().getTileEntity(event.getPos());
                 event.getEntityPlayer().sendMessage(new TextComponentTranslation("hdsutils.message.block_lithium_quartz_powder_interacted",tile.updatedTimes));
             }

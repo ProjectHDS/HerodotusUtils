@@ -23,10 +23,10 @@ import javax.annotation.Nullable;
 
 public class BlockLithiumQuartzOre extends PlainBlock {
     public static final BlockLithiumQuartzOre INSTANCE = new BlockLithiumQuartzOre();
-    public static final Item ITEM_BLOCK = new ItemBlock(INSTANCE).setRegistryName("lithium_quartz_block");
+    public static final Item ITEM_BLOCK = new ItemBlock(INSTANCE).setRegistryName("lithium_quartz_ore");
 
     private BlockLithiumQuartzOre() {
-        super(Material.GLASS, "lithium_quartz_block");
+        super(Material.GLASS, "lithium_quartz_ore");
         this.setResistance(3600000.0F);
         this.setHardness(-1);
     }
