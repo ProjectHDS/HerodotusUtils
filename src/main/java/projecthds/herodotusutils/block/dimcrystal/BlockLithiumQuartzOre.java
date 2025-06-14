@@ -15,22 +15,20 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import projecthds.herodotusutils.HerodotusUtils;
 import projecthds.herodotusutils.block.PlainBlock;
-import projecthds.herodotusutils.item.ItemLithiumQuartz;
 import projecthds.herodotusutils.item.ItemLithiumQuartzPowder;
 
 import javax.annotation.Nullable;
 
-public class BlockLithiumQuartz extends PlainBlock {
-    public static final BlockLithiumQuartz INSTANCE = new BlockLithiumQuartz();
+public class BlockLithiumQuartzOre extends PlainBlock {
+    public static final BlockLithiumQuartzOre INSTANCE = new BlockLithiumQuartzOre();
     public static final Item ITEM_BLOCK = new ItemBlock(INSTANCE).setRegistryName("lithium_quartz_block");
 
-    private BlockLithiumQuartz() {
+    private BlockLithiumQuartzOre() {
         super(Material.GLASS, "lithium_quartz_block");
+        this.setResistance(3600000.0F);
+        this.setHardness(-1);
     }
 
     @Override
@@ -61,18 +59,11 @@ public class BlockLithiumQuartz extends PlainBlock {
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(World world, IBlockState state) { return new TileLithiumQuartz(); }
-
-    @Override
-    public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor) {
-        super.onNeighborChange(world, pos, neighbor);
-    }
-
-
+    public TileEntity createTileEntity(World world, IBlockState state) { return new TileLithiumQuartzOre(); }
 
     @Mod.EventBusSubscriber
     public class Logic{
-        private static long latesetTickTriggering = -1;
+        private static long latestTickTriggering = -1;
         @SubscribeEvent
         public static void onNeighborNotify(BlockEvent.NeighborNotifyEvent event){
             World world = event.getWorld();
@@ -82,16 +73,15 @@ public class BlockLithiumQuartz extends PlainBlock {
                 BlockPos neighborPos = pos.offset(facing);
                 IBlockState neighborState = world.getBlockState(neighborPos);
 
-                if (neighborState.getBlock() instanceof BlockLithiumQuartz) {
+                if (neighborState.getBlock() instanceof BlockLithiumQuartzOre) {
                     long timeCurrent = world.getWorldTime();
-                    if (latesetTickTriggering == timeCurrent) {return;}
-                    latesetTickTriggering = timeCurrent;
+                    if (latestTickTriggering == timeCurrent) {return;}
+                    latestTickTriggering = timeCurrent;
 
-                    TileLithiumQuartz tileLithiumQuartz = (TileLithiumQuartz) world.getTileEntity(neighborPos);
-                    System.out.println("//time is " + timeCurrent);
-                    System.out.println("pos is "+ neighborPos + " //");
-                    if (tileLithiumQuartz.timeRecorded == -1
-                            || ((timeCurrent - tileLithiumQuartz.timeRecorded) / 20) >= 1  ){
+                    TileLithiumQuartzOre tileLithiumQuartzOre = (TileLithiumQuartzOre) world.getTileEntity(neighborPos);
+
+                    if (tileLithiumQuartzOre.timeRecorded == -1
+                            || ((timeCurrent - tileLithiumQuartzOre.timeRecorded) / 20) >= 1  ){
                         ItemStack stackToDrop = new ItemStack(ItemLithiumQuartzPowder.INSTANCE,RANDOM.nextInt(3)+1);
                         EntityItem entityItem = new EntityItem(world,neighborPos.getX(),neighborPos.getY(),neighborPos.getZ(),stackToDrop);
                         world.spawnEntity(entityItem);
@@ -100,13 +90,12 @@ public class BlockLithiumQuartz extends PlainBlock {
                         world.newExplosion(null,neighborPos.getX(),neighborPos.getY(),neighborPos.getZ(),3.0F,false,true);
                     }
 
-                    tileLithiumQuartz.timeRecorded = timeCurrent;
+                    tileLithiumQuartzOre.timeRecorded = timeCurrent;
 
                 }
             }
-
         }
-
     }
+
 
 }

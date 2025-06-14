@@ -2,22 +2,21 @@ package projecthds.herodotusutils.block.dimcrystal;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ITickable;
 
 
-public class TileLithiumQuartz extends TileEntity{
+public class TileLithiumQuartzOre extends TileEntity{
 
     public long timeRecorded = -1;
 
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
-        this.timeRecorded = tag.getLong("Time");
+        this.timeRecorded = tag.getLong("time");
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
-        tag.setLong("Time", this.timeRecorded);
+        tag.setLong("time", this.timeRecorded);
         return super.writeToNBT(tag);
     }
 

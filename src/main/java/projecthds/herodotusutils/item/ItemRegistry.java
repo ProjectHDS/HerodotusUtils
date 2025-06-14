@@ -62,8 +62,8 @@ public class ItemRegistry {
                 BlockPrimordialCharger.ITEM_BLOCK,
                 BlockManaCatalyst.Item.INSTANCE,
                 BlockPlainDimCrystal.ITEM_BLOCK,
-                BlockLithiumQuartz.ITEM_BLOCK,
-                BlockLithiumQuartzPowderBlock.ITEM_BLOCK,
+                BlockLithiumQuartzOre.ITEM_BLOCK,
+                BlockLithiumQuartzPowder.ITEM_BLOCK,
                 BlockRedstoneAmalgam.ITEM_BLOCK
         );
         BlockGolemCore.ITEM_BLOCKS.forEach(registry::register);

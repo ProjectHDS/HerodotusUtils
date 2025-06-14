@@ -52,8 +52,8 @@ public class BlockRegistry {
                 BlockPrimordialCharger.INSTANCE,
                 BlockManaCatalyst.INSTANCE,
                 BlockPlainDimCrystal.INSTANCE,
-                BlockLithiumQuartz.INSTANCE,
-                BlockLithiumQuartzPowderBlock.INSTANCE,
+                BlockLithiumQuartzOre.INSTANCE,
+                BlockLithiumQuartzPowder.INSTANCE,
                 BlockRedstoneAmalgam.INSTANCE
         );
         BlockTransporter.getBlockMap().values().forEach(registry::register);
@@ -77,7 +77,7 @@ public class BlockRegistry {
         GameRegistry.registerTileEntity(TileAlchemySeparator.class, HerodotusUtils.rl("alchemy_separator"));
         GameRegistry.registerTileEntity(TileGolemCore.class, HerodotusUtils.rl("golem_core"));
         GameRegistry.registerTileEntity(TileManaCatalyst.class, HerodotusUtils.rl("mana_catalyst"));
-        GameRegistry.registerTileEntity(TileLithiumQuartz.class, HerodotusUtils.rl("lithium_quartz"));
+        GameRegistry.registerTileEntity(TileLithiumQuartzOre.class, HerodotusUtils.rl("lithium_quartz"));
         GameRegistry.registerTileEntity(TileLithiumQuartzPowderBlock.class, HerodotusUtils.rl("lithium_quartz_powder_block"));
         GameRegistry.registerTileEntity(TileRedstoneAmalgam.class, HerodotusUtils.rl("redstone_amalgam"));
     }

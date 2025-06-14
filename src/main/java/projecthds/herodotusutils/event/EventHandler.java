@@ -63,7 +63,7 @@ import projecthds.herodotusutils.HerodotusUtils;
 import projecthds.herodotusutils.block.BlockCreatureDataAnalyzer;
 import projecthds.herodotusutils.block.BlockCreatureDataReEncodeInterface;
 import projecthds.herodotusutils.block.BlockMercury;
-import projecthds.herodotusutils.block.dimcrystal.BlockLithiumQuartzPowderBlock;
+import projecthds.herodotusutils.block.dimcrystal.BlockLithiumQuartzPowder;
 import projecthds.herodotusutils.computing.event.ComputingUnitChangeEvent;
 import projecthds.herodotusutils.item.ItemPenumbraRing;
 import projecthds.herodotusutils.item.ItemRiftSword;
@@ -167,16 +167,6 @@ public class EventHandler {
                     chunk.getCapability(ZenWorldCapabilityHandler.ZEN_WORLD_CAPABILITY, null).updateData(Util.createDataMap(BlockMercury.TAG_POLLUTION, new DataInt(0)));
                 }
             }
-        }
-    }
-
-    @SubscribeEvent
-    public static void onBlockUpdate(BlockEvent.NeighborNotifyEvent event) {
-        if (!event.getWorld().isRemote) {
-            BlockPos pos = event.getPos();
-            World world = event.getWorld();
-            Block block = event.getState().getBlock();
-            BlockLithiumQuartzPowderBlock.recordSurroundingUpdate(pos, world);
         }
     }
 

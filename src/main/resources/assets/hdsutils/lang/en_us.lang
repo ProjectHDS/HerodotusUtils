@@ -146,3 +146,5 @@ hdsutils.material.lead_coated_wood=Lead Coated Wood
 hdsutils.tips.i18ndetected.0=HerodotusUtils 检测到您正在使用 I18nUpdateMod 模组
 hdsutils.tips.i18ndetected.1=Herodotus 整合包内置了同隶属于 ProjectHDS 的翻译项目 https://github.com/ProjectHDS/Hermes，无需使用其他第三方汉化包
 hdsutils.tips.i18ndetected.2=请您在禁用 I18nUpdateMod 模组后，再启动游戏
+
+hdsutils.message.block_lithium_quartz_powder_interacted=%s times of block update has been recorded
