@@ -44,13 +44,6 @@ public class BlockLithiumQuartzPowder extends PlainBlock {
     }
 
     @Override
-    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-        super.getDrops(drops, world, pos, state, fortune);
-        drops.add(1,new ItemStack(ItemLithiumQuartzPowder.INSTANCE,RANDOM.nextInt(3)+1));
-    }
-
-
-    @Override
     public boolean hasTileEntity(IBlockState state) {
         return true;
     }

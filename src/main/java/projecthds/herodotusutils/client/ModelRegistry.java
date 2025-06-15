@@ -104,6 +104,7 @@ public class ModelRegistry {
                 BlockPlainDimCrystal.ITEM_BLOCK,
                 BlockLithiumQuartzOre.ITEM_BLOCK,
                 BlockLithiumQuartzPowder.ITEM_BLOCK,
+                BlockLithiumQuartz.ITEM_BLOCK,
                 BlockRedstoneAmalgam.ITEM_BLOCK
         );
         BlockOreDimCrystal.BLOCKS.forEach(block -> ModelLoader.setCustomStateMapper(block, new StateMapperBase() {

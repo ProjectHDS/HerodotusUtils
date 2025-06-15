@@ -54,6 +54,8 @@ public class BlockRegistry {
                 BlockPlainDimCrystal.INSTANCE,
                 BlockLithiumQuartzOre.INSTANCE,
                 BlockLithiumQuartzPowder.INSTANCE,
+                BlockPowderedLithiumQuartz.INSTANCE,
+                BlockLithiumQuartz.INSTANCE,
                 BlockRedstoneAmalgam.INSTANCE
         );
         BlockTransporter.getBlockMap().values().forEach(registry::register);
@@ -77,8 +79,10 @@ public class BlockRegistry {
         GameRegistry.registerTileEntity(TileAlchemySeparator.class, HerodotusUtils.rl("alchemy_separator"));
         GameRegistry.registerTileEntity(TileGolemCore.class, HerodotusUtils.rl("golem_core"));
         GameRegistry.registerTileEntity(TileManaCatalyst.class, HerodotusUtils.rl("mana_catalyst"));
-        GameRegistry.registerTileEntity(TileLithiumQuartzOre.class, HerodotusUtils.rl("lithium_quartz"));
+        GameRegistry.registerTileEntity(TileLithiumQuartzOre.class, HerodotusUtils.rl("lithium_quartz_ore"));
+        GameRegistry.registerTileEntity(TileLithiumQuartzBlock.class, HerodotusUtils.rl("lithium_quartz_block"));
         GameRegistry.registerTileEntity(TileLithiumQuartzPowderBlock.class, HerodotusUtils.rl("lithium_quartz_powder_block"));
+        GameRegistry.registerTileEntity(TilePowderedLithiumQuartzBlock.class, HerodotusUtils.rl("powdered_lithium_quartz_block"));
         GameRegistry.registerTileEntity(TileRedstoneAmalgam.class, HerodotusUtils.rl("redstone_amalgam"));
     }
 }

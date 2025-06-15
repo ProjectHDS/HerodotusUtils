@@ -64,6 +64,7 @@ public class ItemRegistry {
                 BlockPlainDimCrystal.ITEM_BLOCK,
                 BlockLithiumQuartzOre.ITEM_BLOCK,
                 BlockLithiumQuartzPowder.ITEM_BLOCK,
+                BlockLithiumQuartz.ITEM_BLOCK,
                 BlockRedstoneAmalgam.ITEM_BLOCK
         );
         BlockGolemCore.ITEM_BLOCKS.forEach(registry::register);
