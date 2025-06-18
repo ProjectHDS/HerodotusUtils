@@ -1,0 +1,41 @@
+name: Develop build
+
+on:
+    push:
+    workflow_dispatch:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+
+            - name: Grant Execute Permission for gradlew
+              run: chmod +x gradlew
+
+            - name: Read gradle.properties
+              uses: BrycensRanch/read-properties-action@v1
+              id: properties
+              with:
+                  file: gradle.properties
+                  all: true
+
+            - name: Setup Java
+              uses: actions/setup-java@v4
+              with:
+                  java-version: "17"
+                  distribution: "zulu"
+                  cache: gradle
+
+            - name: Setup Gradle
+              uses: gradle/actions/setup-gradle@v4
+
+            - name: Build with Gradle
+              run: ./gradlew build
+
+            - name: Upload JAR artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  name: hdsu
+                  path: build/libs/**/*.jar
