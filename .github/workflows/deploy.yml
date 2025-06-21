@@ -59,3 +59,8 @@ jobs:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
         with:
           arguments: modrinth
+
+      - uses: ncipollo/release-action@v1.16.0
+        with:
+          artifacts: "build/libs/*"
+          generateReleaseNotes: true
