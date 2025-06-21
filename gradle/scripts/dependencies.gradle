@@ -44,10 +44,6 @@ repositories {
         name 'hellfirepvp'
         url 'https://maven.hellfiredev.net'
     }
-    maven {
-        name 'GTCEu Maven'
-        url 'https://maven.gtceu.com'
-    }
     mavenLocal()
 }
 
@@ -67,7 +63,7 @@ dependencies {
     implementation 'com.teamacronymcoders.base:base:1.12.2-3.13.0-SNAPSHOT.+'
     implementation 'com.teamacronymcoders:ContentTweaker:1.12.2-4.9.1'
     implementation 'cofh:RedstoneFlux:1.12-2.1.0.+:universal'
-    implementation ('gregtech:gregtech:2.8.10-beta') {transitive = false}
+    implementation files('libs/gregtech-1.12.2-2.9.0-beta-dev.jar')
     implementation 'team.chisel.ctm:CTM:MC1.12.2-1.0.2.31'
     implementation 'team.chisel:Chisel:MC1.12.2-1.0.2.45'
     implementation 'codechicken:CodeChickenLib:1.12.2-3.2.3.358:universal'
