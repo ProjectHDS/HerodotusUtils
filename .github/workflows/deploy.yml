@@ -7,60 +7,65 @@
 name: Deploy
 
 on:
-  push:
-    tags:
-      - '[0-9]+.[0-9]+.[0-9]+'
+    workflow_dispatch:
+    push:
+        tags:
+            - "[0-9]+.[0-9]+.[0-9]+"
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
 
-      - name: Grant Execute Permission for gradlew
-        run: chmod +x gradlew
+            - name: Grant Execute Permission for gradlew
+              run: chmod +x gradlew
 
-      - name: Read gradle.properties
-        uses: BrycensRanch/read-properties-action@v1
-        id: properties
-        with:
-          file: gradle.properties
-          all: true
+            - name: Setup Java
+              uses: actions/setup-java@v4
+              with:
+                  java-version: "21"
+                  distribution: "zulu"
+                  cache: gradle
+                  cache-dependency-path: |
+                    libs/*
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'zulu'
-          cache: gradle
+            - name: Setup Gradle
+              uses: gradle/actions/setup-gradle@v4
 
-      - name: Publish to Maven
-        if: steps.properties.outputs.publish_to_maven == 'true' && steps.properties.outputs.publish_to_local_maven == 'true'
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: |
-            publish
-            -P${{ steps.properties.outputs.maven_name }}Username=${{ secrets.MAVEN_USER }}
-            -P${{ steps.properties.outputs.maven_name }}Password=${{ secrets.MAVEN_PASS }}
+            - name: Read gradle.properties
+              uses: BrycensRanch/read-properties-action@v1.0.4
+              id: properties
+              with:
+                  file: gradle.properties
+                  all: true
 
-      - name: Publish to CurseForge
-        if: steps.properties.outputs.publish_to_curseforge == 'true'
-        uses: gradle/gradle-build-action@v2
-        env:
-          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
-        with:
-          arguments: curseforge
+            - name: Build
+              run: ./gradlew build
 
-      - name: Publish to Modrinth
-        if: steps.properties.outputs.publish_to_modrinth == 'true'
-        uses: gradle/gradle-build-action@v2
-        env:
-          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-        with:
-          arguments: modrinth
+            - name: Publish to Maven
+              if: steps.properties.outputs.publish_to_maven == 'true' && steps.properties.outputs.publish_to_local_maven == 'true'
+              run: ./gradlew publish -P${{ steps.properties.outputs.maven_name }}Username=${{ secrets.MAVEN_USER }} -P${{ steps.properties.outputs.maven_name }}Password=${{ secrets.MAVEN_PASS }}
 
-      - uses: ncipollo/release-action@v1.16.0
-        with:
-          artifacts: "build/libs/*"
-          generateReleaseNotes: true
+            - name: Publish to CurseForge
+              if: steps.properties.outputs.publish_to_curseforge == 'true'
+              run: ./gradlew curseforge
+              env:
+                  CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+
+            - name: Publish to Modrinth
+              if: steps.properties.outputs.publish_to_modrinth == 'true'
+              uses: cloudnode-pro/modrinth-publish@v2
+              with:
+                token: ${{ secrets.MODRINTH_TOKEN }}
+                project: ${{ steps.properties.outputs.modrinth_project_id }}
+                version: ${{ steps.properties.outputs.mod_version }}
+                loaders: '["forge"]'
+                game-versions: '["1.12.2"]'
+                files: build/libs/hdsutils-${{ steps.properties.outputs.mod_version }}.jar
+
+            - uses: ncipollo/release-action@v1.16.0
+              with:
+                  artifacts: "build/libs/*"
+                  generateReleaseNotes: true

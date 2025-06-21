@@ -24,9 +24,11 @@ jobs:
             - name: Setup Java
               uses: actions/setup-java@v4
               with:
-                  java-version: "17"
+                  java-version: "21"
                   distribution: "zulu"
                   cache: gradle
+                  cache-dependency-path: |
+                    libs/*
 
             - name: Setup Gradle
               uses: gradle/actions/setup-gradle@v4
