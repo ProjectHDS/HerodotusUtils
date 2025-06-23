@@ -230,6 +230,9 @@ idea {
     project {
         settings {
             runConfigurations {
+                "0. Setup Workspace"(Gradle) {
+                    taskNames = ["setupDecompWorkspace"]
+                }
                 "1. Run Client"(Gradle) {
                     taskNames = ["runClient"]
                 }
@@ -241,6 +244,9 @@ idea {
                 }
                 "4. Run Obfuscated Server"(Gradle) {
                     taskNames = ["runObfServer"]
+                }
+                "5. Build Jar"(Gradle) {
+                    taskNames = ["build"]
                 }
             }
             compiler.javac {
