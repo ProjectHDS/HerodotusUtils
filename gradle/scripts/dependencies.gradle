@@ -37,8 +37,8 @@ repositories {
         url 'https://maven.covers1624.net'
     }
     maven {
-        name 'tterrag'
-        url 'https://maven.tterrag.com'
+        name 'modmaven'
+        url 'https://modmaven.dev'
     }
     maven {
         name 'hellfirepvp'
