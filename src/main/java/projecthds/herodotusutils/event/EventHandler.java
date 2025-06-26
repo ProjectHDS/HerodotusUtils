@@ -20,32 +20,37 @@ import crafttweaker.util.ArrayUtil;
 import gregtech.api.GregTechAPI;
 import gregtech.api.unification.material.event.MaterialEvent;
 import gregtech.api.unification.material.event.MaterialRegistryEvent;
-import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityFireworkRocket;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.EnumAction;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemStack;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.stats.StatList;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.common.Loader;
@@ -63,8 +68,8 @@ import projecthds.herodotusutils.HerodotusUtils;
 import projecthds.herodotusutils.block.BlockCreatureDataAnalyzer;
 import projecthds.herodotusutils.block.BlockCreatureDataReEncodeInterface;
 import projecthds.herodotusutils.block.BlockMercury;
-import projecthds.herodotusutils.block.dimcrystal.BlockLithiumQuartzPowder;
 import projecthds.herodotusutils.computing.event.ComputingUnitChangeEvent;
+import projecthds.herodotusutils.config.HDSUConfig;
 import projecthds.herodotusutils.item.ItemPenumbraRing;
 import projecthds.herodotusutils.item.ItemRiftSword;
 import projecthds.herodotusutils.item.RefinedBottle;
@@ -81,9 +86,7 @@ import projecthds.herodotusutils.world.PlainTeleporter;
 import youyihj.zenutils.api.world.ZenUtilsWorld;
 import youyihj.zenutils.impl.capability.ZenWorldCapabilityHandler;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author youyihj
@@ -302,4 +305,132 @@ public class EventHandler {
         HDSMaterials.addProperty();
     }
 
+    private static final Set<BiomeDictionary.Type> OCEAN_TYPES = new HashSet<>();
+    static {
+        OCEAN_TYPES.add(BiomeDictionary.Type.OCEAN);
+        OCEAN_TYPES.add(BiomeDictionary.Type.BEACH);
+        OCEAN_TYPES.add(BiomeDictionary.Type.RIVER);
+        OCEAN_TYPES.add(BiomeDictionary.Type.WATER);
     }
+
+    @SubscribeEvent
+    public static void onPlayerJoin(EntityJoinWorldEvent event) {
+        if (event.getWorld().isRemote || !HDSUConfig.nullpinterWelcomeEnabled) return;
+
+        if (event.getEntity() instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) event.getEntity();
+            NBTTagCompound data = player.getEntityData();
+            NBTTagCompound persistent = data.getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
+
+            if (!persistent.getBoolean("oceanSpawnWelcomed")) {
+                if (isInOceanSpawn(player)) {
+                    spawnOceanFireworks(player);
+                    player.world.playSound(
+                            null,
+                            player.getPosition(),
+                            SoundEvents.ENTITY_PLAYER_LEVELUP,
+                            SoundCategory.PLAYERS,
+                            1.0F,
+                            0.8F + player.world.rand.nextFloat() * 0.4F
+                    );
+                    player.sendMessage(new TextComponentString("§b★ 欢迎 Nullpinter 加入游戏！★"));
+                    persistent.setBoolean("oceanSpawnWelcomed", true);
+                    data.setTag(EntityPlayer.PERSISTED_NBT_TAG, persistent);
+                }
+            }
+        }
+    }
+
+    private static boolean isInOceanSpawn(EntityPlayer player) {
+        World world = player.world;
+        BlockPos spawnPos = player.getPosition();
+
+        if (isOceanBiome(world.getBiome(spawnPos))) {
+            return true;
+        }
+
+        ChunkPos centerChunk = new ChunkPos(spawnPos);
+        int oceanChunkCount = 0;
+        int totalChunks = 0;
+
+        for (int x = centerChunk.x - 2; x <= centerChunk.x + 2; x++) {
+            for (int z = centerChunk.z - 2; z <= centerChunk.z + 2; z++) {
+                totalChunks++;
+                ChunkPos chunkPos = new ChunkPos(x, z);
+                Biome biome = world.getBiome(new BlockPos(chunkPos.getXStart(), 64, chunkPos.getZStart()));
+
+                if (isOceanBiome(biome)) {
+                    oceanChunkCount++;
+                }
+            }
+        }
+        return (oceanChunkCount / (float) totalChunks) > 0.4f;
+    }
+
+    private static boolean isOceanBiome(Biome biome) {
+        for (BiomeDictionary.Type type : BiomeDictionary.getTypes(biome)) {
+            if (OCEAN_TYPES.contains(type)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static void spawnOceanFireworks(EntityPlayer player) {
+        World world = player.world;
+        for (int i = 0; i < 7; i++) {
+            ItemStack firework = createOceanFirework(world);
+            EntityFireworkRocket rocket = new EntityFireworkRocket(
+                    world,
+                    player.posX + (world.rand.nextDouble() - 0.5) * 8,
+                    player.posY + 1,
+                    player.posZ + (world.rand.nextDouble() - 0.5) * 8,
+                    firework
+            );
+            world.spawnEntity(rocket);
+        }
+    }
+
+    private static ItemStack createOceanFirework(World world) {
+        ItemStack firework = new ItemStack(Items.FIREWORKS);
+        NBTTagCompound tag = new NBTTagCompound();
+        NBTTagCompound fireworks = new NBTTagCompound();
+        NBTTagList explosions = new NBTTagList();
+
+        int count = 2 + world.rand.nextInt(3);
+        for (int i = 0; i < count; i++) {
+            NBTTagCompound explosion = new NBTTagCompound();
+
+            explosion.setByte("Type", (byte) (i % 2 == 0 ? 4 : 0));
+            explosion.setBoolean("Flicker", world.rand.nextBoolean());
+            explosion.setBoolean("Trail", true);
+
+            int[] colors = new int[2 + world.rand.nextInt(2)];
+            for (int j = 0; j < colors.length; j++) {
+                colors[j] = someRandomColors(world.rand);
+            }
+            explosion.setIntArray("Colors", colors);
+
+            int[] fadeColors = new int[]{ItemDye.DYE_COLORS[15], ItemDye.DYE_COLORS[7]};
+            explosion.setIntArray("FadeColors", fadeColors);
+            explosions.appendTag(explosion);
+        }
+
+        fireworks.setTag("Explosions", explosions);
+        fireworks.setByte("Flight", (byte) (1 + world.rand.nextInt(2)));
+        tag.setTag("Fireworks", fireworks);
+        firework.setTagCompound(tag);
+        return firework;
+    }
+
+    private static int someRandomColors(Random rand) {
+        int[] colors = {
+                ItemDye.DYE_COLORS[12],
+                ItemDye.DYE_COLORS[6],
+                ItemDye.DYE_COLORS[9],
+                ItemDye.DYE_COLORS[11],
+                ItemDye.DYE_COLORS[13]
+        };
+        return colors[rand.nextInt(colors.length)];
+    }
+}

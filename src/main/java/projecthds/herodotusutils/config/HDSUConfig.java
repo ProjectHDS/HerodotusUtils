@@ -19,6 +19,8 @@ public class HDSUConfig {
     public static int MaxBurstUpdatesForQuartz = 1;// 允许的最大突发更新数
     public static boolean OverloadExplosionBreakBlock = false;
 
+    public static boolean nullpinterWelcomeEnabled = true;
+
     static {
         ConfigAnytime.register(HDSUConfig.class);
     }
