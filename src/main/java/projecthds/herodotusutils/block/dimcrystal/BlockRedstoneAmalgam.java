@@ -6,6 +6,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import projecthds.herodotusutils.block.PlainBlock;
 
 import javax.annotation.Nullable;
@@ -26,4 +29,11 @@ public class BlockRedstoneAmalgam extends PlainBlock {
     @Nullable
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) { return new TileRedstoneAmalgam(); }
+
+    @Mod.EventBusSubscriber
+    public class Logic{
+        @SubscribeEvent
+        public static void onFirePlaced(BlockEvent.Eve)
+    }
+
 }

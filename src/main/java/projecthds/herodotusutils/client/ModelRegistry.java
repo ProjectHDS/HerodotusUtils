@@ -35,6 +35,7 @@ import projecthds.herodotusutils.fluid.FluidMercury;
 import projecthds.herodotusutils.block.*;
 import projecthds.herodotusutils.block.alchemy.*;
 import projecthds.herodotusutils.client.render.*;
+import projecthds.herodotusutils.fluid.FluidMercurySteam;
 import projecthds.herodotusutils.item.*;
 
 import javax.annotation.Nonnull;
@@ -62,6 +63,14 @@ public class ModelRegistry {
                 return new ModelResourceLocation(HerodotusUtils.rl(FluidMercury.INSTANCE.getName()), "defaults");
             }
         });
+
+        ModelLoader.setCustomStateMapper(FluidMercurySteam.INSTANCE.getBlock(), new StateMapperBase() {
+            @Override
+            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                return new ModelResourceLocation(HerodotusUtils.rl(FluidMercurySteam.INSTANCE.getName()), "defaults");
+            }
+        });
+
         ModelLoader.setCustomStateMapper(BlockAlchemyController.INSTANCE,
                 new StateMap.Builder().ignore(BlockAlchemyController.WORK_TYPE_PROPERTY).build());
         registerMultipleItemsModel(

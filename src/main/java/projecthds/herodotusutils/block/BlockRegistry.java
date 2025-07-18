@@ -27,6 +27,7 @@ public class BlockRegistry {
         registry.registerAll(
                 FLUID_MANA_BLOCK,
                 BlockMercury.INSTANCE,
+                BlockMercurySteam.INSTANCE,
                 BlockManaLiquidizer.INSTANCE,
                 BlockCalculatorStructure.STRUCTURE_BLOCK_1,
                 BlockCalculatorStructure.STRUCTURE_BLOCK_2,

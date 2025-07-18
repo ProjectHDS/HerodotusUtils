@@ -13,6 +13,7 @@ import projecthds.herodotusutils.HerodotusUtils;
 import projecthds.herodotusutils.fluid.FluidAlchemyWaste;
 import projecthds.herodotusutils.fluid.FluidMana;
 import projecthds.herodotusutils.fluid.FluidMercury;
+import projecthds.herodotusutils.fluid.FluidMercurySteam;
 import projecthds.herodotusutils.modsupport.bloodmagic.BloodAltarStructures;
 import projecthds.herodotusutils.modsupport.thaumcraft.AspectHandler;
 import projecthds.herodotusutils.modsupport.topography.HackTopographyDummyProxy;
@@ -28,8 +29,10 @@ public class CommonProxy implements IProxy {
     public void preInit(FMLPreInitializationEvent event) {
         FluidRegistry.registerFluid(FluidMana.INSTANCE);
         FluidRegistry.registerFluid(FluidMercury.INSTANCE);
+        FluidRegistry.registerFluid(FluidMercurySteam.INSTANCE);
         FluidRegistry.addBucketForFluid(FluidMana.INSTANCE);
         FluidRegistry.addBucketForFluid(FluidMercury.INSTANCE);
+        FluidRegistry.addBucketForFluid(FluidMercurySteam.INSTANCE);
         Capabilities.register();
         FluidRegistry.registerFluid(FluidAlchemyWaste.INSTANCE);
         FluidRegistry.addBucketForFluid(FluidAlchemyWaste.INSTANCE);
