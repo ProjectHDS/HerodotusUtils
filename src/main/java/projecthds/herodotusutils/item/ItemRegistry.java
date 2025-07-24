@@ -42,6 +42,8 @@ public class ItemRegistry {
                 ItemPenumbraRing.INSTANCE,
                 ItemLithiumQuartzPowder.INSTANCE,
                 ItemLithiumQuartz.INSTANCE,
+                ItemMercuryDroplet.INSTANCE,
+                ItemFireTorch.INSTANCE,
                 GolemUpperSword.INSTANCE,
                 GolemDownerSword.INSTANCE,
                 BlockAlchemyController.ITEM_BLOCK,

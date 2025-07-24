@@ -49,6 +49,7 @@ import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.item.ItemEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fluids.FluidStack;
@@ -70,6 +71,7 @@ import projecthds.herodotusutils.block.BlockCreatureDataReEncodeInterface;
 import projecthds.herodotusutils.block.BlockMercury;
 import projecthds.herodotusutils.computing.event.ComputingUnitChangeEvent;
 import projecthds.herodotusutils.config.HDSUConfig;
+import projecthds.herodotusutils.item.ItemFireTorch;
 import projecthds.herodotusutils.item.ItemPenumbraRing;
 import projecthds.herodotusutils.item.ItemRiftSword;
 import projecthds.herodotusutils.item.RefinedBottle;
@@ -87,6 +89,8 @@ import youyihj.zenutils.api.world.ZenUtilsWorld;
 import youyihj.zenutils.impl.capability.ZenWorldCapabilityHandler;
 
 import java.util.*;
+
+import static projecthds.herodotusutils.config.HDSUConfig.BurningStickToTorchChance;
 
 /**
  * @author youyihj
@@ -161,6 +165,7 @@ public class EventHandler {
         }
     }
 
+    static List<EntityItem> itemEntities = new ArrayList<>();
     @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
         World world = event.world;
@@ -170,7 +175,51 @@ public class EventHandler {
                     chunk.getCapability(ZenWorldCapabilityHandler.ZEN_WORLD_CAPABILITY, null).updateData(Util.createDataMap(BlockMercury.TAG_POLLUTION, new DataInt(0)));
                 }
             }
+
+            for (Entity entity : world.loadedEntityList) {
+                if (entity instanceof EntityItem) {
+                    itemEntities.add((EntityItem) entity);
+                }
+            }
+            for (EntityItem entityItem : itemEntities) {
+                if (entityItem.isDead) {
+                    continue;
+                }
+                ItemStack stack = entityItem.getItem();
+                if (!stack.isEmpty() && stack.getItem() == Items.STICK && entityItem.isBurning()) {
+                    convertToFireTorch(world, entityItem);
+                }
+            }
         }
+    }
+
+    private static void convertToFireTorch(World world, EntityItem stickEntity) {
+        Random rand = world.rand;
+        ItemStack stickStack = stickEntity.getItem();
+        BlockPos pos = stickEntity.getPosition();
+
+        int stickCount = stickStack.getCount();
+        int convertedCount = 0;
+
+        for (int i = 0; i < stickCount; i++) {
+            if (rand.nextFloat() < BurningStickToTorchChance) {
+                convertedCount++;
+            }
+        }
+
+        if (convertedCount > 0) {
+            ItemStack torchStack = new ItemStack(ItemFireTorch.INSTANCE, convertedCount);
+            EntityItem torchEntity = new EntityItem(world,
+                    stickEntity.posX, stickEntity.posY + 0.5, stickEntity.posZ, torchStack);
+
+            torchEntity.motionY = 0.2;
+            torchEntity.isImmuneToFire = true;
+            world.spawnEntity(torchEntity);
+
+            world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH,
+                    SoundCategory.BLOCKS, 1.0F, 0.8F + rand.nextFloat() * 0.4F);
+        }
+        stickEntity.setDead();
     }
 
     @SubscribeEvent

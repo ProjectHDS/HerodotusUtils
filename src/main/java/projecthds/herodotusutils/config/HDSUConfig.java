@@ -13,6 +13,7 @@ public class HDSUConfig {
     public static int PowderDropCountForQuartz = 7;// 粉末掉落数量
     public static int BlockUnstableLeadDimFragmentActivationDelay = 5;
     public static boolean nullpinterWelcomeEnabled = true;
+    public static float BurningStickToTorchChance = 0.5f;
 
     static {
         ConfigAnytime.register(HDSUConfig.class);
