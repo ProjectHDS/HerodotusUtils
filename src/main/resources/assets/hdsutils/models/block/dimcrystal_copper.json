@@ -1,0 +1,14 @@
+﻿{
+  "parent": "hdsutils:block/dimcrystal_copper",
+  "textures": {
+    "texture": "minecraft:blocks/dimcrystal_copper",
+    "particle": "minecraft:blocks/dimcrystal_copper"
+  },
+  "variants": {
+    "inventory": [
+      {
+        "transform": "forge:default-item"
+      }
+    ]
+  }
+}

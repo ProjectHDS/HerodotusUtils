@@ -37,16 +37,12 @@ repositories {
         url 'https://maven.covers1624.net'
     }
     maven {
-        name 'tterrag'
-        url 'https://maven.tterrag.com'
+        name 'modmaven'
+        url 'https://modmaven.dev'
     }
     maven {
         name 'hellfirepvp'
         url 'https://maven.hellfiredev.net'
-    }
-    maven {
-        name 'GTCEu Maven'
-        url 'https://maven.gtceu.com'
     }
     mavenLocal()
 }
@@ -67,11 +63,11 @@ dependencies {
     implementation 'com.teamacronymcoders.base:base:1.12.2-3.13.0-SNAPSHOT.+'
     implementation 'com.teamacronymcoders:ContentTweaker:1.12.2-4.9.1'
     implementation 'cofh:RedstoneFlux:1.12-2.1.0.+:universal'
-    implementation ('gregtech:gregtech:2.8.10-beta') {transitive = false}
+    implementation files('libs/gregtech-1.12.2-2.9.0-beta-dev.jar')
     implementation 'team.chisel.ctm:CTM:MC1.12.2-1.0.2.31'
-    implementation 'team.chisel:Chisel:MC1.12.2-1.0.2.45'
     implementation 'codechicken:CodeChickenLib:1.12.2-3.2.3.358:universal'
 
+    implementation rfg.deobf("curse.maven:chisel-235279:2915375") // team.chisel:Chisel:MC1.12.2-1.0.2.45
     implementation rfg.deobf('curse.maven:zenutil-401178:6091806')
     implementation rfg.deobf('curse.maven:agricraft-225635:2609648')
     implementation rfg.deobf('curse.maven:infinitylib-251396:2537265')

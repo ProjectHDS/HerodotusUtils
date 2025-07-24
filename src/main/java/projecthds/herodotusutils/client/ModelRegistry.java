@@ -114,14 +114,18 @@ public class ModelRegistry {
                 BlockLithiumQuartzOre.ITEM_BLOCK,
                 BlockLithiumQuartzPowder.ITEM_BLOCK,
                 BlockLithiumQuartz.ITEM_BLOCK,
+                BlockUnstableLeadDimFragment.ITEM_BLOCK,
                 BlockRedstoneAmalgam.ITEM_BLOCK
         );
-        BlockOreDimCrystal.BLOCKS.forEach(block -> ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
-            @Override
-            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-                return new ModelResourceLocation(HerodotusUtils.rl("dimcrystal"), "normal");
-            }
-        }));
+        BlockOreDimCrystal.BLOCKS.forEach(block -> {
+            ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
+                @Override
+                protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                    String content = ((BlockOreDimCrystal) state.getBlock()).content;
+                    return new ModelResourceLocation(HerodotusUtils.rl("dimcrystal_" + content), "normal");
+                }
+            });
+        });
         BlockGolemCore.BLOCKS.forEach(block -> ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
             @Override
             protected ModelResourceLocation getModelResourceLocation(IBlockState state) {

@@ -57,6 +57,7 @@ public class BlockRegistry {
                 BlockLithiumQuartzPowder.INSTANCE,
                 BlockPowderedLithiumQuartz.INSTANCE,
                 BlockLithiumQuartz.INSTANCE,
+                BlockUnstableLeadDimFragment.INSTANCE,
                 BlockRedstoneAmalgam.INSTANCE
         );
         BlockTransporter.getBlockMap().values().forEach(registry::register);

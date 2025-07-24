@@ -74,6 +74,7 @@ tile.hdsutils.lithium_quartz_powder_block.name=锂石英粉块
 tile.hdsutils.powdered_lithium_quartz_block.name=覆粉锂石英结晶
 tile.hdsutils.lithium_quartz_block.name=锂石英块
 tile.hdsutils.redstone_amalgam.name=红汞齐
+tile.hdsutils.unstable_lead_dim_fragment.name=不稳定的铅维度碎片
 hdsutils.empty=空
 hdsutils.computing_unit.bar=算力：%s / %s
 hdsutils.computing_unit.generate=生产 %s 算力
