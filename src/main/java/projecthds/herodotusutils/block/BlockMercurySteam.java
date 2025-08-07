@@ -43,7 +43,7 @@ public class BlockMercurySteam extends BlockFluidClassic {
     @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
         super.updateTick(world, pos, state, rand);
-        if (!world.isRemote && isSource(world, pos)) {
+        if (!world.isRemote && isSourceBlock(world, pos)) {
             if (isTouchWater(world, pos)) {
                 int dropletCount = 8 + rand.nextInt(11);
                 ItemStack dropletStack = new ItemStack(ItemMercuryDroplet.INSTANCE, dropletCount);
@@ -55,14 +55,6 @@ public class BlockMercurySteam extends BlockFluidClassic {
                 world.setBlockToAir(pos);
             }
         }
-    }
-
-    private boolean isSource(World world, BlockPos pos) {
-        IBlockState state = world.getBlockState(pos);
-        if (state.getBlock() != this) return false;
-
-        int level = state.getValue(LEVEL);
-        return level == 0;
     }
 
     private boolean isTouchWater(World world, BlockPos pos) {
