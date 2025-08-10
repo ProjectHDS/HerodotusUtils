@@ -173,7 +173,6 @@ public class EventHandler {
         }
     }
 
-    static List<EntityItem> itemEntities = new ArrayList<>();
     @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
         World world = event.world;
@@ -186,16 +185,13 @@ public class EventHandler {
 
             for (Entity entity : world.loadedEntityList) {
                 if (entity instanceof EntityItem) {
-                    itemEntities.add((EntityItem) entity);
-                }
-            }
-            for (EntityItem entityItem : itemEntities) {
-                if (entityItem.isDead) {
-                    continue;
-                }
-                ItemStack stack = entityItem.getItem();
-                if (!stack.isEmpty() && stack.getItem() == Items.STICK && entityItem.isBurning()) {
-                    convertToFireTorch(world, entityItem);
+                    EntityItem item = (EntityItem) entity;
+                    if (!item.isDead && item.isBurning()) {
+                        ItemStack stack = item.getItem();
+                        if (!stack.isEmpty() && stack.getItem() == Items.STICK) {
+                            convertToFireTorch(world, item);
+                        }
+                    }
                 }
             }
         }
