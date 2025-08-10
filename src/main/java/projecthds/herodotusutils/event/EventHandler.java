@@ -20,6 +20,7 @@ import crafttweaker.util.ArrayUtil;
 import gregtech.api.GregTechAPI;
 import gregtech.api.unification.material.event.MaterialEvent;
 import gregtech.api.unification.material.event.MaterialRegistryEvent;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -49,9 +50,9 @@ import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.item.ItemEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.common.Loader;
@@ -69,6 +70,10 @@ import projecthds.herodotusutils.HerodotusUtils;
 import projecthds.herodotusutils.block.BlockCreatureDataAnalyzer;
 import projecthds.herodotusutils.block.BlockCreatureDataReEncodeInterface;
 import projecthds.herodotusutils.block.BlockMercury;
+import projecthds.herodotusutils.block.dimcrystal.BlockLithiumQuartzOre;
+import projecthds.herodotusutils.block.dimcrystal.BlockOreDimCrystal;
+import projecthds.herodotusutils.block.dimcrystal.BlockPlainDimCrystal;
+import projecthds.herodotusutils.block.dimcrystal.BlockRedstoneAmalgam;
 import projecthds.herodotusutils.computing.event.ComputingUnitChangeEvent;
 import projecthds.herodotusutils.config.HDSUConfig;
 import projecthds.herodotusutils.item.ItemFireTorch;
@@ -84,6 +89,7 @@ import projecthds.herodotusutils.util.Capabilities;
 import projecthds.herodotusutils.util.SharedRiftAction;
 import projecthds.herodotusutils.util.Util;
 import projecthds.herodotusutils.util.interfaces.ITaint;
+import projecthds.herodotusutils.worldgen.OrePillarGenerator;
 import projecthds.herodotusutils.world.PlainTeleporter;
 import youyihj.zenutils.api.world.ZenUtilsWorld;
 import youyihj.zenutils.impl.capability.ZenWorldCapabilityHandler;
@@ -105,6 +111,8 @@ public class EventHandler {
             Items.RABBIT,
             Items.PORKCHOP
     );
+
+    private static OrePillarGenerator orePillarGenerator;
 
     @SubscribeEvent
     public static void onEntityLivingUpdate(LivingEvent.LivingUpdateEvent event) {
@@ -190,6 +198,47 @@ public class EventHandler {
                     convertToFireTorch(world, entityItem);
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPopulateChunk(PopulateChunkEvent event) {
+        if (orePillarGenerator != null) {
+            orePillarGenerator.generatePillar(event.getWorld(), event.getChunkX(), event.getChunkZ());
+        } else {
+            IBlockState copperOre = null;
+            IBlockState ironOre = null;
+            IBlockState tinOre = null;
+            IBlockState leadOre = null;
+
+            for (BlockOreDimCrystal block : BlockOreDimCrystal.BLOCKS) {
+                switch (block.content) {
+                    case "copper":
+                        copperOre = block.getDefaultState();
+                        break;
+                    case "iron":
+                        ironOre = block.getDefaultState();
+                        break;
+                    case "tin":
+                        tinOre = block.getDefaultState();
+                        break;
+                    case "lead":
+                        leadOre = block.getDefaultState();
+                        break;
+                }
+            }
+
+            orePillarGenerator = new OrePillarGenerator(
+                    BlockPlainDimCrystal.INSTANCE.getDefaultState(),
+                    BlockRedstoneAmalgam.INSTANCE.getDefaultState(),
+                    copperOre,
+                    ironOre,
+                    tinOre,
+                    leadOre,
+                    BlockLithiumQuartzOre.INSTANCE.getDefaultState()
+            );
+
+            orePillarGenerator.generatePillar(event.getWorld(), event.getChunkX(), event.getChunkZ());
         }
     }
 
