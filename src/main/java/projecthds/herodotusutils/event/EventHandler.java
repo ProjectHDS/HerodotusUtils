@@ -38,6 +38,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.text.TextComponentString;
@@ -182,10 +183,17 @@ public class EventHandler {
                     chunk.getCapability(ZenWorldCapabilityHandler.ZEN_WORLD_CAPABILITY, null).updateData(Util.createDataMap(BlockMercury.TAG_POLLUTION, new DataInt(0)));
                 }
             }
+            if (world.playerEntities.isEmpty()) return;
 
-            for (Entity entity : world.loadedEntityList) {
-                if (entity instanceof EntityItem) {
-                    EntityItem item = (EntityItem) entity;
+            for (EntityPlayer player : world.playerEntities) {
+
+                AxisAlignedBB area = new AxisAlignedBB(
+                        player.posX - 8, player.posY - 8, player.posZ - 8,
+                        player.posX + 8, player.posY + 8, player.posZ + 8);
+
+                List<EntityItem> nearbyItems = world.getEntitiesWithinAABB(EntityItem.class, area);
+
+                for (EntityItem item : nearbyItems) {
                     if (!item.isDead && item.isBurning()) {
                         ItemStack stack = item.getItem();
                         if (!stack.isEmpty() && stack.getItem() == Items.STICK) {
@@ -239,15 +247,13 @@ public class EventHandler {
     }
 
     private static void convertToFireTorch(World world, EntityItem stickEntity) {
-        Random rand = world.rand;
         ItemStack stickStack = stickEntity.getItem();
-        BlockPos pos = stickEntity.getPosition();
 
         int stickCount = stickStack.getCount();
         int convertedCount = 0;
 
         for (int i = 0; i < stickCount; i++) {
-            if (rand.nextFloat() < BurningStickToTorchChance) {
+            if (world.rand.nextFloat() < BurningStickToTorchChance) {
                 convertedCount++;
             }
         }
@@ -259,10 +265,12 @@ public class EventHandler {
 
             torchEntity.motionY = 0.2;
             torchEntity.isImmuneToFire = true;
+            torchEntity.extinguish();
+
             world.spawnEntity(torchEntity);
 
-            world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH,
-                    SoundCategory.BLOCKS, 1.0F, 0.8F + rand.nextFloat() * 0.4F);
+            world.playSound(null, stickEntity.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH,
+                    SoundCategory.BLOCKS, 1.0F, 0.8F + world.rand.nextFloat() * 0.4F);
         }
         stickEntity.setDead();
     }
