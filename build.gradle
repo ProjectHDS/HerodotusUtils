@@ -5,6 +5,9 @@ import com.gtnewhorizons.retrofuturagradle.mcp.InjectTagsTask
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.gradle.ext.Gradle
 
+import java.nio.file.Files
+import java.nio.file.Paths
+
 plugins {
     id 'java'
     id 'java-library'
@@ -351,6 +354,19 @@ tasks.register('prioritizeCoremods') {
             if (it.isFile() && it.name =~ '(mixinbooter|configanytime)(-)([0-9])+\\.+([0-9])+(.jar)') {
                 it.renameTo(new File(it.parentFile, "!${it.name}"))
             }
+        }
+    }
+}
+
+// Fixed BiomeTweaker NPE when config does not exist
+tasks.register('generateBiomeTweakerConfig') {
+    group 'herodotus helpers'
+    doLast {
+        if (!file('run/config/BiomeTweaker/scripts/ancient_void.cfg').exists()) {
+            Files.copy(Paths.get('ancient_void.cfg'), Paths.get('run/config/BiomeTweaker/scripts/ancient_void.cfg'))
+            println 'Created BiomeTweaker config file at run/config/BiomeTweaker/scripts/ancient_void.cfg'
+        } else {
+            println 'BiomeTweaker config file already exists at run/config/BiomeTweaker/scripts/ancient_void.cfg'
         }
     }
 }
