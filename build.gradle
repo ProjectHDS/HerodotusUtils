@@ -7,6 +7,7 @@ import org.jetbrains.gradle.ext.Gradle
 
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
 
 plugins {
     id 'java'
@@ -358,15 +359,18 @@ tasks.register('prioritizeCoremods') {
     }
 }
 
-// Fixed BiomeTweaker NPE when config does not exist
-tasks.register('generateBiomeTweakerConfig') {
+// Fixed NPE when some configs do not exist
+tasks.register('generateRequiredConfig') {
     group 'herodotus helpers'
     doLast {
-        if (!file('run/config/BiomeTweaker/scripts/ancient_void.cfg').exists()) {
-            Files.copy(Paths.get('ancient_void.cfg'), Paths.get('run/config/BiomeTweaker/scripts/ancient_void.cfg'))
-            println 'Created BiomeTweaker config file at run/config/BiomeTweaker/scripts/ancient_void.cfg'
-        } else {
-            println 'BiomeTweaker config file already exists at run/config/BiomeTweaker/scripts/ancient_void.cfg'
+        if (!file('run/config/BiomeTweaker/scripts/ancient_void.cfg').exists()) { // BiomeTweaker config file
+            Files.copy(Paths.get('files/ancient_void.cfg'), Paths.get('run/config/BiomeTweaker/scripts/ancient_void.cfg'), StandardCopyOption.REPLACE_EXISTING)
+        }
+
+        Files.copy(Paths.get('files/Topography.txt'), Paths.get('run/config/topography/Topography.txt'), StandardCopyOption.REPLACE_EXISTING)
+
+        if (!file('run/config/topography/ancient_void.txt').exists()) { // Topography config file
+            Files.copy(Paths.get('files/ancient_void.txt'), Paths.get('run/config/topography/ancient_void.cfg'), StandardCopyOption.REPLACE_EXISTING)
         }
     }
 }
