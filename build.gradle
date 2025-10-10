@@ -363,15 +363,14 @@ tasks.register('prioritizeCoremods') {
 tasks.register('generateRequiredConfig') {
     group 'herodotus helpers'
     doLast {
-        if (!file('run/config/BiomeTweaker/scripts/ancient_void.cfg').exists()) { // BiomeTweaker config file
-            Files.copy(Paths.get('files/ancient_void.cfg'), Paths.get('run/config/BiomeTweaker/scripts/ancient_void.cfg'), StandardCopyOption.REPLACE_EXISTING)
-        }
+        file(Paths.get('run/config/BiomeTweaker/scripts/ancient_void.cfg')).mkdirs()
+        Files.copy(Paths.get('files/ancient_void.cfg'), Paths.get('run/config/BiomeTweaker/scripts/ancient_void.cfg'), StandardCopyOption.REPLACE_EXISTING)
 
+        file(Paths.get('run/config/topography/Topography.txt')).mkdirs()
         Files.copy(Paths.get('files/Topography.txt'), Paths.get('run/config/topography/Topography.txt'), StandardCopyOption.REPLACE_EXISTING)
 
-        if (!file('run/config/topography/ancient_void.txt').exists()) { // Topography config file
-            Files.copy(Paths.get('files/ancient_void.txt'), Paths.get('run/config/topography/ancient_void.cfg'), StandardCopyOption.REPLACE_EXISTING)
-        }
+        file(Paths.get('run/config/topography/ancient_void.cfg')).mkdirs()
+        Files.copy(Paths.get('files/ancient_void.txt'), Paths.get('run/config/topography/ancient_void.cfg'), StandardCopyOption.REPLACE_EXISTING)
     }
 }
 
