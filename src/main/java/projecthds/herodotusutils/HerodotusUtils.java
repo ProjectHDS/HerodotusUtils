@@ -7,13 +7,14 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
+import projecthds.herodotusutils.meta.tileentities.HDSMetaTileEntities;
 import projecthds.herodotusutils.proxy.IProxy;
 
 @Mod(
         modid = HerodotusUtils.MOD_ID,
         name = HerodotusUtils.MOD_NAME,
         version = HerodotusUtils.VERSION,
-        dependencies = "before:contenttweaker"
+        dependencies = "before:contenttweaker;after-required:gregtech;"
 )
 public class HerodotusUtils {
 

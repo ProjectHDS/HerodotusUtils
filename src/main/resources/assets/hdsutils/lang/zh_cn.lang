@@ -153,3 +153,5 @@ hdsutils.tips.i18ndetected.1=Herodotus 整合包内置了同隶属于 ProjectHDS
 hdsutils.tips.i18ndetected.2=请您在禁用 I18nUpdateMod 模组后，再启动游戏
 
 hdsutils.message.block_lithium_quartz_powder_interacted=已记录 %s 次方块更新
+
+hdsutils.carver.fuel=燃料: %s

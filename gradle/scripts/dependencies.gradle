@@ -55,7 +55,7 @@ dependencies {
 
     implementation 'org.jooq:joor-java-8:0.9.14'
     implementation 'com.cleanroommc:configanytime:3.0'
-    implementation 'com.cleanroommc:modularui:2.5.0-rc3'
+    implementation 'com.cleanroommc:modularui:2.5.0-rc4'
     implementation 'mezz.jei:jei_1.12.2:4.16.1.1012'
     implementation 'vazkii.botania:Botania:r1.10-363.148'
     implementation 'com.azanor.baubles:Baubles:1.12-1.5.2'
