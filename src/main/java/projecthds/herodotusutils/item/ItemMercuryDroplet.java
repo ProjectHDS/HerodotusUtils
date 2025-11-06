@@ -36,24 +36,24 @@ public class ItemMercuryDroplet extends Item {
         if (!worldIn.isRemote && entityIn instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entityIn;
 
-            if (shouldEvaporate(worldIn.rand, stack)) {
+            if (shouldEvaporate(worldIn, worldIn.rand, stack)) {
                 evaporate(player, stack, itemSlot);
             }
         }
     }
 
-    private boolean shouldEvaporate(Random rand, ItemStack stack) {
+    private boolean shouldEvaporate(World world, Random rand, ItemStack stack) {
         NBTTagCompound nbt = stack.getTagCompound();
         if (nbt == null) {
             nbt = new NBTTagCompound();
-            nbt.setLong("creationTime", System.currentTimeMillis());
+            nbt.setLong("creationTime", world.getTotalWorldTime());
             stack.setTagCompound(nbt);
             return false;
         }
 
         long creationTime = nbt.getLong("creationTime");
-        long currentTime = System.currentTimeMillis();
-        long ageInSeconds = (currentTime - creationTime) / 1000;
+        long currentTime = world.getTotalWorldTime();
+        long ageInSeconds = (currentTime - creationTime) / 20L;
 
         double baseChance = 0.005 / 60.0;
         double timeMultiplier = 1.0 + (ageInSeconds / 3600.0);
@@ -82,19 +82,21 @@ public class ItemMercuryDroplet extends Item {
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
                                       EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
+        net.minecraft.tileentity.TileEntity te = worldIn.getTileEntity(pos);
 
-        IFluidHandler fluidHandler = worldIn.getTileEntity(pos)
-                .getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
+        if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing)) {
+            IFluidHandler fluidHandler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
 
-        if (fluidHandler != null) {
-            FluidStack mercuryStack = new FluidStack(FluidMercury.INSTANCE, 50);
+            if (fluidHandler != null) {
+                FluidStack mercuryStack = new FluidStack(FluidMercury.INSTANCE, 50);
 
-            int filled = fluidHandler.fill(mercuryStack, true);
-            if (filled > 0) {
-                if (!player.capabilities.isCreativeMode) {
-                    stack.shrink(1);
+                int filled = fluidHandler.fill(mercuryStack, true);
+                if (filled > 0) {
+                    if (!player.capabilities.isCreativeMode) {
+                        stack.shrink(1);
+                    }
+                    return EnumActionResult.SUCCESS;
                 }
-                return EnumActionResult.SUCCESS;
             }
         }
 
