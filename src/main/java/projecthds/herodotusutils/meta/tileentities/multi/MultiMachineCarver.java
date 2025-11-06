@@ -14,13 +14,11 @@ import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.UnificationEntry;
 import gregtech.api.util.BlockInfo;
-import gregtech.api.util.GTLog;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityChest;
@@ -228,23 +226,30 @@ public class MultiMachineCarver extends MultiblockControllerBase {
 
     private ItemStack getNextStage(ItemStack stack) {
         if (stack.isEmpty()) return stack;
-        String[] required = new String[]{
-                "meta_plate",
-                "meta_gear",
-                "meta_ingot",
-                "meta_gear_small",
-                "meta_ring",
-                "meta_stick_long",
-                "stick",
-                "meta_screw"
-        };
-        String name = stack.getItem().getRegistryName().getPath();
-        for (int i = 0; i < required.length; i++) {
-            if (name.equals(required[i])) {
-                UnificationEntry entry = WOOD_PARTS.get(i==7?0:i+1);
-                return OreDictUnifier.get(entry.orePrefix, entry.material, stack.getCount());
+
+        for (UnificationEntry e : WOOD_PARTS) {
+            ItemStack unified = OreDictUnifier.get(e.orePrefix, e.material);
+        }
+
+        UnificationEntry entry = OreDictUnifier.getUnificationEntry(stack);
+        if (entry == null) {
+            return stack;
+        }
+
+        if (entry.orePrefix == OrePrefix.plank && entry.material == Materials.Wood) {
+            entry = new UnificationEntry(OrePrefix.plate, Materials.Wood);
+        }
+
+        for (int i = 0; i < WOOD_PARTS.size(); i++) {
+            UnificationEntry req = WOOD_PARTS.get(i);
+            if (req.orePrefix == entry.orePrefix && req.material == entry.material) {
+                int next = (i + 1) % WOOD_PARTS.size();
+                UnificationEntry nextEntry = WOOD_PARTS.get(next);
+                ItemStack result = OreDictUnifier.get(nextEntry.orePrefix, nextEntry.material, stack.getCount());
+                return result;
             }
         }
+
         return stack;
     }
 
