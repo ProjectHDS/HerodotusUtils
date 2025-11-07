@@ -17,6 +17,7 @@ import gregtech.api.util.BlockInfo;
 import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
+import io.sommers.packmode.api.PackModeAPI;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -209,7 +210,7 @@ public class MultiMachineCarver extends MultiblockControllerBase {
     }
 
     private boolean isExpertMode() {
-        return false; // TODO: Expert mode
+        return PackModeAPI.getInstance().getCurrentPackMode().equalsIgnoreCase("expert");
     }
 
     private void orderedTransform(IItemHandlerModifiable inv) {
