@@ -10,7 +10,7 @@ public class HDSMetaTileEntities {
     public static MultiMachineCarver CARVER;
 
     public static void init() {
-        registerMetaTileEntity(18902, new MultiMachineCarver(new ResourceLocation("hdsutils", "carver_mt")));
+        CARVER = registerMetaTileEntity(18900, new MultiMachineCarver(new ResourceLocation("hdsutils", "carver")));
     }
 
 }

@@ -155,3 +155,5 @@ hdsutils.tips.i18ndetected.2=请您在禁用 I18nUpdateMod 模组后，再启动
 hdsutils.message.block_lithium_quartz_powder_interacted=已记录 %s 次方块更新
 
 hdsutils.carver.fuel=燃料: %s
+hdsutils.machine.carver.name=木制结构雕刻机
+hdsutils.carver_update.tooltip=放入箱子中以启用自动补全逻辑

@@ -155,3 +155,5 @@ hdsutils.tips.i18ndetected.2=请您在禁用 I18nUpdateMod 模组后，再启动
 hdsutils.message.block_lithium_quartz_powder_interacted=%s times of block update has been recorded
 
 hdsutils.carver.fuel=Fuel: %s
+hdsutils.machine.carver.name=Carver
+hdsutils.carver_update.tooltip=Place into chest to enable auto-complete logic.

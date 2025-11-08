@@ -1,5 +1,6 @@
 package projecthds.herodotusutils.meta.tileentities.multi;
 
+import codechicken.lib.raytracer.CuboidRayTraceResult;
 import gregtech.api.capability.impl.ItemHandlerList;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -18,6 +19,7 @@ import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import io.sommers.packmode.api.PackModeAPI;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -25,7 +27,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityDropper;
 import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import org.jetbrains.annotations.NotNull;
@@ -100,7 +105,7 @@ public class MultiMachineCarver extends MultiblockControllerBase {
         refuelFromChest();
 
         // work before
-        if (!working && fuel >= FUEL_PER_OPERATION) {
+        if (!working && fuel >= FUEL_PER_OPERATION && hasAllWoodParts(dropper)) {
             fuel -= FUEL_PER_OPERATION;
             progress = 0;
             working = true;
@@ -109,24 +114,20 @@ public class MultiMachineCarver extends MultiblockControllerBase {
         if (working) {
             progress++;
 
+            if (hasSawdust(dropper)) {
+                clearInventory(dropper);
+                working = false;
+                return;
+            }
+
             // work step
             if (progress == DETECT_TICK) {
-                if (hasSawdust(dropper)) {
-                    clearInventory(dropper);
-                    working = false;
-                    return;
-                }
-
-                if (hasAllWoodParts(dropper)) {
-                    WOOD_PARTS.forEach(req -> {
-                        if (OreDictUnifier.hasOreDictionary(dropper.getStackInSlot(4), req.toString())) {
-                            if (isExpertMode()) randomTransform(dropper);
-                            else orderedTransform(dropper);
-                        }
-                    });
-                } else {
-                    working = false;
-                    return;
+                for (UnificationEntry req : WOOD_PARTS) {
+                    if (OreDictUnifier.hasOreDictionary(dropper.getStackInSlot(4), req.toString())) {
+                        transform(dropper, isExpertMode());
+                        progress = 0; // reset progress after transform
+                        break;
+                    }
                 }
             }
 
@@ -134,6 +135,18 @@ public class MultiMachineCarver extends MultiblockControllerBase {
                 working = false;
                 progress = 0;
             }
+        }
+    }
+
+    @Override
+    public boolean onRightClick(EntityPlayer playerIn, EnumHand hand, EnumFacing facing, CuboidRayTraceResult hitResult) {
+        if (super.onRightClick(playerIn, hand, facing, hitResult)) {
+            return true;
+        } else if (playerIn.getHeldItem(hand) == ItemStack.EMPTY && playerIn.isSneaking() && getWorld().isRemote) {
+            playerIn.sendMessage(new TextComponentTranslation("hdsutils.carver.fuel", fuel));
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -213,45 +226,19 @@ public class MultiMachineCarver extends MultiblockControllerBase {
         return PackModeAPI.getInstance().getCurrentPackMode().equalsIgnoreCase("expert");
     }
 
-    private void orderedTransform(IItemHandlerModifiable inv) {
+    private void transform(IItemHandlerModifiable inv, boolean random) {
         int center = 4;
         ItemStack stack = inv.getStackInSlot(center);
-        inv.setStackInSlot(center, getNextStage(stack));
-    }
-
-    private void randomTransform(IItemHandlerModifiable inv) {
-        int center = 4;
-        ItemStack stack = inv.getStackInSlot(center);
-        inv.setStackInSlot(center, getRandomStage(stack));
+        inv.setStackInSlot(center, random ? getRandomStage(stack) : getNextStage(stack));
     }
 
     private ItemStack getNextStage(ItemStack stack) {
-        if (stack.isEmpty()) return stack;
-
-        for (UnificationEntry e : WOOD_PARTS) {
-            ItemStack unified = OreDictUnifier.get(e.orePrefix, e.material);
-        }
-
-        UnificationEntry entry = OreDictUnifier.getUnificationEntry(stack);
-        if (entry == null) {
-            return stack;
-        }
-
-        if (entry.orePrefix == OrePrefix.plank && entry.material == Materials.Wood) {
-            entry = new UnificationEntry(OrePrefix.plate, Materials.Wood);
-        }
-
-        for (int i = 0; i < WOOD_PARTS.size(); i++) {
-            UnificationEntry req = WOOD_PARTS.get(i);
-            if (req.orePrefix == entry.orePrefix && req.material == entry.material) {
-                int next = (i + 1) % WOOD_PARTS.size();
-                UnificationEntry nextEntry = WOOD_PARTS.get(next);
-                ItemStack result = OreDictUnifier.get(nextEntry.orePrefix, nextEntry.material, stack.getCount());
-                return result;
-            }
-        }
-
-        return stack;
+        UnificationEntry ex = WOOD_PARTS.stream()
+                .filter(req -> OreDictUnifier.hasOreDictionary(stack, req.toString()))
+                .findFirst()
+                .orElse(null);
+        UnificationEntry entry = WOOD_PARTS.get((WOOD_PARTS.indexOf(ex) + 1) % WOOD_PARTS.size());
+        return OreDictUnifier.get(entry.orePrefix, entry.material, stack.getCount());
     }
 
     private ItemStack getRandomStage(ItemStack stack) {
