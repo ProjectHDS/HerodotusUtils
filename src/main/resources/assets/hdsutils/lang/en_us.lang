@@ -157,3 +157,4 @@ hdsutils.message.block_lithium_quartz_powder_interacted=%s times of block update
 hdsutils.carver.fuel=Fuel: %s
 hdsutils.machine.carver.name=Carver
 hdsutils.carver_update.tooltip=Place into chest to enable auto-complete logic.
+item.hdsutils.carver_upgrade.name=Carver Upgrade: Part Exclusion Unit

@@ -22,6 +22,7 @@ import io.sommers.packmode.api.PackModeAPI;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityChest;
@@ -34,6 +35,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import org.jetbrains.annotations.NotNull;
+import projecthds.herodotusutils.item.ItemCarverUpgrade;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -105,7 +107,7 @@ public class MultiMachineCarver extends MultiblockControllerBase {
         refuelFromChest();
 
         // work before
-        if (!working && fuel >= FUEL_PER_OPERATION && hasAllWoodParts(dropper)) {
+        if (!working && fuel >= FUEL_PER_OPERATION) {
             fuel -= FUEL_PER_OPERATION;
             progress = 0;
             working = true;
@@ -122,11 +124,33 @@ public class MultiMachineCarver extends MultiblockControllerBase {
 
             // work step
             if (progress == DETECT_TICK) {
-                for (UnificationEntry req : WOOD_PARTS) {
-                    if (OreDictUnifier.hasOreDictionary(dropper.getStackInSlot(4), req.toString())) {
-                        transform(dropper, isExpertMode());
-                        progress = 0; // reset progress after transform
-                        break;
+                // update check
+                boolean updated = checkUpdate();
+                if (updated) {
+                    List<UnificationEntry> missing = getAutoCompleteEntries(dropper);
+                    if (dropper.getStackInSlot(4).getItem() instanceof ItemBlock itemBlock
+                            && itemBlock.getBlock() == Blocks.PLANKS && dropper.getStackInSlot(4).getCount() >= missing.size()) {
+                        dropper.getStackInSlot(4).shrink(missing.size());
+                        for (UnificationEntry req : missing) {
+                            for (int i = 0; i < dropper.getSlots(); i++) {
+                                if (i==4) continue;
+                                if (dropper.getStackInSlot(i) != ItemStack.EMPTY) continue;
+                                ItemStack part = OreDictUnifier.get(req);
+                                dropper.setStackInSlot(i, part);
+                                break;
+                            }
+                        }
+                        progress = 0;
+                    }
+                }
+
+                if (hasAllWoodParts(dropper)) {
+                    for (UnificationEntry req : WOOD_PARTS) {
+                        if (OreDictUnifier.hasOreDictionary(dropper.getStackInSlot(4), req.toString())) {
+                            transform(dropper, isExpertMode());
+                            progress = 0; // reset progress after transform
+                            break;
+                        }
                     }
                 }
             }
@@ -142,7 +166,7 @@ public class MultiMachineCarver extends MultiblockControllerBase {
     public boolean onRightClick(EntityPlayer playerIn, EnumHand hand, EnumFacing facing, CuboidRayTraceResult hitResult) {
         if (super.onRightClick(playerIn, hand, facing, hitResult)) {
             return true;
-        } else if (playerIn.getHeldItem(hand) == ItemStack.EMPTY && playerIn.isSneaking() && getWorld().isRemote) {
+        } else if (hand == EnumHand.MAIN_HAND && playerIn.isSneaking() && !getWorld().isRemote) {
             playerIn.sendMessage(new TextComponentTranslation("hdsutils.carver.fuel", fuel));
             return true;
         } else {
@@ -166,6 +190,30 @@ public class MultiMachineCarver extends MultiblockControllerBase {
                 }
             }
         }
+    }
+
+    private boolean checkUpdate() {
+        List<ItemStack> inputs = GTUtility.itemHandlerToList(chest);
+        if (inputs.isEmpty()) return false;
+        for (ItemStack stack : inputs) if (!stack.isEmpty() && stack.getItem() == ItemCarverUpgrade.INSTANCE) return true;
+        return false;
+    }
+
+    private List<UnificationEntry> getAutoCompleteEntries(IItemHandlerModifiable inv) {
+        List<UnificationEntry> result = new ArrayList<>();
+        for (UnificationEntry req : WOOD_PARTS) {
+            boolean found = false;
+            for (int i = 0; i < inv.getSlots(); i++) {
+                ItemStack slot = inv.getStackInSlot(i);
+                if (slot.isEmpty()) continue;
+                if (OreDictUnifier.hasOreDictionary(slot, req.toString())) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) result.add(req);
+        }
+        return result;
     }
 
     private boolean hasSawdust(IItemHandlerModifiable inv) {

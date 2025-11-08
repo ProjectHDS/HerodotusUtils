@@ -13,13 +13,13 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
-public class ItemCarverUpdate extends Item {
+public class ItemCarverUpgrade extends Item {
 
-    public static final ItemCarverUpdate INSTANCE = new ItemCarverUpdate();
+    public static final ItemCarverUpgrade INSTANCE = new ItemCarverUpgrade();
 
-    private ItemCarverUpdate() {
-        this.setRegistryName("carver_update");
-        this.setTranslationKey("hdsutils.carver_update");
+    private ItemCarverUpgrade() {
+        this.setRegistryName("carver_upgrade");
+        this.setTranslationKey("hdsutils.carver_upgrade");
         this.setCreativeTab(CreativeTabs.MISC);
         this.setMaxStackSize(1);
         this.setMaxDamage(0);

@@ -69,7 +69,7 @@ public class ItemRegistry {
                 BlockLithiumQuartz.ITEM_BLOCK,
                 BlockUnstableLeadDimFragment.ITEM_BLOCK,
                 BlockRedstoneAmalgam.ITEM_BLOCK,
-                ItemCarverUpdate.INSTANCE
+                ItemCarverUpgrade.INSTANCE
         );
         BlockGolemCore.ITEM_BLOCKS.forEach(registry::register);
         BlockOreDimCrystal.ITEM_BLOCKS.forEach(registry::register);
