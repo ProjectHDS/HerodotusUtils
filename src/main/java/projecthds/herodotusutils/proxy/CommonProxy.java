@@ -14,6 +14,7 @@ import projecthds.herodotusutils.fluid.FluidAlchemyWaste;
 import projecthds.herodotusutils.fluid.FluidMana;
 import projecthds.herodotusutils.fluid.FluidMercury;
 import projecthds.herodotusutils.fluid.FluidMercurySteam;
+import projecthds.herodotusutils.meta.tileentities.HDSMetaTileEntities;
 import projecthds.herodotusutils.modsupport.bloodmagic.BloodAltarStructures;
 import projecthds.herodotusutils.modsupport.thaumcraft.AspectHandler;
 import projecthds.herodotusutils.modsupport.topography.HackTopographyDummyProxy;
@@ -41,6 +42,7 @@ public class CommonProxy implements IProxy {
         DimensionManager.registerDimension(ANCIENT_VOID_DIMENSION_ID, ANCIENT_VOID_DIMENSION);
         AspectHandler.initAspects();
         Topography.proxy = new HackTopographyDummyProxy();
+        HDSMetaTileEntities.init();
     }
 
     @Override
