@@ -128,6 +128,7 @@ public class ModelRegistry {
                 }
             });
         });
+        BlockOreDimCrystal.ITEM_BLOCKS.forEach(ModelRegistry::registerItemModel);
         BlockGolemCore.BLOCKS.forEach(block -> ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
             @Override
             protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
