@@ -63,7 +63,7 @@ dependencies {
     implementation 'com.teamacronymcoders.base:base:1.12.2-3.13.0-SNAPSHOT.+'
     implementation 'com.teamacronymcoders:ContentTweaker:1.12.2-4.9.1'
     implementation 'cofh:RedstoneFlux:1.12-2.1.0.+:universal'
-    implementation files('libs/gregtech-1.12.2-2.9.0-beta-dev.jar')
+    implementation files('libs/gregtech-1.12.2-2.8.7-beta-dev.jar')
     implementation 'team.chisel.ctm:CTM:MC1.12.2-1.0.2.31'
     implementation 'codechicken:CodeChickenLib:1.12.2-3.2.3.358:universal'
 
