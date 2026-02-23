@@ -18,6 +18,7 @@ import crafttweaker.mc1120.events.ActionApplyEvent;
 import crafttweaker.mc1120.item.MCItemStack;
 import crafttweaker.util.ArrayUtil;
 import gregtech.api.GregTechAPI;
+import gregtech.api.metatileentity.registry.MTEManager;
 import gregtech.api.unification.material.event.MaterialEvent;
 import gregtech.api.unification.material.event.MaterialRegistryEvent;
 import net.minecraft.block.state.IBlockState;
@@ -393,6 +394,11 @@ public class EventHandler {
             event.setGui(new I18nDetectedScreen());
             shouldDisplay = false;
         }
+    }
+
+    @SubscribeEvent
+    public static void registerMTERegistry(MTEManager.MTERegistryEvent event) {
+        GregTechAPI.mteManager.createRegistry(HerodotusUtils.MOD_ID);
     }
 
     @SubscribeEvent

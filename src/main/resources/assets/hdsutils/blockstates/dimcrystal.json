@@ -1,0 +1,15 @@
+﻿{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "all": "hdsutils:blocks/dimcrystal",
+      "particle": "hdsutils:blocks/dimcrystal"
+    },
+    "model": "minecraft:cube_all",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}
